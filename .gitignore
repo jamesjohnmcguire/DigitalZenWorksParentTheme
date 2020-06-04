@@ -2,3 +2,11 @@ node_modules
 
 vendor
 !js/vendor/
+
+**.css.map
+
+/SourceCode/assets/css/*.css
+
+/SourceCode/.git.test
+/SourceCode/.gitignore.test
+/DigitalZenTheme.zip
