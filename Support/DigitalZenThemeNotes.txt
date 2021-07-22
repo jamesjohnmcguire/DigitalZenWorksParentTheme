@@ -199,3 +199,14 @@ Themes
 				social media
 			customizations
 				admin options
+DigitalZenTheme
+	npm update -g npm
+	npm install -g grunt-cli
+	npm install grunt --save-dev
+		npm install grunt-contrib-jshint --save-dev
+	WordPress
+		Themes
+			Please visit the following links to learn more about translating WordPress themes:
+			https://make.wordpress.org/polyglots/teams/
+			https://developer.wordpress.org/themes/functionality/localization/
+			https://developer.wordpress.org/reference/functions/load_theme_textdomain/
