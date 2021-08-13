@@ -210,3 +210,38 @@ DigitalZenTheme
 			https://make.wordpress.org/polyglots/teams/
 			https://developer.wordpress.org/themes/functionality/localization/
 			https://developer.wordpress.org/reference/functions/load_theme_textdomain/
+DigitalZen Theme
+	composer lint:wpcs
+	composer lint:php
+	composer make-pot
+	wp i18n make-pot . languages/_s.pot
+	npm run compile:css
+	node-sass assets/css/sass/ -o assets/css && stylelint '*.css' --fix || true && stylelint '*.css' --fix
+
+	npm run compile:rtl : generates an RTL stylesheet.
+	npm run watch : watches all SASS files and recompiles them to css when they change.
+	npm run lint:scss : checks all SASS files against CSS Coding Standards.
+	npm run lint:js : checks all JavaScript files against JavaScript Coding Standards.
+	npm run bundle : generates a .zip archive for distribution, excluding development and system files.
+
+	https://github.com/Automattic/_s
+	git remote add origin https://jamesjohnmcguire@bitbucket.org/digitalzenworksgroup/digitalzenthemeprevious.git
+	git push -u origin master
+
+	git remote add origin https://github.com/jamesjohnmcguire/DigitalZenWorksTheme.git
+
+	Rendering Complete, saving .css file...
+	Wrote CSS to C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\assets\css\style.css
+	Wrote 1 CSS files to C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\assets\css
+
+	Error: No files matching the pattern "'assets/css/*.css'" were found.
+		at C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12
+		at processTicksAndRejections (internal/process/task_queues.js:93:5)
+	Error: No files matching the pattern "'*.css'" were found.
+		at C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12
+		at processTicksAndRejections (internal/process/task_queues.js:93:5)
+	Deprecation Warning: 'declaration-property-unit-whitelist' has been deprecated. Instead use 'declaration-property-unit-allowed-list'. See: https://github.com/stylelint/stylelint/blob/13.7.0/lib/rules/declaration-property-unit-whitelist/README.md
+
+	npm install @wordpress/stylelint-config
+	npm i stylelint-config-wordpress
+	npm remove @wordpress/stylelint-config
