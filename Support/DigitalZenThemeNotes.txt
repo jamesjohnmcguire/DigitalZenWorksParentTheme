@@ -1,88 +1,81 @@
-https://themetest.wordpress.com/
+Development Plan
+	Infrastructure
+	Core Functionality
+	Merging of other themes
+	Testing, Polishing, Validation of requirements
+	Enhancements, Optimizations
+	Publish	On Github, WordPress
 
-https://developer.wordpress.com/themes/
-https://make.wordpress.org/themes/handbook/review/required/
-https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
-https://make.wordpress.org/core/handbook/best-practices/coding-standards/
-
-https://developer.wordpress.org/themes/getting-started/
-https://developer.wordpress.org/themes/getting-started/theme-development-examples/
-http://underscores.me/
-https://developer.wordpress.com/themes/
-https://make.wordpress.org/themes/handbook/review/required/
-https://codex.wordpress.org/Theme_Unit_Test
-https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
-
-language_attributes() vs my language functions
-bloginfo( 'charset' ); vs utf-8
-Merge ALL css into one file
-
-#0 require_once() called at [C:\Util\xampp\htdocs\wp\wp-includes\template.php:722]
-#1 load_template() called at [C:\Util\xampp\htdocs\wp\wp-includes\template.php:671]
-#2 locate_template() called at [C:\Util\xampp\htdocs\wp\wp-includes\general-template.php:41] 
-#3 get_header() called at [C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\index.php:10]
-#4 include(C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\index.php) called at [C:\Util\xampp\htdocs\wp\wp-includes\template-loader.php:78]
-#5 require_once(C:\Util\xampp\htdocs\wp\wp-includes\template-loader.php) called at [C:\Util\xampp\htdocs\wp\wp-blog-header.php:19]
-#6 require(C:\Util\xampp\htdocs\wp\wp-blog-header.php) called at [C:\Util\xampp\htdocs\index.php:17]
-
-( ! ) Notice: Undefined variable: component in C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\header.php on line 41
-
-https://github.com/Automattic/_s
-
-Themes
-	Start from
-		Bootstrap	Far from perfect, lots of warnings
-			Dzw-Bootstrap-Child
-
-			Psynary
-			Inferret
-			Start from _s?	I think too much work in the given timeframe
-			DigitalZen	Just too much in infancy
-			Dzw-Custom
-		Plan
-			Start with pure html file prototype.html
-				test mobile
-			Then integrate into WordPress
-Theme Development
-	https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
-	https://my.studiopress.com/themes/genesis/
-	CustomLogo
-		Install
-			The custom logo support should be added first to your theme using add_theme_support(), and then be called in your theme using the_custom_logo()
-
-			To enable the use of a custom logo in your theme, add the following to your functions.php file:
-				add_theme_support( 'custom-logo' );
-				function themename_custom_logo_setup() {
-				 $defaults = array(
-				 'height'      => 100,
-				 'width'       => 400,
-				 'flex-height' => true,
-				 'flex-width'  => true,
-				 'header-text' => array( 'site-title', 'site-description' ),
-				 );
-				 add_theme_support( 'custom-logo', $defaults );
-				}
-				add_action( 'after_setup_theme', 'themename_custom_logo_setup' );
-		Display
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		$image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-		echo $image[0];
-
-		if ( function_exists( 'the_custom_logo' ) ) {
-		 the_custom_logo();
-		}
-	Child Themes
-		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
-Theme
-	Sections
-		Infrastructure
-		Core Functionality
-		Merging of other themes
-		Testing, Polishing, Validation of requirements
-		Enhancements, Optimizations
-		Publish	On Github, WordPress
-Themes
+	infrastructure
+		ignore file.
+		standard license
+		blank screen shot
+		README.md
+		.editorconfig
+		workspace file
+		npm & composer
+		phpdoc
+		phpunit
+		build tools
+			grunt
+			minify
+			scss
+		pipelines
+	_s theme
+	boilerplate
+	bootstrap
+	other packages?
+	sniffs and warnings, theme checkers, etc
+	merge of existing themes
+		child themes
+	optimizations
+		seo
+		social media
+	customizations
+		admin options
+	Bootstrap theme	Far from perfect, lots of warnings
+		Dzw-Bootstrap-Child
+		Psynary
+		Inferret
+		Start from _s?	I think too much work in the given timeframe
+		DigitalZen	Just too much in infancy
+		Dzw-Custom
+Tasks
 	Make New Theme Repo
+	figure out why show_main_menu is always false
+	Review mujin.ai about menu support
+	Find a way to export / import plugin settings
+	Find a way to export / import customization settings
+	The "dealerdirect/phpcodesniffer-composer-installer" plugin was skipped because it requires a Plugin API version ("^1.0") that does not match your Composer installation ("2.0.0"). You may need to run composer update with the "--no-plugins" option.
+	History
+		Added standard license.
+		Added blank screen shot.
+		Added unchecked readme.txt from _s generation.
+		Default .editorconfig file.
+		Added Visual Studio Code workspace.
+		Added npm package.json file for build support.
+		Added grunt build task runner.
+		Added grunt file.
+		Added build command.
+		Moved js files to assets.
+		Added common.scss.
+		Added js/vendor files.
+		Added initial language support.
+	Error: No files matching the pattern "'assets/css/*.css'" were found.	at DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12	at processTicksAndRejections (internal/process/task_queues.js:93:5)
+	Error: No files matching the pattern "'*.css'" were found.	at DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12	at processTicksAndRejections (internal/process/task_queues.js:93:5)
+	Deprecation Warning: 'declaration-property-unit-whitelist' has been deprecated. Instead use 'declaration-property-unit-allowed-list'. See: https://github.com/stylelint/stylelint/blob/13.7.0/lib/rules/declaration-property-unit-whitelist/README.md
+	The "digital-zen" prefix is not a valid	namespace/function/class/variable/constant prefix in PHP.	WordPress.NamingConventions.PrefixAllGlobals.InvalidPrefixPassed
+	The prefix is not a valid namespace/function/class/variable/constant prefix in PHP.	WordPress.NamingConventions.PrefixAllGlobals.InvalidPrefixPassed
+	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found:	"$digitalzen_archive_content".	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	Global variables defined by a theme/plugin should start with the theme/plugin prefix. dash
+	Edit theme for menu support
+	Added customization from admin	**Manual step
+	Edit theme for menu override support
+	language_attributes() vs my language functions
+	bloginfo( 'charset' ); vs utf-8
+	Merge ALL css into one file
+	( ! ) Notice: Undefined variable: component in C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\header.php on line 41
+	Finished
 		Create GitHub repo
 		Add theme to wps structure
 		npm init
@@ -114,8 +107,61 @@ Themes
 		edit build.cmd to include grunt sass
 		Merge in boilerplate	css
 		Merge in boilerplate	js
-	composer require --dev dealerdirect/phpcodesniffer-composer-installer
-Themes
+		Added components from boilerplate template.
+		Integrated HTML from _s starter theme.
+Resources
+	WordPress
+		Themes
+			Please visit the following links to learn more about translating WordPress themes:
+			https://make.wordpress.org/polyglots/teams/
+			https://developer.wordpress.org/themes/functionality/localization/
+			https://developer.wordpress.org/reference/functions/load_theme_textdomain/
+			https://developer.wordpress.org/themes/advanced-topics/child-themes/
+			https://github.com/Automattic/_s
+		https://themetest.wordpress.com/
+
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
+		https://make.wordpress.org/core/handbook/best-practices/coding-standards/
+
+		https://developer.wordpress.org/themes/getting-started/
+		https://developer.wordpress.org/themes/getting-started/theme-development-examples/
+		http://underscores.me/
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://codex.wordpress.org/Theme_Unit_Test
+		https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
+		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
+		https://my.studiopress.com/themes/genesis/
+Notes
+	CustomLogo
+		Install
+			The custom logo support should be added first to your theme using add_theme_support(), and then be called in your theme using the_custom_logo()
+
+			To enable the use of a custom logo in your theme, add the following to your functions.php file:
+				add_theme_support( 'custom-logo' );
+				function themename_custom_logo_setup() {
+				 $defaults = array(
+				 'height'      => 100,
+				 'width'       => 400,
+				 'flex-height' => true,
+				 'flex-width'  => true,
+				 'header-text' => array( 'site-title', 'site-description' ),
+				 );
+				 add_theme_support( 'custom-logo', $defaults );
+				}
+				add_action( 'after_setup_theme', 'themename_custom_logo_setup' );
+		Display
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		$image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+		echo $image[0];
+
+		if ( function_exists( 'the_custom_logo' ) ) {
+		 the_custom_logo();
+		}
+	Child Themes
+		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
 	Language Activation
 		#qtransLangSw?AL&title=none&flags=all&names=hidden&current=hidden
 		#qtransLangSw?title=none&names=hidden&current=hidden
@@ -123,125 +169,111 @@ Themes
 		Set plugin settings	**Manual step
 			languages
 			permalinks
-			?
-		Edit theme for menu support
-		Added customization from admin	**Manual step
+	Commands
+		composer lint:wpcs
+		composer lint:php
+		composer make-pot
+		wp i18n make-pot . languages/_s.pot
+		npm run compile:css
+		node-sass assets/css/sass/ -o assets/css && stylelint '*.css' --fix || true && stylelint '*.css' --fix
 
-		Edit theme for menu override support
-	Tasks
-		themes	figure out why show_main_menu is always false
-		Themes	Review mujin.ai about menu support
-		Themes	Find a way to export / import plugin settings
-		Themes	Find a way to export / import customization settings
+		npm run compile:rtl : generates an RTL stylesheet.
+		npm run watch : watches all SASS files and recompiles them to css when they change.
+		npm run lint:scss : checks all SASS files against CSS Coding Standards.
+		npm run lint:js : checks all JavaScript files against JavaScript Coding Standards.
+		npm run bundle : generates a .zip archive for distribution, excluding development and system files.
+	Coding Styles
+		npm install @wordpress/stylelint-config
+		npm i stylelint-config-wordpress
+		npm remove @wordpress/stylelint-config
+		composer require --dev dealerdirect/phpcodesniffer-composer-installer
+	Additional Code
+			modified:   assets/css/main.css
+			modified:   ruleset.xml
 
+			// prevent reformatting of the text
+			remove_filter( 'the_content', 'wpautop' );
+			remove_filter( 'the_excerpt', 'wpautop' );
 
-		DigitalZen Theme
-			The "dealerdirect/phpcodesniffer-composer-installer" plugin was skipped because it requires a Plugin API version ("^1.0") that does not match your Composer installation ("2.0.0"). You may need to run composer update with the "--no-plugins" option.
-			DigitalZenTheme	Merge divergent versions of bootstrap theme
-			* Added ignore file.
-			* Added standard license.
-			* Added blank screen shot.
-			* Added unchecked readme.txt from _s generation.
-			* Default .editorconfig file.
-			* Added Visual Studio Code workspace.
+			add_theme_support('menus' );
 
-			* Added npm package.json file for build support.
-			* Added grunt build task runner.
-			* Added grunt file.
-			* Added build command.
+			add_action('init', 'disable_wp_emojicons' );
 
-			* Added code sniffer control file.
+			remove_action('wp_head', 'wp_generator');
 
-			* Added style.css.
-			* Moved js files to assets.
+			add_action('pre_get_posts', 'post_queries' );
 
-			* Added components from boilerplate template.
+			// Remove the Link header for the WP REST API
+			// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
+			remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+			add_action('after_setup_theme', 'remove_json_api');
 
-			* Added common.scss.
-			* Added js/vendor files.
+			// remove contact form's unnessary css from all pages
+			add_action('wp_enqueue_scripts', 'deregister_contactform_script',
+				PHP_INT_MAX);
+			add_action('after_setup_theme', 'deregister_contactform_script');
 
-			* Integrated HTML from _s starter theme.
+			add_action('wp_enqueue_scripts', 'deregister_embed_script');
 
-			* Added initial language support.
+			add_filter('show_admin_bar', '__return_false');
 
+				add_action('init', 'disable_wp_emojicons');
 
-			infrastructure
-				ignore file.
-				standard license
-				blank screen shot
-				README.md
-				.editorconfig
-				workspace file
+				// remove Open Sans font
+				add_action('wp_enqueue_scripts', 'deregister_styles', 100);
 
-				npm & composer
+			function clean_yoast()
+			{
+				// Sets the canonical link to the page url
+				add_filter('wpseo_canonical', 'wpseo_canonical');
 
-				phpdoc
-				phpunit
+				// Set the meta description for the main page
+				add_action('wp', 'home_check');
 
-				build tools
-					grunt
-					minify
-					scss
-				pipelines
+				// disable yoast next and previous links (broken)
+				add_filter('wpseo_next_rel_link', 'wpseo_next_rel_link');
+				add_filter('wpseo_prev_rel_link', 'wpseo_prev_rel_link');
+			}
 
-			_s theme
-			boilerplate
-			bootstrap
-			other packages?
+			function comment_debug()
+			{
+				$item = '';
+				$post_id = '';
 
-			sniffs and warnings, theme checkers, etc
+				if (!empty($_SERVER))
+				{
+					if (array_key_exists('REQUEST_URI', $_SERVER))
+					{
+						$item = $_SERVER['REQUEST_URI'];
+						$item  = trim($item, '/');
+					}
+				}
 
-			merge of existing themes
-				child themes
+				if (!empty($item))
+				{
+					$post = get_page_by_path($item);
 
-			optimizations
-				seo
-				social media
-			customizations
-				admin options
-DigitalZenTheme
-	npm update -g npm
-	npm install -g grunt-cli
-	npm install grunt --save-dev
-		npm install grunt-contrib-jshint --save-dev
-	WordPress
-		Themes
-			Please visit the following links to learn more about translating WordPress themes:
-			https://make.wordpress.org/polyglots/teams/
-			https://developer.wordpress.org/themes/functionality/localization/
-			https://developer.wordpress.org/reference/functions/load_theme_textdomain/
-DigitalZen Theme
-	composer lint:wpcs
-	composer lint:php
-	composer make-pot
-	wp i18n make-pot . languages/_s.pot
-	npm run compile:css
-	node-sass assets/css/sass/ -o assets/css && stylelint '*.css' --fix || true && stylelint '*.css' --fix
+					if (!empty($post))
+					{
+						$post_id = $post->ID;
+					}
+				}
 
-	npm run compile:rtl : generates an RTL stylesheet.
-	npm run watch : watches all SASS files and recompiles them to css when they change.
-	npm run lint:scss : checks all SASS files against CSS Coding Standards.
-	npm run lint:js : checks all JavaScript files against JavaScript Coding Standards.
-	npm run bundle : generates a .zip archive for distribution, excluding development and system files.
+				echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
+			}
 
-	https://github.com/Automattic/_s
-	git remote add origin https://jamesjohnmcguire@bitbucket.org/digitalzenworksgroup/digitalzenthemeprevious.git
-	git push -u origin master
+			function deregister_contactform_script()
+			{
+				$current_uri = add_query_arg( NULL, NULL );
+				$found = strpos($current_uri, "/contact-us/");
 
-	git remote add origin https://github.com/jamesjohnmcguire/DigitalZenWorksTheme.git
+				if (false === $found)
+				{
+					remove_action('wp_enqueue_scripts', 'cntctfrm_wp_head');
+				}
+			}
 
-	Rendering Complete, saving .css file...
-	Wrote CSS to C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\assets\css\style.css
-	Wrote 1 CSS files to C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\assets\css
-
-	Error: No files matching the pattern "'assets/css/*.css'" were found.
-		at C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12
-		at processTicksAndRejections (internal/process/task_queues.js:93:5)
-	Error: No files matching the pattern "'*.css'" were found.
-		at C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\stylelint\lib\standalone.js:212:12
-		at processTicksAndRejections (internal/process/task_queues.js:93:5)
-	Deprecation Warning: 'declaration-property-unit-whitelist' has been deprecated. Instead use 'declaration-property-unit-allowed-list'. See: https://github.com/stylelint/stylelint/blob/13.7.0/lib/rules/declaration-property-unit-whitelist/README.md
-
-	npm install @wordpress/stylelint-config
-	npm i stylelint-config-wordpress
-	npm remove @wordpress/stylelint-config
+			function deregister_embed_script()
+			{
+				wp_deregister_script('wp-embed');
+			}
