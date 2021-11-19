@@ -230,3 +230,5 @@ Notes
 				REQUIRED: phpcs.xml.dist PHPCS file found. This file must not be in a theme.
 				REQUIRED: phpcs.xml.dist ruleset.xml XML file found. This file must not be in a theme.
 				REQUIRED: Zip file found. Plugins are not allowed in themes. The zip file found was digitalzentheme.zip digitalzen.zip.
+DigitalZen Theme
+	https://developer.wordpress.org/themes/advanced-topics/child-themes/
