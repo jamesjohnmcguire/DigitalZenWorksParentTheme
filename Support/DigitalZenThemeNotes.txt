@@ -41,14 +41,12 @@ Development Plan
 		DigitalZen	Just too much in infancy
 		Dzw-Custom
 Resources
-	WordPress
-		Themes
-			Please visit the following links to learn more about translating WordPress themes:
-			https://make.wordpress.org/polyglots/teams/
-			https://developer.wordpress.org/themes/functionality/localization/
-			https://developer.wordpress.org/reference/functions/load_theme_textdomain/
-			https://developer.wordpress.org/themes/advanced-topics/child-themes/
-			https://github.com/Automattic/_s
+	Please visit the following links to learn more about translating WordPress themes:
+		https://make.wordpress.org/polyglots/teams/
+		https://developer.wordpress.org/themes/functionality/localization/
+		https://developer.wordpress.org/reference/functions/load_theme_textdomain/
+		https://github.com/Automattic/_s
+
 		https://themetest.wordpress.com/
 
 		https://developer.wordpress.com/themes/
@@ -63,8 +61,10 @@ Resources
 		https://make.wordpress.org/themes/handbook/review/required/
 		https://codex.wordpress.org/Theme_Unit_Test
 		https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
-		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
 		https://my.studiopress.com/themes/genesis/
+	Child Themes
+		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
+		https://developer.wordpress.org/themes/advanced-topics/child-themes/
 Notes
 	CustomLogo
 		Install
@@ -91,8 +91,6 @@ Notes
 		if ( function_exists( 'the_custom_logo' ) ) {
 		 the_custom_logo();
 		}
-	Child Themes
-		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
 	Language Activation
 		#qtransLangSw?AL&title=none&flags=all&names=hidden&current=hidden
 		#qtransLangSw?title=none&names=hidden&current=hidden
@@ -230,5 +228,44 @@ Notes
 				REQUIRED: phpcs.xml.dist PHPCS file found. This file must not be in a theme.
 				REQUIRED: phpcs.xml.dist ruleset.xml XML file found. This file must not be in a theme.
 				REQUIRED: Zip file found. Plugins are not allowed in themes. The zip file found was digitalzentheme.zip digitalzen.zip.
-DigitalZen Theme
-	https://developer.wordpress.org/themes/advanced-topics/child-themes/
+
+add configuration files, such as vs code workspace
+sniffs
+unit tests
+.editorconfig
+ignore files
+pot files
+composer
+grunt
+node modules
+_s
+assets
+screen shot
+license
+readme
+google analytics
+boilerplate
+style.css
+funding
+file headers
+
+https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+https://github.com/WPTT/theme-test-data
+https://github.com/WPTT/theme-sniffer
+https://github.com/WPTT/WPThemeReview
+https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/codeception
+https://codex.wordpress.org/Theme_Unit_Test
+
+
+		$cl_text_domain = PHPCSHelper::get_config_data( 'text_domain' );
+		if ($cl_text_domain !== null)
+		{
+			$cl_text_domain = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
+		}
+
+		$cl_prefixes = PHPCSHelper::get_config_data( 'prefixes' );
+		if ($cl_prefixes !== null)
+		{
+			$cl_prefixes = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
+		}
+
