@@ -269,3 +269,14 @@ https://codex.wordpress.org/Theme_Unit_Test
 			$cl_prefixes = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
 		}
 
+wordpress theme unit tests
+	https://poweredbycoffee.co.uk/unit-testing-with-wordpress/
+	https://www.smashingmagazine.com/2017/12/automated-testing-wordpress-plugins-phpunit/
+	https://code.tutsplus.com/articles/the-beginners-guide-to-unit-testing-building-testable-themes--wp-26007
+	https://github.com/tommcfarlin/Basic-Theme/blob/master/tests/test_basic_theme.php
+	https://wordpress.stackexchange.com/questions/170510/how-exactly-does-unit-testing-work-for-themes
+	https://codesymphony.co/writing-wordpress-plugin-unit-tests/
+	https://core.trac.wordpress.org/browser/tests/trunk
+	https://wptest.io/
+	https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/core-tests
+	https://developer.wordpress.org/themes/advanced-topics/theme-testing/
