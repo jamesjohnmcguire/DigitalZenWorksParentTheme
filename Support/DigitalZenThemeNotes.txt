@@ -280,3 +280,5 @@ wordpress theme unit tests
 	https://wptest.io/
 	https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/core-tests
 	https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+DigitalZenWorks Theme
+	Add functions to return snippets for facebook pixel and google analytics tags, both for head and body
