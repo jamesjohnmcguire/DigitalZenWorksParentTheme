@@ -48,6 +48,8 @@ Development Plan
 		Dzw-Custom
 	funding
 	file headers
+Tasks
+	add npm update to build.cmd
 Notes
 	CustomLogo
 		Install
@@ -201,6 +203,33 @@ Notes
 		{
 			$cl_prefixes = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
 		}
+Issues
+	Npm Update
+		npm update
+		npm WARN EBADENGINE Unsupported engine {
+		npm WARN EBADENGINE   package: 'eslint-plugin-jsdoc@36.1.1',
+		npm WARN EBADENGINE   required: { node: '^12 || ^14 || ^16' },
+		npm WARN EBADENGINE   current: { node: 'v19.7.0', npm: '9.6.1' }
+		npm WARN EBADENGINE }
+		npm WARN EBADENGINE Unsupported engine {
+		npm WARN EBADENGINE   package: '@es-joy/jsdoccomment@0.10.8',
+		npm WARN EBADENGINE   required: { node: '^12 || ^14 || ^16' },
+		npm WARN EBADENGINE   current: { node: 'v19.7.0', npm: '9.6.1' }
+		npm WARN EBADENGINE }
+		npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+		npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+		npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+		npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+		npm WARN deprecated @stylelint/postcss-css-in-js@0.37.3: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+		npm ERR! code 1
+		npm ERR! path C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\deasync
+		npm ERR! command failed
+		npm ERR! command C:\WINDOWS\system32\cmd.exe /d /s /c node ./build.js
+		npm ERR! gyp info it worked if it ends with ok
+		npm ERR! gyp info using node-gyp@8.4.1
+		npm ERR! gyp info using node@19.7.0 | win32 | x64
+		npm ERR! gyp info find Python using Python version 3.11.2 found at "C:\Util\Python\python.exe"
 Resources
 	Please visit the following links to learn more about translating WordPress themes:
 		https://make.wordpress.org/polyglots/teams/
