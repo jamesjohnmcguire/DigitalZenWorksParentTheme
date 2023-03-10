@@ -18,14 +18,19 @@ Development Plan
 		phpunit
 		build tools
 			grunt
+			node modules
 			minify
 			scss
 		pipelines
+		sniffs and warnings, theme checkers, etc
+		unit tests
 	_s theme
+	style.css
+	pot files
 	boilerplate
+	assets
 	bootstrap
 	other packages?
-	sniffs and warnings, theme checkers, etc
 	merge of existing themes
 		child themes
 	optimizations
@@ -33,38 +38,16 @@ Development Plan
 		social media
 	customizations
 		admin options
-	Bootstrap theme	Far from perfect, lots of warnings
+	google analytics
+	Merge variant themes
 		Dzw-Bootstrap-Child
 		Psynary
 		Inferret
 		Start from _s?	I think too much work in the given timeframe
 		DigitalZen	Just too much in infancy
 		Dzw-Custom
-Resources
-	Please visit the following links to learn more about translating WordPress themes:
-		https://make.wordpress.org/polyglots/teams/
-		https://developer.wordpress.org/themes/functionality/localization/
-		https://developer.wordpress.org/reference/functions/load_theme_textdomain/
-		https://github.com/Automattic/_s
-
-		https://themetest.wordpress.com/
-
-		https://developer.wordpress.com/themes/
-		https://make.wordpress.org/themes/handbook/review/required/
-		https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
-		https://make.wordpress.org/core/handbook/best-practices/coding-standards/
-
-		https://developer.wordpress.org/themes/getting-started/
-		https://developer.wordpress.org/themes/getting-started/theme-development-examples/
-		http://underscores.me/
-		https://developer.wordpress.com/themes/
-		https://make.wordpress.org/themes/handbook/review/required/
-		https://codex.wordpress.org/Theme_Unit_Test
-		https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
-		https://my.studiopress.com/themes/genesis/
-	Child Themes
-		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
-		https://developer.wordpress.org/themes/advanced-topics/child-themes/
+	funding
+	file headers
 Notes
 	CustomLogo
 		Install
@@ -206,57 +189,7 @@ Notes
 			{
 				wp_deregister_script('wp-embed');
 			}
-		Digital Zen Theme
-			Remove embedded normalize.css from style.css
-			WARNING: Found ><?php echo esc_attr( in posts-support.php. Only use esc_attr() inside HTML attributes. Use esc_html() between HTML tags. A manual review is needed. Line 53: <li><span class='fa fa-file'></span><?php echo esc_attr( $categories ); ?></li>Line 54: <li><span class='fa fa-tags'></span><?php echo esc_attr( $tags ); ?></li>Line 56: <li class='pull-right'><a href='<?php the_permalink(); ?>' class='btn-link'><?php echo esc_attr( $link ); ?></a></li>
-			WARNING: fwrite was found in the file platform_check.php File write operations should are avoided unless necessary Line 17: fwrite(STDERR, 'Composer detected issues in your platform:' . PHP_EOL.PHP_E
-			WARNING Your theme appears to be in the wrong directory for the theme name. The directory name must match the slug of the theme. This theme's correct slug and text-domain is digitalzen. (If this is a child theme, you can ignore this error.)
-			WARNING More than one text-domain is being used in this theme. This means the theme will not be compatible with WordPress.org language packs. The domains found are digital-zen, digitalzen
-			REQUIRED: Both DOS and UNIX style line endings were found in the file style.css. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings.
-			RECOMMENDED: No reference to register_block_style was found in the theme. Theme authors are encouraged to implement new block styles as a transition to block themes.
-			RECOMMENDED: No reference to register_block_pattern was found in the theme. Theme authors are encouraged to implement custom block patterns as a transition to block themes.
-			RECOMMENDED: No reference to add_theme_support( "wp-block-styles" ) was found in the theme. It is recommended that the theme implement this functionality.
-			RECOMMENDED: No reference to add_theme_support( "responsive-embeds" ) was found in the theme. It is recommended that the theme implement this functionality.
-			RECOMMENDED: No reference to add_theme_support( "align-wide" ) was found in the theme. It is recommended that the theme implement this functionality.
-			RECOMMENDED: No reference to add_editor_style() was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience.
-			INFO: Possible hard-coded links were found in the file footer.php. Line 27: printf( esc_html__( 'Theme: %1$s by %2$s.', 'digitalzen' ), 'digitalzen', '<a href='http://www.digitalzenworks.com'>James John McGuire</a>' );
-			INFO: Possible hard-coded links were found in the file footer.php. Line 25: printf( esc_html__( 'Theme: %1$s by %2$s.', 'digital-zen' ), 'digital-zen', '<a href='https://digitalzenworks.com'>James John McGuire</a>' );
-				REQUIRED: Your Theme URI and Author URI must not be the same.
-				REQUIRED: Found a copy of Underscores. See digitalzen.pot. Learn how to update the files for your own theme. Line 26: msgid 'Hi. I'm a starter theme called <code>_s</code>, or <em>underscores</em>, if
-				REQUIRED: Found a copy of Underscores. See digitalzen.pot. Learn how to update the files for your own theme. Line 148: 'Hi. I'm a starter theme called <code>_s</code>, or <em>underscores</em>, if
-				REQUIRED: Found a copy of Underscores. See README.md. Learn how to update the files for your own theme. Line 6: Hi. I'm a starter theme called `_s`, or `underscores`, if you like. I'm a t
-				REQUIRED: phpcs.xml.dist PHPCS file found. This file must not be in a theme.
-				REQUIRED: phpcs.xml.dist ruleset.xml XML file found. This file must not be in a theme.
-				REQUIRED: Zip file found. Plugins are not allowed in themes. The zip file found was digitalzentheme.zip digitalzen.zip.
-
-add configuration files, such as vs code workspace
-sniffs
-unit tests
-.editorconfig
-ignore files
-pot files
-composer
-grunt
-node modules
-_s
-assets
-screen shot
-license
-readme
-google analytics
-boilerplate
-style.css
-funding
-file headers
-
-https://developer.wordpress.org/themes/advanced-topics/theme-testing/
-https://github.com/WPTT/theme-test-data
-https://github.com/WPTT/theme-sniffer
-https://github.com/WPTT/WPThemeReview
-https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/codeception
-https://codex.wordpress.org/Theme_Unit_Test
-
-
+	Text Domains
 		$cl_text_domain = PHPCSHelper::get_config_data( 'text_domain' );
 		if ($cl_text_domain !== null)
 		{
@@ -268,17 +201,46 @@ https://codex.wordpress.org/Theme_Unit_Test
 		{
 			$cl_prefixes = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
 		}
+Resources
+	Please visit the following links to learn more about translating WordPress themes:
+		https://make.wordpress.org/polyglots/teams/
+		https://developer.wordpress.org/themes/functionality/localization/
+		https://developer.wordpress.org/reference/functions/load_theme_textdomain/
+		https://github.com/Automattic/_s
 
-wordpress theme unit tests
-	https://poweredbycoffee.co.uk/unit-testing-with-wordpress/
-	https://www.smashingmagazine.com/2017/12/automated-testing-wordpress-plugins-phpunit/
-	https://code.tutsplus.com/articles/the-beginners-guide-to-unit-testing-building-testable-themes--wp-26007
-	https://github.com/tommcfarlin/Basic-Theme/blob/master/tests/test_basic_theme.php
-	https://wordpress.stackexchange.com/questions/170510/how-exactly-does-unit-testing-work-for-themes
-	https://codesymphony.co/writing-wordpress-plugin-unit-tests/
-	https://core.trac.wordpress.org/browser/tests/trunk
-	https://wptest.io/
-	https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/core-tests
-	https://developer.wordpress.org/themes/advanced-topics/theme-testing/
-DigitalZenWorks Theme
-	Add functions to return snippets for facebook pixel and google analytics tags, both for head and body
+		https://themetest.wordpress.com/
+
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
+		https://make.wordpress.org/core/handbook/best-practices/coding-standards/
+
+		https://developer.wordpress.org/themes/getting-started/
+		https://developer.wordpress.org/themes/getting-started/theme-development-examples/
+		http://underscores.me/
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://codex.wordpress.org/Theme_Unit_Test
+		https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
+		https://my.studiopress.com/themes/genesis/
+	Child Themes
+		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
+		https://developer.wordpress.org/themes/advanced-topics/child-themes/
+	wordpress theme unit tests
+		https://poweredbycoffee.co.uk/unit-testing-with-wordpress/
+		https://www.smashingmagazine.com/2017/12/automated-testing-wordpress-plugins-phpunit/
+		https://code.tutsplus.com/articles/the-beginners-guide-to-unit-testing-building-testable-themes--wp-26007
+		https://github.com/tommcfarlin/Basic-Theme/blob/master/tests/test_basic_theme.php
+		https://wordpress.stackexchange.com/questions/170510/how-exactly-does-unit-testing-work-for-themes
+		https://codesymphony.co/writing-wordpress-plugin-unit-tests/
+		https://core.trac.wordpress.org/browser/tests/trunk
+		https://wptest.io/
+		https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/core-tests
+		https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+		Testing
+			https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+			https://github.com/WPTT/theme-test-data
+			https://github.com/WPTT/theme-sniffer
+			https://github.com/WPTT/WPThemeReview
+			https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/codeception
+			https://codex.wordpress.org/Theme_Unit_Test
