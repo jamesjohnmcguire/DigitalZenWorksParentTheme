@@ -273,3 +273,14 @@ Resources
 			https://github.com/WPTT/WPThemeReview
 			https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/codeception
 			https://codex.wordpress.org/Theme_Unit_Test
+DigitalZen Theme
+	Including the "Desktop development with C++" while VS installation.(you can modify existing installation)
+
+	npm config set msbuild_path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Msbuild\Current\Bin\MSBuild.exe" 
+
+	npm config set msvs_version 2022
+
+	 3.Updating node-gyp
+	npm install --save-dev node-sass
+
+	npm install --global windows-build-tools
