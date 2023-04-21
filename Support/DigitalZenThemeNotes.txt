@@ -284,3 +284,13 @@ DigitalZen Theme
 	npm install --save-dev node-sass
 
 	npm install --global windows-build-tools
+DigitalZenTheme
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot/52
+	npm update package
+	gyp ERR! find VS - missing any Windows SDK 2022
+	https://stackoverflow.com/questions/72387953/npm-err-gyp-err-find-vs-msvs-version-not-set-from-command-line-or-npm-config
+	https://stackoverflow.com/questions/57541402/node-gyp-configure-got-gyp-err-find-vs
+	upgrade package.json
+	https://stackoverflow.com/questions/16073603/how-to-update-each-dependency-in-package-json-to-the-latest-version
+	`msvs_version` is not a valid npm option
+	https://stackoverflow.com/questions/57879150/how-can-i-solve-error-gypgyp-errerr-find-vsfind-vs-msvs-version-not-set-from-c
