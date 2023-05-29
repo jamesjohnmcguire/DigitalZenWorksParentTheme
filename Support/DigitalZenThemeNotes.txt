@@ -52,6 +52,8 @@ Development Plan
 	file headers
 Tasks
 	add npm update to build.cmd
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+	dart sass
 Notes
 	CustomLogo
 		Install
@@ -301,3 +303,15 @@ Issues
 	Unknown rule                       declaration-property-unit-whitelist         declaration-property-unit-
 		npm run compile:css
 			https://stackoverflow.com/questions/34896279/how-to-compile-scss-to-css-with-node-sass
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+		=======
+						"@wordpress/scripts": "^26.0.0",
+						"dir-archiver": "^2.1.0",
+						"grunt": "^1.6.1",
+		>>>>>>> Stashed changes
+Digital Zen Theme
+	dependabot alerts
+		https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot/30
+		No patched version available for ansi-regex
+			https://github.com/npm/gauge/issues/135
+			https://stackoverflow.com/questions/69590927/how-to-update-nested-package-ansi-regex-for-node-sass-when-npm-audit-fix-upda
