@@ -12,8 +12,8 @@ Development Plan
 		blank screen shot
 		README.md
 		.editorconfig
-		workspace file
-		npm & composer
+		workspace file *
+		npm & composer ?
 		phpdoc
 		phpunit
 		build tools
@@ -304,14 +304,22 @@ Issues
 		npm run compile:css
 			https://stackoverflow.com/questions/34896279/how-to-compile-scss-to-css-with-node-sass
 	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
-		=======
+dependabot alerts
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot/30
+	No patched version available for ansi-regex
+		https://github.com/npm/gauge/issues/135
+		https://stackoverflow.com/questions/69590927/how-to-update-nested-package-ansi-regex-for-node-sass-when-npm-audit-fix-upda
+Unit Tests
+	"10up/wp_mock": "^0.5",
+	wordpress theme unit tests
+		https://codex.wordpress.org/Theme_Unit_Test
+		https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/unit-testing
+Popper
+	Currently not needed
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+Npm
+	C:\Program Files\nodejs\;
+git switch --orphan <new branch
 						"@wordpress/scripts": "^26.0.0",
 						"dir-archiver": "^2.1.0",
 						"grunt": "^1.6.1",
-		>>>>>>> Stashed changes
-Digital Zen Theme
-	dependabot alerts
-		https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot/30
-		No patched version available for ansi-regex
-			https://github.com/npm/gauge/issues/135
-			https://stackoverflow.com/questions/69590927/how-to-update-nested-package-ansi-regex-for-node-sass-when-npm-audit-fix-upda
