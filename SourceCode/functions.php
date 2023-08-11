@@ -1,0 +1,141 @@
+<?php
+
+//contains functions specific to the bootstrap theme
+include 'bootstrap.php';
+
+remove_action('wp_head','qtranxf_wp_head_meta_generator');
+
+add_action('init', 'bootstrap_clean_head');
+add_action('wp_enqueue_scripts', 'enqueue_scripts');
+
+if (!function_exists('bootstrap_enqueue_scripts'))
+{
+	function bootstrap_enqueue_scripts()
+	{
+		$theme_path = get_template_directory_uri();
+		$css_path = $theme_path . '/assets/css/';
+		$js_path = $theme_path . '/assets/js/';
+
+		$theme = wp_get_theme();
+		$version = $theme->get('Version');
+
+        wp_enqueue_style('bootstrap-style',
+            "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css");
+        wp_enqueue_style('fontawesome-style',
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
+
+		// When debug is false, these files, in their minified version are
+		// loaded from the child theme.
+		if (WP_DEBUG === true)
+		{
+			wp_enqueue_style('theme-style', $css_path . 'style.css');
+			wp_enqueue_style(
+                'social-media-style', $css_path  . 'social-media.css');
+			wp_enqueue_style('to-top-style', $css_path  . 'to-top.css');
+			wp_enqueue_style(
+                'parent-parallax-style', $css_path  . 'parallax.css');
+			wp_enqueue_style('services-style', $css_path  . 'services.css');
+		}
+
+		$file = 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js';
+		wp_register_script('theme-bootstrap-async', $file, array('jquery'),
+			false, true);
+		wp_enqueue_script('theme-bootstrap-async');
+
+		$file = $js_path . 'vendor/jquery.ui.totop.min.js';
+		wp_register_script('totop-async', $file, array('jquery'), false, true);
+		wp_enqueue_script('totop-async');
+
+		if (WP_DEBUG === true)
+		{
+			// if false, these will be enqueued by the child theme
+			$file = $js_path . 'bootstrap.slide-menu.js';
+			wp_register_script('theme-slide-menu-async', $file, array('jquery'),
+				false, true);
+			wp_enqueue_script('theme-slide-menu-async');
+		}
+
+		$file = 'https://www.google.com/recaptcha/api.js';
+		wp_register_script('recaptcha-script-async-defer', $file, array(),
+			false, true);
+		wp_enqueue_script('recaptcha-script-async-defer');
+	}
+}
+
+if (!function_exists('enqueue_scripts'))
+{
+	function enqueue_scripts()
+	{
+		bootstrap_enqueue_scripts();
+	}
+}
+
+function comment_debug()
+{
+	$item = '';
+	$post_id = '';
+
+	if (!empty($_SERVER))
+	{
+		if (array_key_exists('REQUEST_URI', $_SERVER))
+		{
+			$item = $_SERVER['REQUEST_URI'];
+			$item  = trim($item, '/');
+		}
+	}
+
+	if (!empty($item))
+	{
+		$post = get_page_by_path($item);
+
+		if (!empty($post))
+		{
+			$post_id = $post->ID;
+		}
+	}
+
+	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
+}
+
+function GetLoop($authordata)
+{
+	while (have_posts())
+	{
+		the_post();
+		$authorId = get_the_author_meta('ID');
+		$author = get_author_posts_url($authorId);
+		//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+		?>
+
+                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                  <h2 class="entry-title">
+                    <a href="<?php the_permalink(); ?>"
+                      title="<?php the_title();; ?>" rel="bookmark">
+                      <?php the_title(); ?>
+                    </a>
+                  </h2>
+
+                  <div class="entry-meta">
+                    <span class="meta-prep meta-prep-author"><?php _e('By ', 'hbd-theme'); ?></span>
+                    <span class="author vcard"><a class="url fn n" href="<?php echo $author; ?>" title="<?php printf( __( 'View all posts by %s', 'hbd-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?></a></span>
+                    <span class="meta-sep"> | </span>
+                    <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'hbd-theme'); ?></span>
+                    <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
+	<?php edit_post_link( __( 'Edit', 'hbd-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
+                  </div><!-- .entry-meta -->
+
+                    <div class="entry-summary">
+	<?php the_excerpt( __( 'Continue reading <span class="meta-nav">&raquo;</span>', 'hbd-theme' )  ); ?>
+                    </div><!-- .entry-summary -->
+
+                    <div class="entry-utility">
+                      <span class="cat-links"><span class="entry-utility-prep entry-utility-prep-cat-links"><?php _e( 'Posted in ', 'hbd-theme' ); ?></span><?php echo get_the_category_list(', '); ?></span>
+                      <span class="meta-sep"> | </span>
+	<?php the_tags( '<span class="tag-links"><span class="entry-utility-prep entry-utility-prep-tag-links">' . __('Tagged ', 'hbd-theme' ) . '</span>', ", ", "</span>\n\t\t\t\t\t\t<span class=\"meta-sep\">|</span>\n" ) ?>
+                      <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'hbd-theme' ), __( '1 Comment', 'hbd-theme' ), __( '% Comments', 'hbd-theme' ) ) ?></span>
+	<?php edit_post_link( __( 'Edit', 'hbd-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
+                    </div><!-- #entry-utility -->
+                  </div><!-- #post-<?php the_ID(); ?> -->
+	<?php
+	}
+}
