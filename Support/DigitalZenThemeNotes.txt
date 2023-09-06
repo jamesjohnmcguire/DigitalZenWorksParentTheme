@@ -323,3 +323,130 @@ git switch --orphan <new branch
 						"@wordpress/scripts": "^26.0.0",
 						"dir-archiver": "^2.1.0",
 						"grunt": "^1.6.1",
+Digital Zen Theme
+	WARNING WP_DEBUG is not enabled!Please test your theme with debug enabled before you upload!
+
+	Update Screenshot
+	Merge bootstrap assets
+
+	REQUIRED: Both DOS and UNIX style line endings were found in the file assets/css/style.css. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings.
+	REQUIRED: Both DOS and UNIX style line endings were found in the file assets/css/style-rtl.css. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings.
+	RECOMMENDED: No reference to register_block_style was found in the theme. Theme authors are encouraged to implement new block styles as a transition to block themes.
+	RECOMMENDED: No reference to register_block_pattern was found in the theme. Theme authors are encouraged to implement custom block patterns as a transition to block themes.
+	RECOMMENDED: No reference to add_theme_support( "wp-block-styles" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "responsive-embeds" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "align-wide" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_editor_style() was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience.
+	INFO: Possible hard-coded links were found in the file footer.php.
+	Line 23: '<a href='https://digitalzenworks.com'>James John McGuire</a>' );
+	INFO: Only one text-domain is being used in this theme. Make sure it matches the theme's slug correctly so that the theme will be compatible with WordPress.org language packs. The domain found is digital-zen.
+
+	dzw	move vendor-ish assets to vendor
+	dzw Is bootstrap.slide-menu.js needed?
+	dzw	mobile	Beginning with tokyo tower overlapping clients
+
+	WARNING WP_DEBUG is not enabled!Please test your theme with debug enabled before you upload!
+	dzw add screenshot for child themes
+	dzw update screenshot for parent theme
+
+	One or more errors were found for Digital Zen Works Child Theme.
+	WARNING: Your theme appears to be in the wrong directory for the theme name. The directory name must match the slug of the theme. This theme's correct slug and text-domain is digital-zen-works-child-theme. (If this is a child theme, you can ignore this error.)
+	WARNING: More than one text-domain is being used in this theme. This means the theme will not be compatible with WordPress.org language packs. The domains found are digitalzenwork-child, bootstrap, hbd-theme, twentyfifteen.
+	WARNING: Found wp_deregister_script in functions.php. Themes must not deregister scripts that are included in WordPress. Deregistering third party scripts that are registered by parent themes is allowed.
+	Line 16: wp_deregister_script('wp-embed');
+	Line 69: wp_deregister_script('wp-embed');
+	WARNING: Could not find a copyright notice for the theme. A copyright notice is needed if your theme is licenced as GPL. Learn how to add a copyright notice (opens in a new window).
+	WARNING: A menu without a theme_location was found in bootstrap.php. $menu_options is used inside wp_nav_menu(). You must manually check if the theme_location is included.
+	WARNING: screenshot.png is 1.2 MB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	WARNING: functions.php Themes are not allowed to hide the admin bar. This warning must be manually checked.
+	Line 8: add_filter('show_admin_bar', '__return_false');
+	WARNING: assets/images/sunset.jpg is 800.2 KB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	WARNING: assets/images/mount_rainier.jpg is 961.2 KB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	REQUIRED: The theme uses the add_shortcode() function in the file bootstrap.php. add_shortcode() is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 22: add_shortcode('theme_directory', 'bootstrap_theme_directory_shortcode');
+	REQUIRED: The theme uses remove_action wp_head wp_oembed_add_discovery_links in the file themes-common-library.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 173: remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	Line 185: //remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+	REQUIRED: The theme uses remove_action wp_head wp_oembed_add_discovery_links in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 439: remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	REQUIRED: The theme uses remove_action wp_head rest_output_link_wp_head in the file themes-common-library.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 172: remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+	REQUIRED: The theme uses remove_action wp_head rest_output_link_wp_head in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 438: remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+	REQUIRED: The theme uses remove_action template_redirect rest_output_link_header in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 436: remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+	REQUIRED: No reference to add_theme_support( "title-tag" ) was found in the theme.
+	REQUIRED: Found the URL of a CDN in the code: cloudflare.com. You should not load CSS or Javascript resources from a CDN, please bundle them with the theme.
+	REQUIRED: Found a Customizer setting called 'use_title' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 497: //$wp_customize->add_setting('use_title'
+	REQUIRED: Found a Customizer setting called 'use_carousel' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 486: $wp_customize->add_setting('use_carousel'
+	REQUIRED: Found a Customizer setting called 'twitter_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 562: $wp_customize->add_setting('twitter_url'
+	REQUIRED: Found a Customizer setting called 'show_main_menu' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 508: $wp_customize->add_setting('show_main_menu'
+	REQUIRED: Found a Customizer setting called 'pinterest_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 553: $wp_customize->add_setting('pinterest_url'
+	REQUIRED: Found a Customizer setting called 'menu_location' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 515: $wp_customize->add_setting('menu_location'
+	REQUIRED: Found a Customizer setting called 'gplus_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 544: $wp_customize->add_setting('gplus_url'
+	REQUIRED: Found a Customizer setting called 'google_analytics_code' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 526: $wp_customize->add_setting('google_analytics_code'
+	REQUIRED: Found a Customizer setting called 'facebook_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 535: $wp_customize->add_setting('facebook_url'
+	REQUIRED: Could not find the file readme.txt in the theme.
+	REQUIRED: Could not find wp_body_open action or function call at the very top of the body just after the opening body tag. See: wp_body_open
+	 <?php wp_body_open(); ?>
+	REQUIRED: Could not find language_attributes. See: language_attributes
+	<html <?php language_attributes(); ?>
+	REQUIRED: Could not find body_class call in body tag. See: body_class
+	 <?php body_class( $class ); ?>
+	REQUIRED: Could not find add_theme_support( 'automatic-feed-links' ). See: add_theme_support
+	 <?php add_theme_support( $feature ); ?>
+	REQUIRED The theme appears to use dynamic_sidebars() but no register_sidebar() was found. See: register_sidebar
+	 <?php register_sidebar( $args ); ?>
+	REQUIRED Tested up to: is missing from your style.css header. Also, this should be numbers only, so 5.0 and not WP 5.0
+	REQUIRED Requires PHP: is missing from your style.css header.
+	RECOMMENDED: Possible variable $title found in translation function in category.php. Translation function calls must not contain PHP variables, use placeholders instead. See Internationalization Guidelines (Opens in a new window).
+	Line 6: $title = single_cat_title('', false);
+	Line 7: $title = __($title);
+	Line 20: bootstrap_show_title($title);
+	RECOMMENDED: No reference to register_block_style was found in the theme. Theme authors are encouraged to implement new block styles as a transition to block themes.
+	RECOMMENDED: No reference to register_block_pattern was found in the theme. Theme authors are encouraged to implement custom block patterns as a transition to block themes.
+	RECOMMENDED: No reference to add_theme_support( "wp-block-styles" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "responsive-embeds" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "html5", $args ) was found in the theme. It is strongly recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "custom-logo", $args ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "custom-header", $args ) was found in the theme. It is recommended that the theme implement this functionality if using an image for the header.
+	RECOMMENDED: No reference to add_theme_support( "custom-background", $args ) was found in the theme. If the theme uses background images or solid colors for the background, then it is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "align-wide" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_editor_style() was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience.
+	RECOMMENDED: Found a script tag in header.php. Scripts and styles need to be enqueued or added via a hook, otherwise it is more difficult to remove or replace them with plugins or child themes.
+	Line 58: <script async src='https://www.googletagmanager.com/gtag/js?id=UA-170462278
+	Line 59: <script>
+	Line 69: <script>
+	RECOMMENDED: Found a script tag in footer.php. Scripts and styles need to be enqueued or added via a hook, otherwise it is more difficult to remove or replace them with plugins or child themes.
+	Line 73: <script>
+	RECOMMENDED: Could not find the comment-reply script enqueued.
+	RECOMMENDED: wp_title() was found in the file bootstrap.php. wp_title was historically used for the document <title> tag and was never intended for other purposes. Use add_theme_support( "title-tag" ) instead.
+	Line 252: $title = wp_title('', false);
+	RECOMMENDED: <title> tag was found in the file header.php. Document titles must not be hard coded, use add_theme_support( "title-tag" ) instead.
+	Line 41: <title><?php echo $title; ?></title>
+	RECOMMENDED No reference to post-thumbnails was found in the theme. If the theme has a thumbnail like functionality, it should be implemented with add_theme_support( "post-thumbnails" ) in the functions.php file.
+	RECOMMENDED No reference to the_post_thumbnail() was found in the theme. It is recommended that the theme implement this functionality instead of using custom fields for thumbnails.
+	RECOMMENDED .wp-caption css class is recommended in your theme css.
+	RECOMMENDED .wp-caption-text css class is recommended in your theme css.
+	RECOMMENDED .gallery-caption css class is recommended in your theme css.
+	RECOMMENDED .bypostauthor css class is recommended in your theme css.
+	RECOMMENDED .alignright css class is recommended in your theme css.
+	RECOMMENDED .alignleft css class is recommended in your theme css.
+	RECOMMENDED .aligncenter css class is recommended in your theme css.
+	INFO: Possible Favicon found in header.php. Favicons are handled by the Site Icon setting in the customizer since version 4.3.
+	INFO Found wrong tag, remove shick from your style.css header.
+	INFO Found wrong tag, remove responsive from your style.css header.
+	INFO Found wrong tag, remove modern from your style.css header.
+	INFO Found wrong tag, remove html5 from your style.css header.
+	INFO Found wrong tag, remove cool from your style.css header.
+	INFO Found wrong tag, remove bootstrap from your style.css header.
+	INFO .screen-reader-text CSS class is generated by WordPress and needs to be styled with your theme CSS. See the Codex for an example implementation.
