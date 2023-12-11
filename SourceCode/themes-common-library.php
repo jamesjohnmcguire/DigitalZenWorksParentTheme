@@ -45,7 +45,7 @@ function get_archive_title()
 	{
 		if (isset($_GET['paged']) && !empty($_GET['paged']) )
 		{
-			$message = translate( 'Blog Archives', 'hbd-theme');
+			$message = translate( 'Blog Archives', 'digitalzenworks-theme');
 		}
 		else
 		{
@@ -66,7 +66,7 @@ function get_archive_title()
 			}
 
 			$message = sprintf(__('%s Archives: <span>%s</span>',
-				'hbd-theme'), $type, $format);
+				'digitalzenworks-theme'), $type, $format);
 		}
 	}
 
@@ -125,7 +125,7 @@ function get_page_number()
 {
 	if (get_query_var('paged'))
 	{
-		print ' | ' . __( 'Page ' , 'hbd-theme') . get_query_var('paged');
+		print ' | ' . __( 'Page ' , 'digitalzenworks-theme') . get_query_var('paged');
 	}
 }
 
@@ -137,10 +137,10 @@ function get_pagination($class)
 	{
 		$next = get_next_posts_link(
 			__( '<span class="meta-nav">&laquo;</span> Older posts',
-			'hbd-theme' ));
+			'digitalzenworks-theme' ));
 		$previous = get_previous_posts_link(
 			__( 'Newer posts <span class="meta-nav">&raquo;</span>',
-			'hbd-theme' ));
+			'digitalzenworks-theme' ));
 		?>
                 <div id="<?php echo $class; ?>" class="navigation">
                   <span class="nav-previous"><?php echo $next; ?></span>

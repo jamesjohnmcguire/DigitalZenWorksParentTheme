@@ -13,8 +13,6 @@ remove_filter('the_excerpt', 'wpautop');
 // W3C validation errors
 add_action('after_setup_theme', 'bootstrap_remove_head_rest');
 
-add_action('template_redirect', 'bootstrap_fix_ssl', 1, 0);
-
 // add the home link to the main menu, if needed
 add_filter('wp_nav_menu_items', 'bootstrap_add_home_link', 10, 2);
 
@@ -106,34 +104,6 @@ function bootstrap_disable_wp_emojicons()
 	add_filter( 'tiny_mce_plugins', 'bootstrap_disable_emojicons_tinymce' );
 }
 
-function bootstrap_fix_ssl()
-{
-	// if site is set to run on SSL, then force-enable SSL detection!
-	$siteurl = get_option('siteurl');
-	$position = stripos($siteurl, 'https://');
-
-	if ($position === 0)
-	{
-		$_SERVER['HTTPS'] = 'on';
-
-		// add JavaScript detection of page protocol, and pray!
-		add_action('wp_print_scripts', 'bootstrap_force_ssl_url_scheme_script');
-	}
-}
-
-function bootstrap_force_ssl_url_scheme_script()
-{
-?>
-    <script>
-	console.log('Forcing to https');
-	if (document.location.protocol != "https:")
-	{
-		document.location = document.URL.replace(/^http:/i, "https:");
-	}
-    </script>
-<?php
-}
-
 function bootstrap_get_archive_title()
 {
 	$message = null;
@@ -141,7 +111,7 @@ function bootstrap_get_archive_title()
 	{
 		if (isset($_GET['paged']) && !empty($_GET['paged']) )
 		{
-			$message = translate( 'Blog Archives', 'hbd-theme');
+			$message = translate( 'Blog Archives', 'digitalzenworks-theme');
 		}
 		else
 		{
@@ -162,7 +132,7 @@ function bootstrap_get_archive_title()
 			}
 
 			$message = sprintf(__('%s Archives: <span>%s</span>',
-				'hbd-theme'), $type, $format);
+				'digitalzenworks-theme'), $type, $format);
 		}
 	}
 
@@ -273,10 +243,10 @@ function bootstrap_get_pagination($class)
 	{
 		$next = get_next_posts_link(
 			__( '<span class="meta-nav">&laquo;</span> Older posts',
-			'hbd-theme' ));
+			'digitalzenworks-theme' ));
 		$previous = get_previous_posts_link(
 			__( 'Newer posts <span class="meta-nav">&raquo;</span>',
-			'hbd-theme' ));
+			'digitalzenworks-theme' ));
 		?>
                 <div id="<?php echo $class; ?>" class="navigation">
                   <span class="nav-previous"><?php echo $next; ?></span>
@@ -583,5 +553,3 @@ if (!function_exists('bootstrap_use_navbar_logo'))
 		return $use;
 	}
 }
-
-?>

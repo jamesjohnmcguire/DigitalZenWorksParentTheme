@@ -23,7 +23,7 @@ else
 	$author_name = get_the_author();
 	$author_id = get_the_author_meta('ID');
 	$author = get_author_posts_url($author_id);
-	$author_tip = sprintf(__('View all posts by %s', 'hbd-theme' ),
+	$author_tip = sprintf(__('View all posts by %s', 'digitalzenworks-theme' ),
 		$authordata->display_name);
 
 	$title = "Author Archives: <span class=\"author vcard\"><a class=\"url fn n\" href=\"$author\" title=\"$author_tip\">$author_name</a></span>";
