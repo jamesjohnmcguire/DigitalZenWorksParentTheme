@@ -10,7 +10,6 @@ global $title;
 ?>
     <!-- page.php -->
 <?php
-bootstrap_show_title($title);
 the_content();
 
 get_footer();

@@ -6,13 +6,11 @@ Template Name: Category
 $title = single_cat_title('', false);
 $title = __($title);
 
-$additional_css_classes = 'breadcrumbs';
-
 get_header();
 rewind_posts();
 
  ?>
-    <!-- category.php -->
+      <!-- category.php -->
       <div class="row">
         <div class="col-md-12">
 <?php

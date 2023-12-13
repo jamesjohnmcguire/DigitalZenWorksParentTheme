@@ -55,11 +55,6 @@ if (!function_exists('bootstrap_enqueue_scripts'))
 				true);
 			wp_enqueue_script('theme-bootstrap-async');
 		}
-
-		$file = 'https://www.google.com/recaptcha/api.js';
-		wp_register_script('recaptcha-script-async-defer', $file, array(),
-			false, true);
-		wp_enqueue_script('recaptcha-script-async-defer');
 	}
 }
 

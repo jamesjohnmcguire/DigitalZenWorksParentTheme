@@ -431,7 +431,7 @@ function bootstrap_show_title($title = null, $title_classes = null,
 
 ?>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col">
         <div class="title <?php echo $title_classes; ?>">
           <h<?php echo $degree; ?>><?php echo $title; ?></h<?php echo $degree; ?>>
 <?php
@@ -475,6 +475,7 @@ function bootstrap_theme_customizer($wp_customize)
 		'section' => 'theme_options', 'label' => 'Use Blog Title as Caption?',
 		'type' => 'checkbox'));
 
+	// 'transport' => 'refresh' ?
 	$wp_customize->add_setting('show_main_menu', array(
 		'default' => true, 'transport' => 'postMessage'));
 

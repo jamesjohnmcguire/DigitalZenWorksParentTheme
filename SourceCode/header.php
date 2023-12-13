@@ -155,16 +155,17 @@ if ((true == $show_main_menu) && ($menu_location == 'menu_below'))
 	bootstrap_get_nav($title, $use_logo);
 }
 
+$additional_css_classes = '';
+
 if (!is_front_page())
 {
-	global $additional_css_classes;
 	//TODO Make theme option
 	$enable_breadcrumbs = false;
 
 	if ($enable_breadcrumbs == true)
 	{
 		bootstrap_get_breadcrumbs();
-		$additional_css_classes .= " breadcrumbs";
+		$additional_css_classes = " breadcrumbs";
 	}
 }
 
