@@ -22,13 +22,13 @@ if (!function_exists('bootstrap_enqueue_scripts'))
 		$version = $theme->get('Version');
 
 		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
-        wp_enqueue_style('bootstrap-style', $bootstrap_file);
-        wp_enqueue_style('fontawesome-style',
-            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
+		wp_enqueue_style('bootstrap-style', $bootstrap_file);
+		wp_enqueue_style('fontawesome-style',
+			"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
 
 		// When debug is false, these files, in their minified version are
 		// loaded from the child theme.
-		if (WP_DEBUG === true)
+		if (THEME_DEBUG === true)
 		{
 			wp_enqueue_style('theme-style', $css_path . 'style.css');
 			wp_enqueue_style(
@@ -43,7 +43,7 @@ if (!function_exists('bootstrap_enqueue_scripts'))
 		wp_register_script('totop-async', $file, array('jquery'), false, true);
 		wp_enqueue_script('totop-async');
 
-		if (WP_DEBUG === true)
+		if (THEME_DEBUG === true)
 		{
 			// if false, these will be enqueued by the child theme
 			$bootstrap_file = $js_vendor_path . 'bootstrap.min.js';
