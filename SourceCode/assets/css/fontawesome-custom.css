@@ -1,0 +1,110 @@
+/*!
+ * Font Awesome Free 5.13.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ *
+ * Customized from above to include only what is needed on this site (facebook & instagram)
+ */
+@font-face
+{
+	font-family: 'Font Awesome 5 Brands';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.eot);
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.woff2) format("woff2"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.woff) format("woff"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.ttf) format("truetype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-brands-400.svg#fontawesome) format("svg");
+	font-display: swap; /* or use optional */
+}
+
+@font-face
+{
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.eot);
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.woff2) format("woff2"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.woff) format("woff"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.ttf) format("truetype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-regular-400.svg#fontawesome) format("svg");
+	font-display: swap; /* or use optional */
+}
+
+@font-face
+{
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.eot);
+	src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.woff2) format("woff2"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.woff) format("woff"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.ttf) format("truetype"), url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/webfonts/fa-solid-900.svg#fontawesome) format("svg");
+	font-display: swap; /* or use optional */
+}
+
+.fa,
+.fas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900; }
+
+.fab {
+  font-family: 'Font Awesome 5 Brands'; }
+
+.fa-angle-right:before {
+  content: "\f105"; }
+
+.fa-angle-up:before {
+  content: "\f106"; }
+
+.fa-calendar:before {
+  content: "\f133"; }
+
+.fa-envelope:before {
+  content: "\f0e0"; }
+
+.fa-facebook:before {
+  content: "\f09a"; }
+
+.fa-facebook-f:before {
+  content: "\f39e"; }
+
+.fa-facebook-square:before {
+  content: "\f082"; }
+
+.fa-file:before {
+  content: "\f15b"; }
+
+.fa-home:before {
+  content: "\f015"; }
+
+.fa-instagram:before {
+  content: "\f16d"; }
+
+.fa-long-arrow-alt-right:before,
+/* Added here for compatibility, but changed to the above in 5.* */
+.fa-long-arrow-right:before {
+  content: "\f30b"; }
+
+.fa-outdent:before
+/* Added here for compatibility, but changed to the above in 5.* */
+.fa-dedent:before {
+  content: "\f03b"; }
+
+.fa-pinterest:before {
+  content: "\f0d2"; }
+
+.fa-pinterest-p:before {
+  content: "\f231"; }
+
+.fa-pinterest-square:before {
+  content: "\f0d3"; }
+
+.fa-rss:before {
+  content: "\f09e"; }
+
+.fa-rss-square:before {
+  content: "\f143"; }
+
+.fa-search:before {
+  content: "\f002"; }
+
+.fa-twitter:before {
+  content: "\f099"; }
+
+.fa-twitter-square:before {
+  content: "\f081"; }

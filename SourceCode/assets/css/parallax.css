@@ -1,0 +1,73 @@
+.fixed-background
+{
+	position: relative;
+	min-height: 100vh;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	z-index: 1;
+}
+
+.fixed-background-1
+{
+	min-height: 100vh;
+}
+
+@supports (background-attachment: fixed)
+{
+	/* fix bug on IE11 and below */
+	.fixed-background
+	{
+		background-attachment: fixed;
+	}
+}
+
+/*
+This basically disables the scroll effect on small devices
+*/
+@media (max-width: 576px)
+{
+	.fixed-background
+	{
+		background-size: contain;
+	}
+}
+
+@media (min-width: 576px)
+{
+	.fixed-background-2
+	{
+		min-height: 100vh;
+	}
+}
+
+/*
+This basically changes the scroll effect on small devices
+*/
+@media (max-width: 991px)
+{
+	.fixed-background
+	{
+		background-attachment: scroll;
+	}
+}
+
+.scrolling-background
+{
+	background-color: white;
+}
+
+@media (min-width: 768px)
+{
+	.scrolling-background
+	{
+		min-height: 95vh;
+		height: 100vh;
+		padding-top: 40px;
+	}
+
+	.scrolling-background .col
+	{
+		height: 95%;
+	}
+}
