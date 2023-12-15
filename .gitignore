@@ -1,4 +1,6 @@
-node_modules
+DigitalZenThemePrevious.code-workspace
+
+node_modules/
 
 vendor
 !js/vendor/
