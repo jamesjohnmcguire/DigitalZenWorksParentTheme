@@ -3,8 +3,6 @@
 Template Name: Author
 */
 
-$additional_css_classes = 'breadcrumbs';
-
 get_header();
 ?>
     <!-- author.php -->

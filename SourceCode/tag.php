@@ -3,8 +3,6 @@
 Template Name: Tags
 */
 
-$additional_css_classes = "container breadcrumbs";
-
 get_header();
 ?>
     <!-- tags.php -->

@@ -3,8 +3,6 @@
 Template Name: Articles
 */
 
-$additional_css_classes = 'breadcrumbs';
-
 get_header();
 ?>
     <!-- articles.php -->
