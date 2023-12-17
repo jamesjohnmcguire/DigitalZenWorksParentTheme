@@ -805,3 +805,35 @@ if (!function_exists('\DigitalZenWorksTheme\use_navbar_logo'))
 		return $use;
 	}
 }
+
+if (!function_exists('output_head'))
+{
+	function output_head($title, $icon_file = null)
+	{
+?>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <title><?php echo $title; ?></title>
+<?php
+		if ($icon_file != null)
+		{
+			$exists = file_exists($icon_file);
+
+			if ($exists === true)
+			{
+?>
+		<link rel="icon" href="<?php echo $iconFile; ?>" />
+<?php
+			}
+		}
+?>
+    <!--wp_head begin-->
+    <?php wp_head(); ?>
+    <!--wp_head end-->
+  </head>
+<?php
+	}
+}
