@@ -1,0 +1,54 @@
+
+#toTop
+{
+	display: none;
+	text-decoration: none;
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	overflow: hidden;
+	width: 26px;
+	height: 26px;
+	border: 0;
+	text-indent: 100%;
+	background: #232323;
+	border-radius: 2px;
+	z-index: 2000;
+}
+
+#toTopHover
+{
+	background: #5d67dd;
+	width: 26px;
+	height: 26px;
+	display: block;
+	overflow: hidden;
+	float: left;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+#toTop:active,
+#toTop:focus
+{
+	outline: none;
+}
+
+#toTop:before
+{
+	font-family: 'FontAwesome';
+	content: "\f106";
+	color: #ffffff;
+	font-size: 16px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 16px;
+	margin-top: -8px;
+	margin-left: -8px;
+	text-indent: 0;
+}

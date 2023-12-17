@@ -1,111 +1,177 @@
 <?php
-/**
- * The header for our theme
- *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package DigitalZen
- */
+$title = bootstrap_get_title();
 
-if ((PHP_SAPI == 'cli') || (!array_key_exists("SERVER_NAME", $_SERVER)))
-{
-	// running on command line, possibly from CRON
-	// $_SERVER["SERVER_NAME"] won't be set
-	// cron jobs should have predefined this.
-	defined('WP_DEBUG') OR define('WP_DEBUG', true);
-	defined('ENVIRONMENT') OR define('ENVIRONMENT', 'development');
-}
-else
-{
-	defined('WP_DEBUG') OR define('WP_DEBUG', false);
-	defined('ENVIRONMENT') OR define('ENVIRONMENT', 'production');
-}
+$use_carousel = get_theme_mod('use_carousel');
+$use_title = get_theme_mod('use_title');
+$front_page_only = get_theme_mod('banner_pages');
+$show_main_menu = get_theme_mod('show_main_menu');
+$menu_location = get_theme_mod('menu_location');
+$use_logo = bootstrap_use_navbar_logo();
+$use_google_analytics = true;
+$use_alexa = false;
+$google_analytics_code = get_theme_mod('google_analytics_code');
 
-if (WP_DEBUG == true)
-{
-	defined('ENVIRONMENT') OR define('ENVIRONMENT', 'development');
-}
-else
-{
-	defined('ENVIRONMENT') OR define('ENVIRONMENT', 'production');
-}
-
-$data = digitalzen_theme_data(null);
-$component = $data['page_type'];
-
-$language = 'en';
-$title = 'Digital Zen';
-$description = 'New theme';
-$css_file = digitalzen_get_css_file($component);
+$home = "/";
 
 ?>
-<!doctype html>
-<html class="no-js" <?php language_attributes(); ?>>
-
+<!--[if IE]><![endif]-->
+<!DOCTYPE html>
+<html lang="en">
+<!--2020-02-09-->
 <head>
   <meta charset="utf-8">
-  <title><?php echo $title; ?></title>
-  <meta name="description" content="<?php echo $description; ?>">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="profile" href="https://gmpg.org/xfn/11">
+  <meta name="robots" content="index, follow">
+  <title><?php echo $title; ?></title>
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="<?php echo $css_file; ?>">
-
-  <meta name="theme-color" content="aqua">
-<?php wp_head(); ?>
-</head>
-
-<body <?php body_class(); ?>>
-  <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
-
-  <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'digitalzen' ); ?></a>
-
-    <header id="masthead" class="site-header">
-      <div class="site-branding">
+  <!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+  <link rel="icon" href="favicon.png">
 <?php
-the_custom_logo();
-
-if (is_front_page() && is_home())
+if ((true == $use_google_analytics) && (!empty($google_analytics_code)))
 {
 ?>
-        <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-<?php
-}
-else
-{
-?>
-        <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-<?php
-}
+    <script>
+	console.log('google analytics begin');
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-$digitalzen_description = get_bloginfo( 'description', 'display' );
-if ($digitalzen_description || is_customize_preview())
-{
-?>
-        <p class="site-description"><?php echo $digitalzen_description; /* WPCS: xss ok. */ ?></p>
+	ga('create', '<?php echo $google_analytics_code; ?>', 'auto');
+	ga('send', 'pageview');
+	console.log('google analytics complete');
+
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '431079187086706',
+			xfbml      : true,
+			version    : 'v2.10'
+		});
+		FB.AppEvents.logPageView();
+	};
+    <!-- End google analytics -->
+    </script>
 <?php
 }
 ?>
-      </div><!-- .site-branding -->
+    <!-- Facebook analytics -->
+    <script>
+	console.log('facebook analytics begin');
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	console.log('facebook analytics complete');
 
-    <nav id="site-navigation" class="main-navigation">
-      <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'digitalzen' ); ?></button>
+	console.log('facebook pixel begin');
+	if(typeof fbq === 'undefined') {
+		console.log('facebook pixel calling function');
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '286120895201177');
+		fbq('track', 'PageView');
+	}
+	fbq('track', 'ViewContent');
+	console.log('facebook pixel complete');
+    </script>
+    <!-- End Facebook Pixel Code -->
 <?php
-wp_nav_menu(array(
-	'theme_location' => 'menu-1',
-	'menu_id'        => 'primary-menu',
-));
+if (true == $use_alexa)
+{
 ?>
-    </nav><!-- #site-navigation -->
-  </header><!-- #masthead -->
+    <!-- Start Alexa Certify Javascript -->
+    <script>
+    //_atrk_opts = { atrk_acct:"", domain:"inferret.com",dynamic: true};
+    //(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+    </script>
+    <!-- End Alexa Certify Javascript -->
+<?php
+}
+bootstrap_navigation_link("next");
+bootstrap_navigation_link("prev");
 
-  <div id="content" class="site-content">
+?>
+  <!--wp_head begin-->
+  <?php wp_head(); ?>
+  <!--wp_head end-->
+  </head>
+
+  <body>
+    <!-- Facebook Pixel Code -->
+    <noscript>
+      <img height="1" width="1" style="display:none" alt="Facebook Pixel Code"
+        src="https://www.facebook.com/tr?id=286120895201177&ev=PageView&noscript=1"
+      />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    <div id="header-container" class="container-fluid">
+      <header class="row">
+<?php
+
+if ((true == $show_main_menu) && ($menu_location == 'menu_above'))
+{
+	bootstrap_get_nav($title, $use_logo);
+}
+
+if (($front_page_only == 'all_pages') || (is_front_page()))
+{
+	if ($use_carousel == "use_carousel")
+	{
+	}
+	else
+	{
+		$image = bootstrap_get_front_page_image();
+?>
+      <div class="item active"><a href="<?php echo $home; ?>"><img src="<?php echo $image; ?>" class="ls-bg" style="width: 100%;" alt="<?php echo $title; ?>"/></a>
+<?php
+if (true == $use_title)
+{
+?>
+        <h1 id="title"><?php the_title(); ?></h1>
+<?php
+}
+?>
+      </div>
+<!--h1 class="block-content" id="title-section">BOOTSTRAP<br />by Digital Zen Works</h1>
+<br/>
+<br/-->
+<?php
+	}
+}
+
+if ((true == $show_main_menu) && ($menu_location == 'menu_below'))
+{
+	bootstrap_get_nav($title, $use_logo);
+}
+
+$additional_css_classes = '';
+
+if (!is_front_page())
+{
+	//TODO Make theme option
+	$enable_breadcrumbs = false;
+
+	if ($enable_breadcrumbs == true)
+	{
+		bootstrap_get_breadcrumbs();
+		$additional_css_classes = " breadcrumbs";
+	}
+}
+
+?>
+      </header><!--row-->
+    </div><!--header-container-->
+    <div style="clear:both;"></div>
+
+    <section id="main-container" class="container-fluid<?php echo $additional_css_classes; ?>">

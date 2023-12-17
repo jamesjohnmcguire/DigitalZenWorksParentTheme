@@ -1,40 +1,469 @@
+Development Plan
+	Infrastructure
+	Core Functionality
+	Merging of other themes
+	Testing, Polishing, Validation of requirements
+	Enhancements, Optimizations
+	Publish	On Github, WordPress
 
-	
-define( 'WP_DEBUG_LOG', true );
-define( 'WP_DEBUG_DISPLAY', true );
-https://wordpress.org/plugins/query-monitor/
-	
-https://github.com/Varying-Vagrant-Vagrants/VVV
-https://codex.wordpress.org/Theme_Unit_Test
-https://themetest.wordpress.com/
+	Infrastructure
+		ignore file.
+		standard license
+		blank screen shot
+		README.md
+		.editorconfig
+		workspace file *
+		npm & composer ?
+		phpdoc
+		phpunit
+		build tools
+			grunt
+			node modules
+			minify
+			scss
+		pipelines
+		sniffs and warnings, theme checkers, etc
+		unit tests
+	Core Functionality
+		_s theme
+		boilerplate
+		bootstrap
+	style.css
+	pot files
+	assets
+	other packages?
+	Merging of other themes
+		merge of existing themes
+			child themes
+	optimizations
+		seo
+		social media
+	customizations
+		admin options
+	google analytics
+	Merge variant themes
+		Dzw-Bootstrap-Child
+		Psynary
+		Inferret
+		Start from _s?	I think too much work in the given timeframe
+		DigitalZen	Just too much in infancy
+		Dzw-Custom
+	funding
+	file headers
+Tasks
+	add npm update to build.cmd
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+	dart sass
+Notes
+	CustomLogo
+		Install
+			The custom logo support should be added first to your theme using add_theme_support(), and then be called in your theme using the_custom_logo()
 
-https://developer.wordpress.com/themes/
-https://make.wordpress.org/themes/handbook/review/required/
-https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
-https://make.wordpress.org/core/handbook/best-practices/coding-standards/
+			To enable the use of a custom logo in your theme, add the following to your functions.php file:
+				add_theme_support( 'custom-logo' );
+				function themename_custom_logo_setup() {
+				 $defaults = array(
+				 'height'      => 100,
+				 'width'       => 400,
+				 'flex-height' => true,
+				 'flex-width'  => true,
+				 'header-text' => array( 'site-title', 'site-description' ),
+				 );
+				 add_theme_support( 'custom-logo', $defaults );
+				}
+				add_action( 'after_setup_theme', 'themename_custom_logo_setup' );
+		Display
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		$image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+		echo $image[0];
 
-wordpress theme development
-	https://developer.wordpress.org/themes/getting-started/
-	https://developer.wordpress.org/themes/getting-started/theme-development-examples/
-	http://underscores.me/
-	https://developer.wordpress.com/themes/
-	https://make.wordpress.org/themes/handbook/review/required/
-	https://codex.wordpress.org/Theme_Unit_Test
-	https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
+		if ( function_exists( 'the_custom_logo' ) ) {
+		 the_custom_logo();
+		}
+	Language Activation
+		#qtransLangSw?AL&title=none&flags=all&names=hidden&current=hidden
+		#qtransLangSw?title=none&names=hidden&current=hidden
+		Activated qTranslate-Xt plugin	**Manual step
+		Set plugin settings	**Manual step
+			languages
+			permalinks
+	Commands
+		composer lint:wpcs
+		composer lint:php
+		composer make-pot
+		wp i18n make-pot . languages/_s.pot
+		npm run compile:css
+		node-sass assets/css/sass/ -o assets/css && stylelint '*.css' --fix || true && stylelint '*.css' --fix
 
-	language_attributes() vs my language functions
-	bloginfo( 'charset' ); vs utf-8
-	Merge ALL css into one file
+		npm run compile:rtl : generates an RTL stylesheet.
+		npm run watch : watches all SASS files and recompiles them to css when they change.
+		npm run lint:scss : checks all SASS files against CSS Coding Standards.
+		npm run lint:js : checks all JavaScript files against JavaScript Coding Standards.
+		npm run bundle : generates a .zip archive for distribution, excluding development and system files.
+	Coding Styles
+		npm install @wordpress/stylelint-config
+		npm i stylelint-config-wordpress
+		npm remove @wordpress/stylelint-config
+		composer require --dev dealerdirect/phpcodesniffer-composer-installer
+	Additional Code
+			modified:   assets/css/main.css
+			modified:   ruleset.xml
 
-	#0 require_once() called at [C:\Util\xampp\htdocs\wp\wp-includes\template.php:722]
-	#1 load_template() called at [C:\Util\xampp\htdocs\wp\wp-includes\template.php:671]
-	#2 locate_template() called at [C:\Util\xampp\htdocs\wp\wp-includes\general-template.php:41] 
-	#3 get_header() called at [C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\index.php:10]
-	#4 include(C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\index.php) called at [C:\Util\xampp\htdocs\wp\wp-includes\template-loader.php:78]
-	#5 require_once(C:\Util\xampp\htdocs\wp\wp-includes\template-loader.php) called at [C:\Util\xampp\htdocs\wp\wp-blog-header.php:19]
-	#6 require(C:\Util\xampp\htdocs\wp\wp-blog-header.php) called at [C:\Util\xampp\htdocs\index.php:17]
+			// prevent reformatting of the text
+			remove_filter( 'the_content', 'wpautop' );
+			remove_filter( 'the_excerpt', 'wpautop' );
 
-	( ! ) Notice: Undefined variable: component in C:\Util\xampp\htdocs\wp\wp-content\themes\DigitalZen\header.php on line 41
+			add_theme_support('menus' );
 
-Theme Development
-	https://github.com/Automattic/_s
+			add_action('init', 'disable_wp_emojicons' );
+
+			remove_action('wp_head', 'wp_generator');
+
+			add_action('pre_get_posts', 'post_queries' );
+
+			// Remove the Link header for the WP REST API
+			// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
+			remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+			add_action('after_setup_theme', 'remove_json_api');
+
+			// remove contact form's unnessary css from all pages
+			add_action('wp_enqueue_scripts', 'deregister_contactform_script',
+				PHP_INT_MAX);
+			add_action('after_setup_theme', 'deregister_contactform_script');
+
+			add_action('wp_enqueue_scripts', 'deregister_embed_script');
+
+			add_filter('show_admin_bar', '__return_false');
+
+				add_action('init', 'disable_wp_emojicons');
+
+				// remove Open Sans font
+				add_action('wp_enqueue_scripts', 'deregister_styles', 100);
+
+			function clean_yoast()
+			{
+				// Sets the canonical link to the page url
+				add_filter('wpseo_canonical', 'wpseo_canonical');
+
+				// Set the meta description for the main page
+				add_action('wp', 'home_check');
+
+				// disable yoast next and previous links (broken)
+				add_filter('wpseo_next_rel_link', 'wpseo_next_rel_link');
+				add_filter('wpseo_prev_rel_link', 'wpseo_prev_rel_link');
+			}
+
+			function comment_debug()
+			{
+				$item = '';
+				$post_id = '';
+
+				if (!empty($_SERVER))
+				{
+					if (array_key_exists('REQUEST_URI', $_SERVER))
+					{
+						$item = $_SERVER['REQUEST_URI'];
+						$item  = trim($item, '/');
+					}
+				}
+
+				if (!empty($item))
+				{
+					$post = get_page_by_path($item);
+
+					if (!empty($post))
+					{
+						$post_id = $post->ID;
+					}
+				}
+
+				echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
+			}
+
+			function deregister_contactform_script()
+			{
+				$current_uri = add_query_arg( NULL, NULL );
+				$found = strpos($current_uri, "/contact-us/");
+
+				if (false === $found)
+				{
+					remove_action('wp_enqueue_scripts', 'cntctfrm_wp_head');
+				}
+			}
+
+			function deregister_embed_script()
+			{
+				wp_deregister_script('wp-embed');
+			}
+	Text Domains
+		$cl_text_domain = PHPCSHelper::get_config_data( 'text_domain' );
+		if ($cl_text_domain !== null)
+		{
+			$cl_text_domain = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
+		}
+
+		$cl_prefixes = PHPCSHelper::get_config_data( 'prefixes' );
+		if ($cl_prefixes !== null)
+		{
+			$cl_prefixes = trim( PHPCSHelper::get_config_data( 'text_domain' ) );
+		}
+Issues
+	Npm Update
+		npm update
+		npm WARN EBADENGINE Unsupported engine {
+		npm WARN EBADENGINE   package: 'eslint-plugin-jsdoc@36.1.1',
+		npm WARN EBADENGINE   required: { node: '^12 || ^14 || ^16' },
+		npm WARN EBADENGINE   current: { node: 'v19.7.0', npm: '9.6.1' }
+		npm WARN EBADENGINE }
+		npm WARN EBADENGINE Unsupported engine {
+		npm WARN EBADENGINE   package: '@es-joy/jsdoccomment@0.10.8',
+		npm WARN EBADENGINE   required: { node: '^12 || ^14 || ^16' },
+		npm WARN EBADENGINE   current: { node: 'v19.7.0', npm: '9.6.1' }
+		npm WARN EBADENGINE }
+		npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+		npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+		npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+		npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+		npm WARN deprecated @stylelint/postcss-css-in-js@0.37.3: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+		npm ERR! code 1
+		npm ERR! path C:\Users\JamesMc\Data\Clients\DigitalZenWorks\DigitalZenTheme\SourceCode\node_modules\deasync
+		npm ERR! command failed
+		npm ERR! command C:\WINDOWS\system32\cmd.exe /d /s /c node ./build.js
+		npm ERR! gyp info it worked if it ends with ok
+		npm ERR! gyp info using node-gyp@8.4.1
+		npm ERR! gyp info using node@19.7.0 | win32 | x64
+		npm ERR! gyp info find Python using Python version 3.11.2 found at "C:\Util\Python\python.exe"
+Resources
+	Please visit the following links to learn more about translating WordPress themes:
+		https://make.wordpress.org/polyglots/teams/
+		https://developer.wordpress.org/themes/functionality/localization/
+		https://developer.wordpress.org/reference/functions/load_theme_textdomain/
+		https://github.com/Automattic/_s
+
+		https://themetest.wordpress.com/
+
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://make.wordpress.org/themes/2013/11/10/guidelines-shouldnt-fail-a-theme/
+		https://make.wordpress.org/core/handbook/best-practices/coding-standards/
+
+		https://developer.wordpress.org/themes/getting-started/
+		https://developer.wordpress.org/themes/getting-started/theme-development-examples/
+		http://underscores.me/
+		https://developer.wordpress.com/themes/
+		https://make.wordpress.org/themes/handbook/review/required/
+		https://codex.wordpress.org/Theme_Unit_Test
+		https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
+		https://my.studiopress.com/themes/genesis/
+	Child Themes
+		https://www.smashingmagazine.com/2016/01/create-customize-wordpress-child-theme/
+		https://developer.wordpress.org/themes/advanced-topics/child-themes/
+	wordpress theme unit tests
+		https://poweredbycoffee.co.uk/unit-testing-with-wordpress/
+		https://www.smashingmagazine.com/2017/12/automated-testing-wordpress-plugins-phpunit/
+		https://code.tutsplus.com/articles/the-beginners-guide-to-unit-testing-building-testable-themes--wp-26007
+		https://github.com/tommcfarlin/Basic-Theme/blob/master/tests/test_basic_theme.php
+		https://wordpress.stackexchange.com/questions/170510/how-exactly-does-unit-testing-work-for-themes
+		https://codesymphony.co/writing-wordpress-plugin-unit-tests/
+		https://core.trac.wordpress.org/browser/tests/trunk
+		https://wptest.io/
+		https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/core-tests
+		https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+		Testing
+			https://developer.wordpress.org/themes/advanced-topics/theme-testing/
+			https://github.com/WPTT/theme-test-data
+			https://github.com/WPTT/theme-sniffer
+			https://github.com/WPTT/WPThemeReview
+			https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/codeception
+			https://codex.wordpress.org/Theme_Unit_Test
+DigitalZen Theme
+	Including the "Desktop development with C++" while VS installation.(you can modify existing installation)
+
+	npm config set msbuild_path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Msbuild\Current\Bin\MSBuild.exe" 
+
+	npm config set msvs_version 2022
+
+	 3.Updating node-gyp
+	npm install --save-dev node-sass
+
+	npm install --global windows-build-tools
+Issues
+	npm update package
+	gyp ERR! find VS - missing any Windows SDK 2022
+		https://stackoverflow.com/questions/72387953/npm-err-gyp-err-find-vs-msvs-version-not-set-from-command-line-or-npm-config
+		https://stackoverflow.com/questions/57541402/node-gyp-configure-got-gyp-err-find-vs
+		upgrade package.json
+		https://stackoverflow.com/questions/16073603/how-to-update-each-dependency-in-package-json-to-the-latest-version
+		`msvs_version` is not a valid npm option
+		https://stackoverflow.com/questions/57879150/how-can-i-solve-error-gypgyp-errerr-find-vsfind-vs-msvs-version-not-set-from-c
+		gyp verb find VS unknown version "undefined" found at "C:\Program Files\Microsoft Visual Studio\2022\Community"
+
+		In CMD, type set vcinstall file\Microsoft Visual Studio\2022\Community\VC\they did it in https://stackoverflow.com/questions/1679560/using-visual-studio-command-prompt-Tools-overwhere
+	Unknown rule                       declaration-property-unit-whitelist         declaration-property-unit-
+		npm run compile:css
+			https://stackoverflow.com/questions/34896279/how-to-compile-scss-to-css-with-node-sass
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+dependabot alerts
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot/30
+	No patched version available for ansi-regex
+		https://github.com/npm/gauge/issues/135
+		https://stackoverflow.com/questions/69590927/how-to-update-nested-package-ansi-regex-for-node-sass-when-npm-audit-fix-upda
+Unit Tests
+	"10up/wp_mock": "^0.5",
+	wordpress theme unit tests
+		https://codex.wordpress.org/Theme_Unit_Test
+		https://infinum.com/handbook/wordpress/automated-testing-in-wordpress/basic-tests-using-phpunit/unit-testing
+Popper
+	Currently not needed
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+Npm
+	C:\Program Files\nodejs\;
+git switch --orphan <new branch
+						"@wordpress/scripts": "^26.0.0",
+						"dir-archiver": "^2.1.0",
+						"grunt": "^1.6.1",
+Digital Zen Theme
+	WARNING WP_DEBUG is not enabled!Please test your theme with debug enabled before you upload!
+
+	Update Screenshot
+	Merge bootstrap assets
+
+	REQUIRED: Both DOS and UNIX style line endings were found in the file assets/css/style.css. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings.
+	REQUIRED: Both DOS and UNIX style line endings were found in the file assets/css/style-rtl.css. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings.
+	RECOMMENDED: No reference to register_block_style was found in the theme. Theme authors are encouraged to implement new block styles as a transition to block themes.
+	RECOMMENDED: No reference to register_block_pattern was found in the theme. Theme authors are encouraged to implement custom block patterns as a transition to block themes.
+	RECOMMENDED: No reference to add_theme_support( "wp-block-styles" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "responsive-embeds" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "align-wide" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_editor_style() was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience.
+	INFO: Possible hard-coded links were found in the file footer.php.
+	Line 23: '<a href='https://digitalzenworks.com'>James John McGuire</a>' );
+	INFO: Only one text-domain is being used in this theme. Make sure it matches the theme's slug correctly so that the theme will be compatible with WordPress.org language packs. The domain found is digital-zen.
+
+	dzw	move vendor-ish assets to vendor
+	dzw Is bootstrap.slide-menu.js needed?
+	dzw	mobile	Beginning with tokyo tower overlapping clients
+
+	WARNING WP_DEBUG is not enabled!Please test your theme with debug enabled before you upload!
+	dzw add screenshot for child themes
+	dzw update screenshot for parent theme
+
+	One or more errors were found for Digital Zen Works Child Theme.
+	WARNING: Your theme appears to be in the wrong directory for the theme name. The directory name must match the slug of the theme. This theme's correct slug and text-domain is digital-zen-works-child-theme. (If this is a child theme, you can ignore this error.)
+	WARNING: More than one text-domain is being used in this theme. This means the theme will not be compatible with WordPress.org language packs. The domains found are digitalzenwork-child, bootstrap, hbd-theme, twentyfifteen.
+	WARNING: Found wp_deregister_script in functions.php. Themes must not deregister scripts that are included in WordPress. Deregistering third party scripts that are registered by parent themes is allowed.
+	Line 16: wp_deregister_script('wp-embed');
+	Line 69: wp_deregister_script('wp-embed');
+	WARNING: Could not find a copyright notice for the theme. A copyright notice is needed if your theme is licenced as GPL. Learn how to add a copyright notice (opens in a new window).
+	WARNING: A menu without a theme_location was found in bootstrap.php. $menu_options is used inside wp_nav_menu(). You must manually check if the theme_location is included.
+	WARNING: screenshot.png is 1.2 MB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	WARNING: functions.php Themes are not allowed to hide the admin bar. This warning must be manually checked.
+	Line 8: add_filter('show_admin_bar', '__return_false');
+	WARNING: assets/images/sunset.jpg is 800.2 KB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	WARNING: assets/images/mount_rainier.jpg is 961.2 KB in size. Large file sizes have a negative impact on website performance and loading time. Compress images before using them.
+	REQUIRED: The theme uses the add_shortcode() function in the file bootstrap.php. add_shortcode() is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 22: add_shortcode('theme_directory', 'bootstrap_theme_directory_shortcode');
+	REQUIRED: The theme uses remove_action wp_head wp_oembed_add_discovery_links in the file themes-common-library.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 173: remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	Line 185: //remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+	REQUIRED: The theme uses remove_action wp_head wp_oembed_add_discovery_links in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 439: remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	REQUIRED: The theme uses remove_action wp_head rest_output_link_wp_head in the file themes-common-library.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 172: remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+	REQUIRED: The theme uses remove_action wp_head rest_output_link_wp_head in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 438: remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+	REQUIRED: The theme uses remove_action template_redirect rest_output_link_header in the file bootstrap.php. This is plugin-territory functionality and must not be used in themes. Use a plugin instead.
+	Line 436: remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+	REQUIRED: No reference to add_theme_support( "title-tag" ) was found in the theme.
+	REQUIRED: Found the URL of a CDN in the code: cloudflare.com. You should not load CSS or Javascript resources from a CDN, please bundle them with the theme.
+	REQUIRED: Found a Customizer setting called 'use_title' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 497: //$wp_customize->add_setting('use_title'
+	REQUIRED: Found a Customizer setting called 'use_carousel' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 486: $wp_customize->add_setting('use_carousel'
+	REQUIRED: Found a Customizer setting called 'twitter_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 562: $wp_customize->add_setting('twitter_url'
+	REQUIRED: Found a Customizer setting called 'show_main_menu' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 508: $wp_customize->add_setting('show_main_menu'
+	REQUIRED: Found a Customizer setting called 'pinterest_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 553: $wp_customize->add_setting('pinterest_url'
+	REQUIRED: Found a Customizer setting called 'menu_location' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 515: $wp_customize->add_setting('menu_location'
+	REQUIRED: Found a Customizer setting called 'gplus_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 544: $wp_customize->add_setting('gplus_url'
+	REQUIRED: Found a Customizer setting called 'google_analytics_code' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 526: $wp_customize->add_setting('google_analytics_code'
+	REQUIRED: Found a Customizer setting called 'facebook_url' in bootstrap.php that did not have a sanitization callback function. Every call to the add_setting() method needs to have a sanitization callback function passed.
+	Line 535: $wp_customize->add_setting('facebook_url'
+	REQUIRED: Could not find the file readme.txt in the theme.
+	REQUIRED: Could not find wp_body_open action or function call at the very top of the body just after the opening body tag. See: wp_body_open
+	 <?php wp_body_open(); ?>
+	REQUIRED: Could not find language_attributes. See: language_attributes
+	<html <?php language_attributes(); ?>
+	REQUIRED: Could not find body_class call in body tag. See: body_class
+	 <?php body_class( $class ); ?>
+	REQUIRED: Could not find add_theme_support( 'automatic-feed-links' ). See: add_theme_support
+	 <?php add_theme_support( $feature ); ?>
+	REQUIRED The theme appears to use dynamic_sidebars() but no register_sidebar() was found. See: register_sidebar
+	 <?php register_sidebar( $args ); ?>
+	REQUIRED Tested up to: is missing from your style.css header. Also, this should be numbers only, so 5.0 and not WP 5.0
+	REQUIRED Requires PHP: is missing from your style.css header.
+	RECOMMENDED: Possible variable $title found in translation function in category.php. Translation function calls must not contain PHP variables, use placeholders instead. See Internationalization Guidelines (Opens in a new window).
+	Line 6: $title = single_cat_title('', false);
+	Line 7: $title = __($title);
+	Line 20: bootstrap_show_title($title);
+	RECOMMENDED: No reference to register_block_style was found in the theme. Theme authors are encouraged to implement new block styles as a transition to block themes.
+	RECOMMENDED: No reference to register_block_pattern was found in the theme. Theme authors are encouraged to implement custom block patterns as a transition to block themes.
+	RECOMMENDED: No reference to add_theme_support( "wp-block-styles" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "responsive-embeds" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "html5", $args ) was found in the theme. It is strongly recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "custom-logo", $args ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "custom-header", $args ) was found in the theme. It is recommended that the theme implement this functionality if using an image for the header.
+	RECOMMENDED: No reference to add_theme_support( "custom-background", $args ) was found in the theme. If the theme uses background images or solid colors for the background, then it is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_theme_support( "align-wide" ) was found in the theme. It is recommended that the theme implement this functionality.
+	RECOMMENDED: No reference to add_editor_style() was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience.
+	RECOMMENDED: Found a script tag in header.php. Scripts and styles need to be enqueued or added via a hook, otherwise it is more difficult to remove or replace them with plugins or child themes.
+	Line 58: <script async src='https://www.googletagmanager.com/gtag/js?id=UA-170462278
+	Line 59: <script>
+	Line 69: <script>
+	RECOMMENDED: Found a script tag in footer.php. Scripts and styles need to be enqueued or added via a hook, otherwise it is more difficult to remove or replace them with plugins or child themes.
+	Line 73: <script>
+	RECOMMENDED: Could not find the comment-reply script enqueued.
+	RECOMMENDED: wp_title() was found in the file bootstrap.php. wp_title was historically used for the document <title> tag and was never intended for other purposes. Use add_theme_support( "title-tag" ) instead.
+	Line 252: $title = wp_title('', false);
+	RECOMMENDED: <title> tag was found in the file header.php. Document titles must not be hard coded, use add_theme_support( "title-tag" ) instead.
+	Line 41: <title><?php echo $title; ?></title>
+	RECOMMENDED No reference to post-thumbnails was found in the theme. If the theme has a thumbnail like functionality, it should be implemented with add_theme_support( "post-thumbnails" ) in the functions.php file.
+	RECOMMENDED No reference to the_post_thumbnail() was found in the theme. It is recommended that the theme implement this functionality instead of using custom fields for thumbnails.
+	RECOMMENDED .wp-caption css class is recommended in your theme css.
+	RECOMMENDED .wp-caption-text css class is recommended in your theme css.
+	RECOMMENDED .gallery-caption css class is recommended in your theme css.
+	RECOMMENDED .bypostauthor css class is recommended in your theme css.
+	RECOMMENDED .alignright css class is recommended in your theme css.
+	RECOMMENDED .alignleft css class is recommended in your theme css.
+	RECOMMENDED .aligncenter css class is recommended in your theme css.
+	INFO: Possible Favicon found in header.php. Favicons are handled by the Site Icon setting in the customizer since version 4.3.
+	INFO Found wrong tag, remove shick from your style.css header.
+	INFO Found wrong tag, remove responsive from your style.css header.
+	INFO Found wrong tag, remove modern from your style.css header.
+	INFO Found wrong tag, remove html5 from your style.css header.
+	INFO Found wrong tag, remove cool from your style.css header.
+	INFO Found wrong tag, remove bootstrap from your style.css header.
+	INFO .screen-reader-text CSS class is generated by WordPress and needs to be styled with your theme CSS. See the Codex for an example implementation.
+Digital Zen Theme
+	npm WARN deprecated @stylelint/postcss-markdown@0.36.2: Use the original unforked package instead: postcss-markdown
+	npm WARN deprecated intl-messageformat-parser@1.8.1: We've written a new parser that's 6x faster and is backwards compatible. Please use @formatjs/icu-messageformat-parser
+	npm WARN deprecated @stylelint/postcss-css-in-js@0.37.3: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+	npm WARN deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+	npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+	npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+	npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+	npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+	npm WARN deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+	npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+Digital Zen Theme
+	Mess Up
+	bootstrap	use_google_analytics
+	bootstrap	improve bootstrap_get_title	yoest / bootstrap conflict
+	bootstrap	have matching tags explicit in each file (ex: don't include <body> in header.php)
+	bootstrap	change single.php to use article instead of section

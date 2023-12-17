@@ -1,38 +1,25 @@
 <?php
-/**
- * The template for displaying all single posts
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package DigitalZen
- */
+/*
+Template Name: Single
+*/
 
 get_header();
 ?>
-
-  <div id="primary" class="content-area">
-    <main id="main" class="site-main">
-
+    <!-- single.php -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="post-item">
+<?php bootstrap_show_title(); ?>
+            <div class="post-content">
 <?php
-while (have_posts())
-{
-	the_post();
-
-	get_template_part( 'template-parts/content', get_post_type() );
-
-	the_post_navigation();
-
-	// If comments are open or we have at least one comment, load up the comment template.
-	if (comments_open() || get_comments_number())
-	{
-		comments_template();
-	}
-}
+the_post();
+the_content();
+bootstrap_get_status_line(false);
 ?>
-
-    </main><!-- #main -->
-  </div><!-- #primary -->
-
+            </div>
+          </div>
+<?php show_right_column(); ?>
+        </div>
+      </div>
 <?php
-get_sidebar();
 get_footer();

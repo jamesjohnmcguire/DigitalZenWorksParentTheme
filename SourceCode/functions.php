@@ -1,46 +1,72 @@
 <?php
-/**
- * Digital Zen functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
- * @package Digital_Zen
- */
 
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/includes/custom-header.php';
+//contains functions specific to the bootstrap theme
+include 'bootstrap.php';
 
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/includes/template-tags.php';
+remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/includes/template-functions.php';
+add_action('init', 'bootstrap_clean_head');
+add_action('wp_enqueue_scripts', 'enqueue_scripts');
 
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/includes/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if (defined('JETPACK__VERSION'))
+if (!function_exists('bootstrap_enqueue_scripts'))
 {
-	require get_template_directory() . '/includes/jetpack.php';
+	function bootstrap_enqueue_scripts()
+	{
+		$theme_path = get_template_directory_uri();
+		$css_path = $theme_path . '/assets/css/';
+		$js_path = $theme_path . '/assets/js/';
+		$css_vendor_path = $css_path . 'vendor/';
+		$js_vendor_path = $js_path . 'vendor/';
+
+		$theme = wp_get_theme();
+		$version = $theme->get('Version');
+
+		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
+		wp_enqueue_style('bootstrap-style', $bootstrap_file);
+		wp_enqueue_style('fontawesome-style',
+			"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
+
+		// When debug is false, these files, in their minified version are
+		// loaded from the child theme.
+		if (THEME_DEBUG === true)
+		{
+			wp_enqueue_style('theme-style', $css_path . 'style.css');
+			wp_enqueue_style(
+                'social-media-style', $css_path  . 'social-media.css');
+			wp_enqueue_style('to-top-style', $css_path  . 'to-top.css');
+			wp_enqueue_style(
+                'parent-parallax-style', $css_path  . 'parallax.css');
+			wp_enqueue_style('services-style', $css_path  . 'services.css');
+		}
+
+		$file = $js_path . 'vendor/jquery.ui.totop.min.js';
+		wp_register_script('totop-async', $file, array('jquery'), false, true);
+		wp_enqueue_script('totop-async');
+
+		if (THEME_DEBUG === true)
+		{
+			// if false, these will be enqueued by the child theme
+			$bootstrap_file = $js_vendor_path . 'bootstrap.min.js';
+			wp_register_script(
+				'theme-bootstrap-async',
+				$bootstrap_file,
+				['jquery'],
+				false,
+				true);
+			wp_enqueue_script('theme-bootstrap-async');
+		}
+	}
 }
 
-add_action('after_setup_theme', 'digitalzen_setup');
-add_action('after_setup_theme', 'digitalzen_content_width', 0);
-add_action('widgets_init', 'digitalzen_widgets_init');
-add_action('wp_enqueue_scripts', 'digitalzen_scripts');
+if (!function_exists('enqueue_scripts'))
+{
+	function enqueue_scripts()
+	{
+		bootstrap_enqueue_scripts();
+	}
+}
 
-function digitalzen_comment_debug()
+function comment_debug()
 {
 	$item = '';
 	$post_id = '';
@@ -67,171 +93,45 @@ function digitalzen_comment_debug()
 	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
 }
 
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
- */
-function digitalzen_content_width()
+function GetLoop($authordata)
 {
-	// This variable is intended to be overruled from themes.
-	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
-	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-	$GLOBALS['content_width'] = apply_filters('digitalzen_content_width', 640);
-}
-
-function digitalzen_get_css_file($component)
-{
-	$css_file = '';
-
-	if (ENVIRONMENT == 'development')
+	while (have_posts())
 	{
-		$css_file = $component . '.css';
+		the_post();
+		$authorId = get_the_author_meta('ID');
+		$author = get_author_posts_url($authorId);
+		//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+		?>
+
+                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                  <h2 class="entry-title">
+                    <a href="<?php the_permalink(); ?>"
+                      title="<?php the_title();; ?>" rel="bookmark">
+                      <?php the_title(); ?>
+                    </a>
+                  </h2>
+
+                  <div class="entry-meta">
+                    <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
+                    <span class="author vcard"><a class="url fn n" href="<?php echo $author; ?>" title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?></a></span>
+                    <span class="meta-sep"> | </span>
+                    <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
+                    <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
+	<?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
+                  </div><!-- .entry-meta -->
+
+                    <div class="entry-summary">
+	<?php the_excerpt( __( 'Continue reading <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )  ); ?>
+                    </div><!-- .entry-summary -->
+
+                    <div class="entry-utility">
+                      <span class="cat-links"><span class="entry-utility-prep entry-utility-prep-cat-links"><?php _e( 'Posted in ', 'digitalzenworks-theme' ); ?></span><?php echo get_the_category_list(', '); ?></span>
+                      <span class="meta-sep"> | </span>
+	<?php the_tags( '<span class="tag-links"><span class="entry-utility-prep entry-utility-prep-tag-links">' . __('Tagged ', 'digitalzenworks-theme' ) . '</span>', ", ", "</span>\n\t\t\t\t\t\t<span class=\"meta-sep\">|</span>\n" ) ?>
+                      <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'digitalzenworks-theme' ), __( '1 Comment', 'digitalzenworks-theme' ), __( '% Comments', 'digitalzenworks-theme' ) ) ?></span>
+	<?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
+                    </div><!-- #entry-utility -->
+                  </div><!-- #post-<?php the_ID(); ?> -->
+	<?php
 	}
-	else
-	{
-		$css_file = $component . '.min.css';
-	}
-
-	return $css_file;
-}
-
-/**
- * Enqueue scripts and styles.
- */
-function digitalzen_scripts()
-{
-	$styles_path = get_stylesheet_uri();
-	$template_path = get_template_directory_uri();
-
-	$navigation_file = $template_path . '/js/navigation.js';
-	$fix_file = $template_path . '/js/skip-link-focus-fix.js';
-
-	wp_enqueue_style('digitalzen-style', $styles_path);
-	wp_enqueue_script('digitalzen-navigation', $navigation_file, array(), '20151215', true);
-	wp_enqueue_script('digitalzen-skip-link-focus-fix', $fix_file, array(), '20151215', true);
-
-	if (is_singular() && comments_open() && get_option( 'thread_comments'))
-	{
-		wp_enqueue_script('comment-reply');
-	}
-}
-
-if (!function_exists('digitalzen_setup'))
-{
-	/**
-	 * Sets up theme defaults and registers support for various WordPress features.
-	 *
-	 * Note that this function is hooked into the after_setup_theme hook, which
-	 * runs before the init hook. The init hook is too late for some features, such
-	 * as indicating support for post thumbnails.
-	 */
-	function digitalzen_setup()
-	{
-		$template_path = get_template_directory();
-
-		$languages_file = $template_path . '/languages';
-
-		/*
-		 * Make theme available for translation.
-		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on Digital Zen, use a find and replace
-		 * to change 'digitalzen' to the name of your theme in all the template files.
-		 */
-		load_theme_textdomain('digitalzen', $languages_file);
-
-		// Add default posts and comments RSS feed links to head.
-		add_theme_support('automatic-feed-links');
-
-		/*
-		 * Let WordPress manage the document title.
-		 * By adding theme support, we declare that this theme does not use a
-		 * hard-coded <title> tag in the document head, and expect WordPress to
-		 * provide it for us.
-		 */
-		add_theme_support('title-tag');
-
-		/*
-		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		 */
-		add_theme_support('post-thumbnails');
-
-		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus(array(
-			'menu-1' => esc_html__('Primary', 'digitalzen'),
-		));
-
-		/*
-		 * Switch default core markup for search form, comment form, and comments
-		 * to output valid HTML5.
-		 */
-		add_theme_support('html5', array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-		));
-
-		// Set up the WordPress core custom background feature.
-		$filter_data =  apply_filters('digitalzen_custom_background_args',
-			array
-			(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			));
-		add_theme_support('custom-background', $filter_data);
-
-		// Add theme support for selective refresh for widgets.
-		add_theme_support('customize-selective-refresh-widgets');
-
-		/**
-		 * Add support for core custom logo.
-		 *
-		 * @link https://codex.wordpress.org/Theme_Logo
-		 */
-		add_theme_support('custom-logo', array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		));
-	}
-}
-
-function digitalzen_theme_data($data)
-{
-	static $theme_data = null;
-
-	if (!empty($data))
-	{
-		foreach($data as $key => $item)
-		{
-			$theme_data[$key] = $item;
-		}
-	}
-
-	return $theme_data;
-}
-
-/**
- * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- */
-function digitalzen_widgets_init()
-{
-	register_sidebar(array(
-		'name'          => esc_html__( 'Sidebar', 'digitalzen' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'digitalzen' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-	));
 }

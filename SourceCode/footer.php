@@ -1,45 +1,92 @@
 <?php
-/**
- * The template for displaying the footer
- *
- * Contains the closing of the #content div and all content after.
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package DigitalZen
- */
+$site_title = get_bloginfo('name');
+$facebook_url = get_theme_mod('facebook_url');
+$gplus_url = get_theme_mod('gplus_url');
+$pinterest_url = get_theme_mod('pinterest_url');
+$twitter_url = get_theme_mod('twitter_url');
 
 ?>
+    <!-- FOOTER -->
 
-    </div><!-- #content -->
+    </section><!--main-container-->
+    <div style="clear: both; height:20px; overflow:hidden;"></div>
 
-<!--footer-->
-
-    <footer id="colophon" class="site-footer">
-      <div class="site-info">
-        <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'digitalzen' ) ); ?>">
+    <div class="copyright">
+      <div class="container">   
+        <div class="div-table v-middle">
+          <div class="cell">All rights reserved. Copyright &copy; 2023 <span class="company-rights"><?php echo $site_title; ?></span></div>
+          <div class="cell">
+            <div class="social-media">
 <?php
-/* translators: %s: CMS name, i.e. WordPress. */
-printf( esc_html__('Proudly powered by %s', 'DigitalZen' ), 'WordPress');
+if (!empty($facebook_url))
+{
 ?>
-        </a>
-        <span class="sep"> | </span>
+              <a href="<?php echo $facebook_url; ?>" class="facebook">
+                <span class="fa fa-facebook"></span>
+              </a>
 <?php
-/* translators: 1: Theme name, 2: Theme author. */
-printf( esc_html__( 'Theme: %1$s by %2$s.', 'digitalzen' ), 'digitalzen', '<a href="http://www.digitalzenworks.com">James John McGuire</a>' );
+}
+
+if (!empty($gplus_url))
+{
 ?>
-      </div><!-- .site-info -->
-    </footer><!-- #colophon -->
-  </div><!-- #page -->
+              <a href="<?php echo $gplus_url; ?>" class="google-plus">
+                <span class="fa fa-google-plus"></span>
+              </a>
+<?php
+}
 
-  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+if (!empty($pinterest_url))
+{
+?>
+              <a href="<?php echo $pinterest_url; ?>" class="pinterest">
+                <span class="fa fa-pinterest"></span>
+              </a>
+<?php
+}
 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+if (!empty($twitter_url))
+{
+?>
+              <a href="<?php echo $twitter_url; ?>" class="twitter">
+                <span class="fa fa-twitter"></span>
+              </a>
+<?php
+}
+?>
+                    <a href="/feed" class="rss">
+                      <span class="fa fa-rss"></span>
+                    </a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!--wp_footer begin-->
 <?php wp_footer(); ?>
-</body>
+    <!--wp_footer end-->
+
+    <!--scripts-->
+    <!-- Cross-browser responsiveness scripts -->
+    <!--[if lt IE 9]>
+      <script src="<?php echo get_template_directory_uri(); ?>/js/html5shiv.js"></script>
+      <script src="<?php echo get_template_directory_uri(); ?>/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load google fonts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js?202004040"></script>
+    <script>WebFont.load({google:{families:['Open+Sans:400italic,600italic,400,600,700', 'Raleway:400,500,600,700']}});</script>
+
+    <!-- Assets - Required -->
+    <script src="<?php echo get_template_directory_uri(); ?>/assets/page-scroller/jquery.ui.totop.min.js"></script>
+
+    <script>
+
+		$('.carousel').carousel({
+			interval: 3000
+		})
+    </script>
+
+  </body>
 </html>
