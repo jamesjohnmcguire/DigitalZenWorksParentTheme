@@ -7,20 +7,8 @@ include 'bootstrap.php';
 
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
-add_action('init', 'clean_head');
+add_action('wp_enqueue_scripts', 'dequeue_assets');
 add_action('wp_enqueue_scripts', 'enqueue_assets');
-
-// these actions will clean out unneeded items in page head
-if (!function_exists('clean_head'))
-{
-	function clean_head()
-	{
-		disable_wp_emojicons();
-
-		// remove Open Sans font
-		add_action('wp_enqueue_scripts', 'deregister_styles', 100);
-	}
-}
 
 function comment_debug()
 {
@@ -49,14 +37,17 @@ function comment_debug()
 	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
 }
 
-if (!function_exists('deregister_styles'))
+if (!function_exists('dequeue_assets'))
 {
-	function deregister_styles()
+	function dequeue_assets()
 	{
 		if (!is_admin_bar_showing())
 		{
+			// remove Open Sans font
 			wp_deregister_style('open-sans');
 		}
+
+		disable_emojicons();
 	}
 }
 
@@ -75,9 +66,9 @@ if (!function_exists('disable_emojicons_tinymce'))
 	}
 }
 
-if (!function_exists('disable_wp_emojicons'))
+if (!function_exists('disable_emojicons'))
 {
-	function disable_wp_emojicons()
+	function disable_emojicons()
 	{
 		// all actions related to emojis
 		remove_action('admin_print_styles', 'print_emoji_styles');
