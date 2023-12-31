@@ -5,7 +5,7 @@ include 'bootstrap.php';
 
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
-add_action('init', 'bootstrap_clean_head');
+add_action('init', 'clean_head');
 add_action('wp_enqueue_scripts', 'enqueue_scripts');
 
 if (!function_exists('bootstrap_enqueue_scripts'))
@@ -56,6 +56,15 @@ if (!function_exists('bootstrap_enqueue_scripts'))
 			wp_enqueue_script('theme-bootstrap-async');
 		}
 	}
+}
+
+// these actions will clean out unneeded items in page head
+function clean_head()
+{
+	bootstrap_disable_wp_emojicons();
+
+	// remove Open Sans font
+	add_action('wp_enqueue_scripts', 'bootstrap_deregister_styles', 100);
 }
 
 if (!function_exists('enqueue_scripts'))

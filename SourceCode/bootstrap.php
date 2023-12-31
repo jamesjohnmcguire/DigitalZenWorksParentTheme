@@ -29,15 +29,6 @@ function bootstrap_add_home_link($items)
 	return $items;
 }
 
-// these actions will clean out unneeded items in page head
-function bootstrap_clean_head()
-{
-	bootstrap_disable_wp_emojicons();
-
-	// remove Open Sans font
-	add_action('wp_enqueue_scripts', 'bootstrap_deregister_styles', 100);
-}
-
 /**
  * Display navigation to next/previous comments when applicable.
  */
