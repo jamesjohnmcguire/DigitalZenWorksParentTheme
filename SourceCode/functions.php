@@ -64,14 +64,14 @@ if (!function_exists('disable_emojicons_tinymce'))
 {
 	function disable_emojicons_tinymce( $plugins )
 	{
+		$result = [];
+
 		if (is_array($plugins))
 		{
-			return array_diff($plugins, array('wpemoji'));
+			$result = array_diff($plugins, array('wpemoji'));
 		}
-		else
-		{
-			return array();
-		}
+
+		return $result;
 	}
 }
 
