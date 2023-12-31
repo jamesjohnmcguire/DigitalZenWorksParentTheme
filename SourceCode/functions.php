@@ -6,7 +6,7 @@ include 'bootstrap.php';
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
 add_action('init', 'clean_head');
-add_action('wp_enqueue_scripts', 'enqueue_scripts');
+add_action('wp_enqueue_scripts', 'enqueue_assets');
 
 if (!function_exists('bootstrap_enqueue_scripts'))
 {
@@ -141,9 +141,9 @@ if (!function_exists('disable_wp_emojicons'))
 	}
 }
 
-if (!function_exists('enqueue_scripts'))
+if (!function_exists('enqueue_assets'))
 {
-	function enqueue_scripts()
+	function enqueue_assets()
 	{
 		bootstrap_enqueue_scripts();
 	}
