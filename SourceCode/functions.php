@@ -59,12 +59,59 @@ if (!function_exists('bootstrap_enqueue_scripts'))
 }
 
 // these actions will clean out unneeded items in page head
-function clean_head()
+if (!function_exists('clean_head'))
 {
-	bootstrap_disable_wp_emojicons();
+	function clean_head()
+	{
+		disable_wp_emojicons();
 
-	// remove Open Sans font
-	add_action('wp_enqueue_scripts', 'bootstrap_deregister_styles', 100);
+		// remove Open Sans font
+		add_action('wp_enqueue_scripts', 'deregister_styles', 100);
+	}
+}
+
+if (!function_exists('deregister_styles'))
+{
+	function deregister_styles()
+	{
+		if (!is_admin_bar_showing())
+		{
+			wp_deregister_style('open-sans');
+		}
+	}
+}
+
+if (!function_exists('disable_emojicons_tinymce'))
+{
+	function disable_emojicons_tinymce( $plugins )
+	{
+		if (is_array($plugins))
+		{
+			return array_diff($plugins, array('wpemoji'));
+		}
+		else
+		{
+			return array();
+		}
+	}
+}
+
+if (!function_exists('disable_wp_emojicons'))
+{
+	function disable_wp_emojicons()
+	{
+		// all actions related to emojis
+		remove_action('admin_print_styles', 'print_emoji_styles');
+		remove_action('wp_head', 'print_emoji_detection_script', 7);
+		remove_action('admin_print_scripts', 'print_emoji_detection_script');
+		remove_action('wp_print_styles', 'print_emoji_styles');
+		remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+		remove_filter('the_content_feed', 'wp_staticize_emoji');
+		remove_filter('comment_text_rss', 'wp_staticize_emoji');
+
+		// filter to remove TinyMCE emojis
+		add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+	}
 }
 
 if (!function_exists('enqueue_scripts'))

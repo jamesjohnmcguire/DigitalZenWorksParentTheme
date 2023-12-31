@@ -485,3 +485,6 @@ Enqueuing
 	child::deregister_components
 
 	https://developer.wordpress.org/reference/hooks/wp_enqueue_scripts/
+
+add_action('init', 'clean_head');
+add_action('wp_enqueue_scripts', 'enqueue_scripts');
