@@ -70,6 +70,33 @@ if (!function_exists('clean_head'))
 	}
 }
 
+function comment_debug()
+{
+	$item = '';
+	$post_id = '';
+
+	if (!empty($_SERVER))
+	{
+		if (array_key_exists('REQUEST_URI', $_SERVER))
+		{
+			$item = $_SERVER['REQUEST_URI'];
+			$item  = trim($item, '/');
+		}
+	}
+
+	if (!empty($item))
+	{
+		$post = get_page_by_path($item);
+
+		if (!empty($post))
+		{
+			$post_id = $post->ID;
+		}
+	}
+
+	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
+}
+
 if (!function_exists('deregister_styles'))
 {
 	function deregister_styles()
@@ -122,34 +149,7 @@ if (!function_exists('enqueue_scripts'))
 	}
 }
 
-function comment_debug()
-{
-	$item = '';
-	$post_id = '';
-
-	if (!empty($_SERVER))
-	{
-		if (array_key_exists('REQUEST_URI', $_SERVER))
-		{
-			$item = $_SERVER['REQUEST_URI'];
-			$item  = trim($item, '/');
-		}
-	}
-
-	if (!empty($item))
-	{
-		$post = get_page_by_path($item);
-
-		if (!empty($post))
-		{
-			$post_id = $post->ID;
-		}
-	}
-
-	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
-}
-
-function GetLoop($authordata)
+function get_loop($authordata)
 {
 	while (have_posts())
 	{
