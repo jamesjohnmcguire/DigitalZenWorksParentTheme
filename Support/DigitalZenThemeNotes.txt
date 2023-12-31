@@ -467,3 +467,21 @@ Digital Zen Theme
 	bootstrap	improve bootstrap_get_title	yoest / bootstrap conflict
 	bootstrap	have matching tags explicit in each file (ex: don't include <body> in header.php)
 	bootstrap	change single.php to use article instead of section
+Tasks
+	Merge bootstrap.php into functions.php
+	Update to Bootstrap 5
+	Merge variant wp-config files
+	get local copy of font-awesome.min.css
+	Tracking	Deal With	<!--meta name="alexaVerifyID" content=""/>
+	Tracking	Deal With	<meta name="google-site-verification" content="" /-->
+	if (!function_exists(''))	Use in parent theme, not needed in child themes
+Enqueuing
+	parent::add_action('wp_enqueue_scripts', 'enqueue_scripts');
+	child::add_filter('wp_enqueue_scripts', 'deregister_components', 100 );
+
+	child::enqueue_scripts
+		child_enqueue_styles
+		child_enqueue_scripts
+	child::deregister_components
+
+	https://developer.wordpress.org/reference/hooks/wp_enqueue_scripts/
