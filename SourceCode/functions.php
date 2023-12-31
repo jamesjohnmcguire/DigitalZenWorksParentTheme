@@ -1,4 +1,6 @@
 <?php
+// Insure THEME_DEBUG is defined.
+defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
 //contains functions specific to the bootstrap theme
 include 'bootstrap.php';
