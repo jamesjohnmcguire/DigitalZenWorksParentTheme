@@ -8,56 +8,6 @@ remove_action('wp_head','qtranxf_wp_head_meta_generator');
 add_action('init', 'clean_head');
 add_action('wp_enqueue_scripts', 'enqueue_assets');
 
-if (!function_exists('bootstrap_enqueue_scripts'))
-{
-	function bootstrap_enqueue_scripts()
-	{
-		$theme_path = get_template_directory_uri();
-		$css_path = $theme_path . '/assets/css/';
-		$js_path = $theme_path . '/assets/js/';
-		$css_vendor_path = $css_path . 'vendor/';
-		$js_vendor_path = $js_path . 'vendor/';
-
-		$theme = wp_get_theme();
-		$version = $theme->get('Version');
-
-		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
-		wp_enqueue_style('bootstrap-style', $bootstrap_file);
-		wp_enqueue_style('fontawesome-style',
-			"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
-
-		// When debug is false, these files, in their minified version are
-		// loaded from the child theme.
-		if (THEME_DEBUG === true)
-		{
-			wp_enqueue_style('theme-style', $css_path . 'style.css');
-			wp_enqueue_style(
-                'social-media-style', $css_path  . 'social-media.css');
-			wp_enqueue_style('to-top-style', $css_path  . 'to-top.css');
-			wp_enqueue_style(
-                'parent-parallax-style', $css_path  . 'parallax.css');
-			wp_enqueue_style('services-style', $css_path  . 'services.css');
-		}
-
-		$file = $js_path . 'vendor/jquery.ui.totop.min.js';
-		wp_register_script('totop-async', $file, array('jquery'), false, true);
-		wp_enqueue_script('totop-async');
-
-		if (THEME_DEBUG === true)
-		{
-			// if false, these will be enqueued by the child theme
-			$bootstrap_file = $js_vendor_path . 'bootstrap.min.js';
-			wp_register_script(
-				'theme-bootstrap-async',
-				$bootstrap_file,
-				['jquery'],
-				false,
-				true);
-			wp_enqueue_script('theme-bootstrap-async');
-		}
-	}
-}
-
 // these actions will clean out unneeded items in page head
 if (!function_exists('clean_head'))
 {
@@ -145,7 +95,57 @@ if (!function_exists('enqueue_assets'))
 {
 	function enqueue_assets()
 	{
-		bootstrap_enqueue_scripts();
+		enqueue_scripts();
+	}
+}
+
+if (!function_exists('enqueue_scripts'))
+{
+	function enqueue_scripts()
+	{
+		$theme_path = get_template_directory_uri();
+		$css_path = $theme_path . '/assets/css/';
+		$js_path = $theme_path . '/assets/js/';
+		$css_vendor_path = $css_path . 'vendor/';
+		$js_vendor_path = $js_path . 'vendor/';
+
+		$theme = wp_get_theme();
+		$version = $theme->get('Version');
+
+		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
+		wp_enqueue_style('bootstrap-style', $bootstrap_file);
+		wp_enqueue_style('fontawesome-style',
+			"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
+
+		// When debug is false, these files, in their minified version are
+		// loaded from the child theme.
+		if (THEME_DEBUG === true)
+		{
+			wp_enqueue_style('theme-style', $css_path . 'style.css');
+			wp_enqueue_style(
+                'social-media-style', $css_path  . 'social-media.css');
+			wp_enqueue_style('to-top-style', $css_path  . 'to-top.css');
+			wp_enqueue_style(
+                'parent-parallax-style', $css_path  . 'parallax.css');
+			wp_enqueue_style('services-style', $css_path  . 'services.css');
+		}
+
+		$file = $js_path . 'vendor/jquery.ui.totop.min.js';
+		wp_register_script('totop-async', $file, array('jquery'), false, true);
+		wp_enqueue_script('totop-async');
+
+		if (THEME_DEBUG === true)
+		{
+			// if false, these will be enqueued by the child theme
+			$bootstrap_file = $js_vendor_path . 'bootstrap.min.js';
+			wp_register_script(
+				'theme-bootstrap-async',
+				$bootstrap_file,
+				['jquery'],
+				false,
+				true);
+			wp_enqueue_script('theme-bootstrap-async');
+		}
 	}
 }
 
