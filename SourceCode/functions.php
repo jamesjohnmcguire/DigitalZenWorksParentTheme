@@ -226,3 +226,10 @@ if (!function_exists('output_head'))
 <?php
 	}
 }
+
+function remove_block_library_styles()
+{
+	wp_dequeue_style('wp-block-library');
+	wp_dequeue_style('wp-block-library-theme');
+	wp_dequeue_style('wc-block-style'); // Remove WooCommerce block CSS
+}
