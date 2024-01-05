@@ -5,6 +5,8 @@ $gplus_url = get_theme_mod('gplus_url');
 $pinterest_url = get_theme_mod('pinterest_url');
 $twitter_url = get_theme_mod('twitter_url');
 
+date_default_timezone_set('Asia/Tokyo');
+$year = date("Y");
 ?>
     <!-- FOOTER -->
 
@@ -14,7 +16,7 @@ $twitter_url = get_theme_mod('twitter_url');
     <div class="copyright">
       <div class="container">   
         <div class="div-table v-middle">
-          <div class="cell">All rights reserved. Copyright &copy; 2023 <span class="company-rights"><?php echo $site_title; ?></span></div>
+          <div class="cell">All rights reserved. Copyright &copy; <?php echo $year; ?> <span class="company-rights"><?php echo $site_title; ?></span></div>
           <div class="cell">
             <div class="social-media">
 <?php
