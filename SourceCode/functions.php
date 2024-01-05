@@ -204,9 +204,7 @@ if (!function_exists('output_head'))
 ?>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
 <?php
 		if ($icon_file != null)
@@ -216,7 +214,7 @@ if (!function_exists('output_head'))
 			if ($exists === true)
 			{
 ?>
-		<link rel="icon" href="<?php echo $iconFile; ?>" />
+    <link rel="icon" href="<?php echo $icon_file; ?>" />
 <?php
 			}
 		}
