@@ -15,11 +15,10 @@ defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 include 'bootstrap.php';
 
 add_action('phpmailer_init', 'mailer_config', 10, 1);
-
-remove_action('wp_head','qtranxf_wp_head_meta_generator');
-
 add_action('wp_enqueue_scripts', 'dequeue_assets');
 add_action('wp_enqueue_scripts', 'enqueue_assets');
+
+remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
 function comment_debug()
 {
