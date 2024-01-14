@@ -1,0 +1,33 @@
+{
+	"description": "Digital Zen Works Theme",
+	"license": "proprietary",
+	"name": "digitalzenworks/digitalzenworks-theme",
+	"type": "library",
+	"authors": [
+		{
+			"name": "James John McGuire",
+			"email": "jamesjohnmcguire@gmail.com"
+		}
+	],
+	"config": {
+		"process-timeout": 0,
+			"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"require": {
+	},
+	"require-dev": {
+		"brain/monkey": "^2.6",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"php-parallel-lint/php-parallel-lint": "^1.2.0",
+		"phpcompatibility/php-compatibility": "*",
+		"phpcompatibility/phpcompatibility-wp": "*",
+		"phpcsstandards/phpcsdevtools": "^1.0",
+		"phpstan/phpstan": "^1.2",
+		"phpunit/phpunit": "^10.0",
+		"squizlabs/php_codesniffer": "*",
+		"wp-cli/i18n-command": "^2.2.5",
+		"wp-coding-standards/wpcs": "*"
+	}
+}
