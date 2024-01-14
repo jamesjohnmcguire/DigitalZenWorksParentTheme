@@ -14,11 +14,27 @@ defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 //contains functions specific to the bootstrap theme
 include 'bootstrap.php';
 
+// Remove the Link header for the WP REST API, as this (falsely) causes
+// W3C validation errors
+add_action('after_setup_theme', 'bootstrap_remove_head_rest');
+
+// admin - customize them
+add_action('customize_register', 'bootstrap_theme_customizer');
 add_action('phpmailer_init', 'mailer_config', 10, 1);
 add_action('wp_enqueue_scripts', 'dequeue_assets');
 add_action('wp_enqueue_scripts', 'enqueue_assets');
 
+// add the home link to the main menu, if needed
+add_filter('wp_nav_menu_items', 'bootstrap_add_home_link', 10, 2);
+
+// add the theme directory path as needed
+add_shortcode('theme_directory', 'bootstrap_theme_directory_shortcode');
+
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
+
+// prevent adding extra <p> into the text
+remove_filter('the_content', 'wpautop');
+remove_filter('the_excerpt', 'wpautop');
 
 function comment_debug()
 {
