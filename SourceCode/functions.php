@@ -1,5 +1,14 @@
 <?php
-// Insure THEME_DEBUG is defined.
+/**
+ * Functions File
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ */
+
+ declare(strict_types=1);
+
+ // Insure THEME_DEBUG is defined.
 defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
 //contains functions specific to the bootstrap theme
