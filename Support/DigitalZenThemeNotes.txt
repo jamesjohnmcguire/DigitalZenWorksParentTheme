@@ -1,3 +1,16 @@
+Digital Zen Theme	Tasks
+	Check for duplicate functionality	wp_head
+	Clean up functions.php
+	add npm update to build.cmd
+	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+	dart sass
+Dzw Theme	Tasks
+	<script type="text/javascript" src="http://localhost/wp-content/themes/digitalzenworks/assets/js/vendor/jquery.slim.min.js?ver=6.4.2" id="jquery.slim-js"></script>
+	<script type="text/javascript" src="http://localhost/wp-content/themes/digitalzenworks/assets/js/vendor/bootstrap.min.js?ver=6.4.2" id="bootstrap-js"></script>
+	Remove if (!function_exists('enqueue_scripts'))	if (!function_exists('enqueue_styles'))
+	https://mariushosting.com/how-to-completely-remove-jquery-from-wordpress/
+	Check for duplicate functionality	wp_head
+	Clean up functions.php
 Development Plan
 	Infrastructure
 	Core Functionality
@@ -50,10 +63,6 @@ Development Plan
 		Dzw-Custom
 	funding
 	file headers
-Tasks
-	add npm update to build.cmd
-	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
-	dart sass
 Notes
 	CustomLogo
 		Install
@@ -503,3 +512,14 @@ Enqueuing
 		child_enqueue_styles
 		child_enqueue_scripts
 	child::deregister_components
+Additional Code
+	add_action('wp_footer', 'bootstrap_deregister_scripts');	wp_deregister_script('wp-embed');
+	add_action('after_setup_theme', 'register_primary_menu');
+	function register_primary_menu()
+	{
+		$description =  __('Primary Menu', 'bootstrap-child');
+		register_nav_menu('primary', $description);
+	}
+
+	//Remove Gutenberg Block Library CSS from loading on the frontend
+	add_action('wp_enqueue_scripts', 'remove_block_library_styles', 100);
