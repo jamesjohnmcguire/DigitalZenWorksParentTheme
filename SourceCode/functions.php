@@ -5,6 +5,8 @@ defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 //contains functions specific to the bootstrap theme
 include 'bootstrap.php';
 
+add_action('phpmailer_init', 'mailer_config', 10, 1);
+
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
 add_action('wp_enqueue_scripts', 'dequeue_assets');
@@ -194,6 +196,42 @@ function get_loop($authordata)
                     </div><!-- #entry-utility -->
                   </div><!-- #post-<?php the_ID(); ?> -->
 	<?php
+	}
+}
+
+if (!function_exists('mailer_config'))
+{
+	function mailer_config($mailer)
+	{
+		$hostname = gethostname();
+
+		if ($hostname === 'ZenwanFocus' || $hostname === 'ZenWanJedi' ||
+			$hostname === 'ZenWan-Nomad')
+		{
+			$smtpServer = getenv('SMTP_SERVER');
+			$smtpProtocol = getenv('SMTP_PROTOCOL');
+			$smtpPort = (int)getenv('SMTP_PORT');
+			$smtpUser = getenv('SMTP_USER');
+			$smtpPassword = getenv('SMTP_PASSWORD');
+
+			$userExists = !empty($smtpUser);
+			$passwordExists = !empty($smtpPassword);
+
+			if ($userExists === true && $passwordExists === true)
+			{
+				$mailer->IsSMTP();
+				$mailer->Mailer = "smtp";
+				$mailer->SMTPAuth = true;
+
+				$mailer->Host = $smtpServer;
+				$mailer->SMTPSecure = $smtpProtocol;
+				$mailer->Port = $smtpPort;
+				$mailer->CharSet  = "utf-8";
+
+				$mailer->Username = $smtpUser;
+				$mailer->Password = $smtpPassword;
+			}
+		}
 	}
 }
 
