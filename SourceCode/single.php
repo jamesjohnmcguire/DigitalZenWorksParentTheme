@@ -11,12 +11,12 @@ get_header();
       <div class="row">
         <div class="col-md-12">
           <div class="post-item">
-<?php bootstrap_show_title(); ?>
+<?php show_title(); ?>
             <div class="post-content">
 <?php
 the_post();
 the_content();
-bootstrap_get_status_line(false);
+get_status_line(false);
 ?>
             </div>
           </div>

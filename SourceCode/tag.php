@@ -28,7 +28,7 @@ while (have_posts())
         </div>
         <br />
 <?php
-	bootstrap_get_status_line($authordata);
+	get_status_line($authordata);
 }
 ?>
       </div>

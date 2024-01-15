@@ -15,19 +15,19 @@ defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
 // Remove the Link header for the WP REST API, as this (falsely) causes
 // W3C validation errors
-add_action('after_setup_theme', '\DigitalZenWorksTheme\bootstrap_remove_head_rest');
+add_action('after_setup_theme', '\DigitalZenWorksTheme\remove_head_rest');
 
 // admin - customize them
-add_action('customize_register', '\DigitalZenWorksTheme\bootstrap_theme_customizer');
+add_action('customize_register', '\DigitalZenWorksTheme\theme_customizer');
 add_action('phpmailer_init', '\DigitalZenWorksTheme\mailer_config', 10, 1);
 add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_assets');
 add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
 
 // add the home link to the main menu, if needed
-add_filter('wp_nav_menu_items', '\DigitalZenWorksTheme\bootstrap_add_home_link', 10, 2);
+add_filter('wp_nav_menu_items', '\DigitalZenWorksTheme\add_home_link', 10, 2);
 
 // add the theme directory path as needed
-add_shortcode('theme_directory', '\DigitalZenWorksTheme\bootstrap_theme_directory_shortcode');
+add_shortcode('theme_directory', '\DigitalZenWorksTheme\theme_directory_shortcode');
 
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
@@ -35,9 +35,9 @@ remove_action('wp_head','qtranxf_wp_head_meta_generator');
 remove_filter('the_content', 'wpautop');
 remove_filter('the_excerpt', 'wpautop');
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_add_home_link'))
+if (!function_exists('\DigitalZenWorksTheme\add_home_link'))
 {
-	function bootstrap_add_home_link($items)
+	function add_home_link($items)
 	{
 		if (!is_front_page())
 		{
@@ -52,9 +52,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_add_home_link'))
 /**
  * Display navigation to next/previous comments when applicable.
  */
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_comment_nav'))
+if (!function_exists('\DigitalZenWorksTheme\comment_nav'))
 {
-	function bootstrap_comment_nav()
+	function comment_nav()
 	{
 		// Are there comments to navigate through?
 		if (get_comment_pages_count() > 1 && get_option('page_comments'))
@@ -83,9 +83,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_comment_nav'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_archive_title'))
+if (!function_exists('\DigitalZenWorksTheme\get_archive_title'))
 {
-	function bootstrap_get_archive_title()
+	function get_archive_title()
 	{
 		$message = null;
 		if ((true == is_archive()) && (false == is_category()))
@@ -124,9 +124,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_archive_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_breadcrumbs'))
+if (!function_exists('\DigitalZenWorksTheme\get_breadcrumbs'))
 {
-	function bootstrap_get_breadcrumbs()
+	function get_breadcrumbs()
 	{
 		if (!is_front_page())
 		{
@@ -152,9 +152,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_breadcrumbs'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_front_page_image'))
+if (!function_exists('\DigitalZenWorksTheme\get_front_page_image'))
 {
-	function bootstrap_get_front_page_image()
+	function get_front_page_image()
 	{
 		$front_image =
 			get_template_directory_uri() . '/assets/images/sunset.jpg';
@@ -163,9 +163,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_front_page_image'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_language'))
+if (!function_exists('\DigitalZenWorksTheme\get_language'))
 {
-	function bootstrap_get_language()
+	function get_language()
 	{
 		$language = null;
 
@@ -180,9 +180,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_language'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_nav'))
+if (!function_exists('\DigitalZenWorksTheme\get_nav'))
 {
-	function bootstrap_get_nav($title, $use_logo)
+	function get_nav($title, $use_logo)
 	{
 ?>
     <nav id="slide-nav" class="navbar navbar-main navbar-shadow">
@@ -201,11 +201,11 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_nav'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_page_title'))
+if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 {
-	function bootstrap_get_page_title()
+	function get_page_title()
 	{
-		$language = bootstrap_get_language();
+		$language = get_language();
 
 		$title = wp_title('', false);
 
@@ -223,9 +223,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_page_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_pagination'))
+if (!function_exists('\DigitalZenWorksTheme\get_pagination'))
 {
-	function bootstrap_get_pagination($class)
+	function get_pagination($class)
 	{
 		global $wp_query;
 		$total_pages = $wp_query->max_num_pages;
@@ -247,9 +247,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_pagination'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_status_line'))
+if (!function_exists('\DigitalZenWorksTheme\get_status_line'))
 {
-	function bootstrap_get_status_line($read_more = true)
+	function get_status_line($read_more = true)
 	{
 		$time = get_the_time('Y/m/d');
 		$categories = get_the_category_list(', ');
@@ -271,9 +271,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_status_line'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_the_posts'))
+if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
 {
-	function bootstrap_get_the_posts($paged = true)
+	function get_the_posts($paged = true)
 	{
 		if (true == $paged)
 		{
@@ -289,7 +289,7 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_the_posts'))
 <?php
 			if (true == $paged)
 			{
-				bootstrap_get_pagination('nav-above');
+				get_pagination('nav-above');
 			}
 
 			while(have_posts())
@@ -304,12 +304,12 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_the_posts'))
           </div>
           <br />
 <?php
-				bootstrap_get_status_line();
+				get_status_line();
 			}
 
 			if (true == $paged)
 			{
-				bootstrap_get_pagination('nav-below');
+				get_pagination('nav-below');
 			}
 ?>
         </div>
@@ -319,16 +319,16 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_the_posts'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_title'))
+if (!function_exists('\DigitalZenWorksTheme\get_title'))
 {
-	function bootstrap_get_title($page_name_site_name = true,
+	function get_title($page_name_site_name = true,
 		$site_name_page_name = false, $only_site_name = false,
 		$only_page_name = false, $site_name_description = false,
 		$seperator = ' | ')
 	{
 		$title = '';
 		$site_name = get_bloginfo('name');
-		$page_name = bootstrap_get_page_title();
+		$page_name = get_page_title();
 		$description = get_bloginfo('description');
 
 		if (true == $only_site_name)
@@ -360,9 +360,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_title'))
 If the page is articles (posts) list page, include links in the head for
 next and previous
 */
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_navigation_link'))
+if (!function_exists('\DigitalZenWorksTheme\navigation_link'))
 {
-	function bootstrap_navigation_link($type)
+	function navigation_link($type)
 	{
 		$link = null;
 
@@ -391,9 +391,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_navigation_link'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_remove_head_rest'))
+if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
 {
-	function bootstrap_remove_head_rest()
+	function remove_head_rest()
 	{
 		// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
 		remove_action('template_redirect', 'rest_output_link_header', 11, 0);
@@ -415,9 +415,9 @@ if (!function_exists('\DigitalZenWorksTheme\show_right_column'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_show_title'))
+if (!function_exists('\DigitalZenWorksTheme\show_title'))
 {
-	function bootstrap_show_title($title = null, $title_classes = null,
+	function show_title($title = null, $title_classes = null,
 		$degree = 1)
 	{
 		if (empty($title))
@@ -434,7 +434,7 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_show_title'))
 
 		if ($enable_breadcrumbs == true)
 		{
-			bootstrap_get_breadcrumbs();
+			get_breadcrumbs();
 		}
 ?>
         </div>
@@ -444,9 +444,9 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_show_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_theme_customizer'))
+if (!function_exists('\DigitalZenWorksTheme\theme_customizer'))
 {
-	function bootstrap_theme_customizer($wp_customize)
+	function theme_customizer($wp_customize)
 	{
 		$wp_customize->add_section('theme_options',
 			array('title' => 'Theme Options'));
@@ -539,17 +539,17 @@ if (!function_exists('\DigitalZenWorksTheme\bootstrap_theme_customizer'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_theme_directory_shortcode'))
+if (!function_exists('\DigitalZenWorksTheme\theme_directory_shortcode'))
 {
-	function bootstrap_theme_directory_shortcode($content = '')
+	function theme_directory_shortcode($content = '')
 	{
 		return get_template_directory_uri().$content;
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\bootstrap_use_navbar_logo'))
+if (!function_exists('\DigitalZenWorksTheme\use_navbar_logo'))
 {
-	function bootstrap_use_navbar_logo()
+	function use_navbar_logo()
 	{
 		$use = true;
 

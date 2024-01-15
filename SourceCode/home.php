@@ -2,6 +2,6 @@
     <!-- home.php -->
 <?php
 // in functions.php
-bootstrap_get_the_posts();
+get_the_posts();
 
 get_footer();

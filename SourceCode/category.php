@@ -17,9 +17,9 @@ rewind_posts();
         <div class="col-md-12">
 <?php
 // in functions.php
-bootstrap_show_title($title);
+show_title($title);
 
-bootstrap_get_the_posts(false);
+get_the_posts(false);
 ?>
         </div>
 <?php show_right_column(); ?>

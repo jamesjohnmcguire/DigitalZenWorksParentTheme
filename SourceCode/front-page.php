@@ -21,7 +21,7 @@ if (is_front_page())
 		// show a list of posts
 		echo "<!--home-->\r\n";
 		// in functions.php
-		bootstrap_get_the_posts();
+		get_the_posts();
 	}
 	else
 	{

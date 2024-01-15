@@ -30,7 +30,7 @@ if (have_comments())
 			?>
 		</h2>
 
-<?php bootstrap_comment_nav(); ?>
+<?php comment_nav(); ?>
 
 		<ol class="comment-list">
 			<?php
@@ -43,7 +43,7 @@ if (have_comments())
 		</ol><!-- .comment-list -->
 
 <?php
-	bootstrap_comment_nav();
+	comment_nav();
 }
 
 // If comments are closed and there are comments, let's leave a little note, shall we?

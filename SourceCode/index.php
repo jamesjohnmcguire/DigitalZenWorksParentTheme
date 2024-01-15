@@ -16,7 +16,7 @@ rewind_posts();
         <div class="row">
             <div class="col-md-9">
 <?php
-bootstrap_get_the_posts();
+get_the_posts();
 ?>
                 </div>
 <?php

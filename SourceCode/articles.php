@@ -12,8 +12,8 @@ get_header();
 query_posts('&showposts=-1&order=ASC');
 
 // in functions.php
-bootstrap_show_title($title);
+show_title($title);
 
-bootstrap_get_the_posts();
+get_the_posts();
 
 get_footer();

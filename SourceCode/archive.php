@@ -15,9 +15,9 @@ $title = get_archive_title();
     <section id="main-container" class="container breadcrumbs">
 <?php
 // in functions.php
-bootstrap_show_title($title);
+show_title($title);
 
-bootstrap_get_the_posts();
+get_the_posts();
 ?>
     </div>
 <?php get_footer(); ?>

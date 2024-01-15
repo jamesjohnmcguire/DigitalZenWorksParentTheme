@@ -29,12 +29,12 @@ else
 	$title = "Author Archives: <span class=\"author vcard\"><a class=\"url fn n\" href=\"$author\" title=\"$author_tip\">$author_name</a></span>";
 
 	// in functions.php
-	bootstrap_show_title($title);
+	show_title($title);
 
 	rewind_posts();
 	query_posts('&showposts=-1&order=ASC');
 	// in functions.php
-	bootstrap_get_the_posts();
+	get_the_posts();
 }
 ?>
       </div>
