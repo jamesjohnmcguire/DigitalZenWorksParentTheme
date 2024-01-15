@@ -8,24 +8,26 @@
 
 declare(strict_types=1);
 
+namespace DigitalZenWorksTheme;
+
 // Insure THEME_DEBUG is defined.
 defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
 // Remove the Link header for the WP REST API, as this (falsely) causes
 // W3C validation errors
-add_action('after_setup_theme', 'bootstrap_remove_head_rest');
+add_action('after_setup_theme', '\DigitalZenWorksTheme\bootstrap_remove_head_rest');
 
 // admin - customize them
-add_action('customize_register', 'bootstrap_theme_customizer');
-add_action('phpmailer_init', 'mailer_config', 10, 1);
-add_action('wp_enqueue_scripts', 'dequeue_assets');
-add_action('wp_enqueue_scripts', 'enqueue_assets');
+add_action('customize_register', '\DigitalZenWorksTheme\bootstrap_theme_customizer');
+add_action('phpmailer_init', '\DigitalZenWorksTheme\mailer_config', 10, 1);
+add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_assets');
+add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
 
 // add the home link to the main menu, if needed
-add_filter('wp_nav_menu_items', 'bootstrap_add_home_link', 10, 2);
+add_filter('wp_nav_menu_items', '\DigitalZenWorksTheme\bootstrap_add_home_link', 10, 2);
 
 // add the theme directory path as needed
-add_shortcode('theme_directory', 'bootstrap_theme_directory_shortcode');
+add_shortcode('theme_directory', '\DigitalZenWorksTheme\bootstrap_theme_directory_shortcode');
 
 remove_action('wp_head','qtranxf_wp_head_meta_generator');
 
