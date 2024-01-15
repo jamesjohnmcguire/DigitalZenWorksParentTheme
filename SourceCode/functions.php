@@ -36,103 +36,119 @@ remove_action('wp_head','qtranxf_wp_head_meta_generator');
 remove_filter('the_content', 'wpautop');
 remove_filter('the_excerpt', 'wpautop');
 
-function bootstrap_add_home_link($items)
+if (!function_exists('bootstrap_add_home_link'))
 {
-	if (!is_front_page())
+	function bootstrap_add_home_link($items)
 	{
-		$items ='<li id="home-link" class="menu-item"><a href="/">Home</a></li>'.$items;
-	}
+		if (!is_front_page())
+		{
+			$items = '<li id="home-link" class="menu-item">' .
+				'<a href="/">Home</a></li>' . $items;
+		}
 
-	return $items;
+		return $items;
+	}
 }
 
 /**
  * Display navigation to next/previous comments when applicable.
  */
-function bootstrap_comment_nav()
+if (!function_exists('bootstrap_comment_nav'))
 {
-	// Are there comments to navigate through?
-	if (get_comment_pages_count() > 1 && get_option('page_comments'))
+	function bootstrap_comment_nav()
 	{
+		// Are there comments to navigate through?
+		if (get_comment_pages_count() > 1 && get_option('page_comments'))
+		{
 ?>
 	<nav class="navigation comment-navigation" role="navigation">
 		<h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'twentyfifteen' ); ?></h2>
 		<div class="nav-links">
 <?php
-		$older_comments = translate( 'Older Comments');
-		$newer_comments = translate( 'Newer Comments');
-		if ($prev_link = get_previous_comments_link($older_comments))
-		{
-			printf( '<div class="nav-previous">%s</div>', $prev_link );
-		}
+			$older_comments = translate( 'Older Comments');
+			$newer_comments = translate( 'Newer Comments');
+			if ($prev_link = get_previous_comments_link($older_comments))
+			{
+				printf( '<div class="nav-previous">%s</div>', $prev_link );
+			}
 
-		if ($next_link = get_previous_comments_link($newer_comments))
-		{
-			printf( '<div class="nav-next">%s</div>', $next_link );
-		}
+			if ($next_link = get_previous_comments_link($newer_comments))
+			{
+				printf( '<div class="nav-next">%s</div>', $next_link );
+			}
 ?>
 		</div><!-- .nav-links -->
 	</nav><!-- .comment-navigation -->
 <?php
+		}
 	}
 }
 
-function bootstrap_get_archive_title()
+if (!function_exists('bootstrap_get_archive_title'))
 {
-	$message = null;
-	if ((true == is_archive()) && (false == is_category()))
+	function bootstrap_get_archive_title()
 	{
-		if (isset($_GET['paged']) && !empty($_GET['paged']) )
+		$message = null;
+		if ((true == is_archive()) && (false == is_category()))
 		{
-			$message = translate( 'Blog Archives', 'digitalzenworks-theme');
-		}
-		else
-		{
-			if (is_day())
+			if (isset($_GET['paged']) && !empty($_GET['paged']) )
+			{
+				$message = translate( 'Blog Archives', 'digitalzenworks-theme');
+			}
+			else
 			{
 				$type = 'Daily';
 				$format = get_the_time(get_option('date_format'));
-			}
-			elseif (is_month())
-			{
-				$type = 'Monthly';
-				$format = get_the_time('F Y');
-			}
-			elseif (is_year())
-			{
-				$type = 'Yearly';
-				$format = get_the_time('Y');
-			}
 
-			$message = sprintf(__('%s Archives: <span>%s</span>',
-				'digitalzenworks-theme'), $type, $format);
+				if (is_day())
+				{
+					$type = 'Daily';
+					$format = get_the_time(get_option('date_format'));
+				}
+				elseif (is_month())
+				{
+					$type = 'Monthly';
+					$format = get_the_time('F Y');
+				}
+				elseif (is_year())
+				{
+					$type = 'Yearly';
+					$format = get_the_time('Y');
+				}
+
+				$message = sprintf(__('%s Archives: <span>%s</span>',
+					'digitalzenworks-theme'), $type, $format);
+			}
 		}
-	}
 
-	return $message;
+		return $message;
+	}
 }
 
-function bootstrap_get_breadcrumbs()
+if (!function_exists('bootstrap_get_breadcrumbs'))
 {
-	if (!is_front_page())
+	function bootstrap_get_breadcrumbs()
 	{
+		if (!is_front_page())
+		{
 ?>
     <!-- breadcrumb -->
 <?php
-		$breadcrumbs_enabled = current_theme_supports('yoast-seo-breadcrumbs');
+			$breadcrumbs_enabled = current_theme_supports('yoast-seo-breadcrumbs');
 
-		if ((function_exists('yoast_breadcrumb')) &&
-			($breadcrumbs_enabled == true))
-		{
-			yoast_breadcrumb('<p id="breadcrumbs">','</p>');
-		}
-		else
-		{
+			if ((function_exists('yoast_breadcrumb')) &&
+				($breadcrumbs_enabled == true))
+			{
+				yoast_breadcrumb('<p id="breadcrumbs">','</p>');
+			}
+			else
+			{
 ?>
             <ol class="breadcrumb">
               <li><a href="/"><span class="fa fa-home"></span> Home</a></li>
             </ol>
 <?php
+			}
 		}
 	}
 }
@@ -208,24 +224,27 @@ if (!function_exists('bootstrap_get_page_title'))
 	}
 }
 
-function bootstrap_get_pagination($class)
+if (!function_exists('bootstrap_get_pagination'))
 {
-	global $wp_query;
-	$total_pages = $wp_query->max_num_pages;
-	if ( $total_pages > 1 )
+	function bootstrap_get_pagination($class)
 	{
-		$next = get_next_posts_link(
-			__( '<span class="meta-nav">&laquo;</span> Older posts',
-			'digitalzenworks-theme' ));
-		$previous = get_previous_posts_link(
-			__( 'Newer posts <span class="meta-nav">&raquo;</span>',
-			'digitalzenworks-theme' ));
-		?>
+		global $wp_query;
+		$total_pages = $wp_query->max_num_pages;
+		if ( $total_pages > 1 )
+		{
+			$next = get_next_posts_link(
+				__( '<span class="meta-nav">&laquo;</span> Older posts',
+				'digitalzenworks-theme' ));
+			$previous = get_previous_posts_link(
+				__( 'Newer posts <span class="meta-nav">&raquo;</span>',
+				'digitalzenworks-theme' ));
+?>
                 <div id="<?php echo $class; ?>" class="navigation">
                   <span class="nav-previous"><?php echo $next; ?></span>
                   <span class="nav-next"><?php echo $previous; ?></span>
                 </div><!-- #<?php echo $class; ?> -->
-		<?php
+<?php
+		}
 	}
 }
 
@@ -373,13 +392,16 @@ if (!function_exists('bootstrap_navigation_link'))
 	}
 }
 
-function bootstrap_remove_head_rest()
+if (!function_exists('bootstrap_remove_head_rest'))
 {
-	// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
-	remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+	function bootstrap_remove_head_rest()
+	{
+		// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
+		remove_action('template_redirect', 'rest_output_link_header', 11, 0);
 
-	remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
-	remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+		remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+		remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	}
 }
 
 if (!function_exists('show_right_column'))
@@ -394,128 +416,136 @@ if (!function_exists('show_right_column'))
 	}
 }
 
-function bootstrap_show_title($title = null, $title_classes = null,
-	$degree = 1)
+if (!function_exists('bootstrap_show_title'))
 {
-	if (empty($title))
+	function bootstrap_show_title($title = null, $title_classes = null,
+		$degree = 1)
 	{
-		$title = get_the_title();
-	}
-
+		if (empty($title))
+		{
+			$title = get_the_title();
+		}
 ?>
     <div class="row">
       <div class="col">
         <div class="title <?php echo $title_classes; ?>">
           <h<?php echo $degree; ?>><?php echo $title; ?></h<?php echo $degree; ?>>
 <?php
-	global $enable_breadcrumbs;
+		global $enable_breadcrumbs;
 
-	if ($enable_breadcrumbs == true)
-	{
-		bootstrap_get_breadcrumbs();
-	}
+		if ($enable_breadcrumbs == true)
+		{
+			bootstrap_get_breadcrumbs();
+		}
 ?>
         </div>
       </div>
     </div>
 <?php
+	}
 }
 
-function bootstrap_theme_customizer($wp_customize)
+if (!function_exists('bootstrap_theme_customizer'))
 {
-	$wp_customize->add_section('theme_options',
-		array('title' => 'Theme Options'));
+	function bootstrap_theme_customizer($wp_customize)
+	{
+		$wp_customize->add_section('theme_options',
+			array('title' => 'Theme Options'));
 
-	$wp_customize->add_setting('use_carousel', array('type' => 'theme_mod',
-		'default' => 'Single Image only','transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('use_carousel', array('type' => 'theme_mod',
+			'default' => 'Single Image only','transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('use_carousel', array(
-		'section' => 'theme_options',
-		'label' => 'Use carousel or single image?',
-		'type' => 'radio', 'choices' => array(
-			'single_image' => 'Single Image Only',
-			'use_carousel' => 'Use Carousel')));
+		$wp_customize->add_control('use_carousel', array(
+			'section' => 'theme_options',
+			'label' => 'Use carousel or single image?',
+			'type' => 'radio', 'choices' => array(
+				'single_image' => 'Single Image Only',
+				'use_carousel' => 'Use Carousel')));
 
-	//$wp_customize->add_setting('use_title', array(
-	//	'default' => true,'transport' => 'postMessage'));
+		//$wp_customize->add_setting('use_title', array(
+		//	'default' => true,'transport' => 'postMessage'));
 
-	$wp_customize->add_setting('use_title', array('type' => 'theme_mod',
-		'default' => 'Use Blog Title as Caption','transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('use_title', array('type' => 'theme_mod',
+			'default' => 'Use Blog Title as Caption','transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('use_title', array(
-		'section' => 'theme_options', 'label' => 'Use Blog Title as Caption?',
-		'type' => 'checkbox'));
+		$wp_customize->add_control('use_title', array(
+			'section' => 'theme_options', 'label' => 'Use Blog Title as Caption?',
+			'type' => 'checkbox'));
 
-	// 'transport' => 'refresh' ?
-	$wp_customize->add_setting('show_main_menu', array(
-		'default' => true, 'transport' => 'postMessage'));
+		// 'transport' => 'refresh' ?
+		$wp_customize->add_setting('show_main_menu', array(
+			'default' => true, 'transport' => 'postMessage'));
 
-	$wp_customize->add_control('show_main_menu', array(
-		'section' => 'theme_options', 'label' => 'Show Main Menu?',
-		'type' => 'checkbox'));
+		$wp_customize->add_control('show_main_menu', array(
+			'section' => 'theme_options', 'label' => 'Show Main Menu?',
+			'type' => 'checkbox'));
 
-	$wp_customize->add_setting('menu_location', array('type' => 'theme_mod',
-		'default' => 'Menu Above','transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('menu_location', array('type' => 'theme_mod',
+			'default' => 'Menu Above','transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('menu_location', array(
-		'section' => 'theme_options',
-		'label' => 'Main menu above top or below top image?',
-		'type' => 'radio', 'choices' => array(
-			'menu_above' => 'Menu Above',
-			'menu_below' => 'Menu Below')));
+		$wp_customize->add_control('menu_location', array(
+			'section' => 'theme_options',
+			'label' => 'Main menu above top or below top image?',
+			'type' => 'radio', 'choices' => array(
+				'menu_above' => 'Menu Above',
+				'menu_below' => 'Menu Below')));
 
-	$wp_customize->add_setting('google_analytics_code', array('type' => 'theme_mod',
-		'default' => '', 'transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('google_analytics_code', array('type' => 'theme_mod',
+			'default' => '', 'transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('google_analytics_code', array(
-		'section' => 'theme_options',
-		'label' => 'Your google analytics code?',
-		'type' => 'text'));
+		$wp_customize->add_control('google_analytics_code', array(
+			'section' => 'theme_options',
+			'label' => 'Your google analytics code?',
+			'type' => 'text'));
 
-	$wp_customize->add_setting('facebook_url', array('type' => 'theme_mod',
-		'default' => '', 'transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('facebook_url', array('type' => 'theme_mod',
+			'default' => '', 'transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('facebook_url', array(
-		'section' => 'theme_options',
-		'label' => 'Your facebook URL?',
-		'type' => 'text'));
+		$wp_customize->add_control('facebook_url', array(
+			'section' => 'theme_options',
+			'label' => 'Your facebook URL?',
+			'type' => 'text'));
 
-	$wp_customize->add_setting('gplus_url', array('type' => 'theme_mod',
-		'default' => '', 'transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('gplus_url', array('type' => 'theme_mod',
+			'default' => '', 'transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('gplus_url', array(
-		'section' => 'theme_options',
-		'label' => 'Your google plus URL?',
-		'type' => 'text'));
+		$wp_customize->add_control('gplus_url', array(
+			'section' => 'theme_options',
+			'label' => 'Your google plus URL?',
+			'type' => 'text'));
 
-	$wp_customize->add_setting('pinterest_url', array('type' => 'theme_mod',
-		'default' => '', 'transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('pinterest_url', array('type' => 'theme_mod',
+			'default' => '', 'transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('pinterest_url', array(
-		'section' => 'theme_options',
-		'label' => 'Your pinterest_url URL?',
-		'type' => 'text'));
+		$wp_customize->add_control('pinterest_url', array(
+			'section' => 'theme_options',
+			'label' => 'Your pinterest_url URL?',
+			'type' => 'text'));
 
-	$wp_customize->add_setting('twitter_url', array('type' => 'theme_mod',
-		'default' => '', 'transport' => 'refresh',
-		'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting('twitter_url', array('type' => 'theme_mod',
+			'default' => '', 'transport' => 'refresh',
+			'capability' => 'manage_options', 'priority' => 4));
 
-	$wp_customize->add_control('twitter_url', array(
-		'section' => 'theme_options',
-		'label' => 'Your twitter URL?',
-		'type' => 'text'));
+		$wp_customize->add_control('twitter_url', array(
+			'section' => 'theme_options',
+			'label' => 'Your twitter URL?',
+			'type' => 'text'));
+	}
 }
 
-function bootstrap_theme_directory_shortcode($content = '')
+if (!function_exists('bootstrap_theme_directory_shortcode'))
 {
-	return get_template_directory_uri().$content;
+	function bootstrap_theme_directory_shortcode($content = '')
+	{
+		return get_template_directory_uri().$content;
+	}
 }
 
 if (!function_exists('bootstrap_use_navbar_logo'))
@@ -528,31 +558,12 @@ if (!function_exists('bootstrap_use_navbar_logo'))
 	}
 }
 
-function comment_debug()
+if (!function_exists('comment_debug'))
 {
-	$item = '';
-	$post_id = '';
-
-	if (!empty($_SERVER))
+	function comment_debug($message)
 	{
-		if (array_key_exists('REQUEST_URI', $_SERVER))
-		{
-			$item = $_SERVER['REQUEST_URI'];
-			$item  = trim($item, '/');
-		}
+		echo "\r\n<!--*****DEBUG: $message*****-->\r\n";
 	}
-
-	if (!empty($item))
-	{
-		$post = get_page_by_path($item);
-
-		if (!empty($post))
-		{
-			$post_id = $post->ID;
-		}
-	}
-
-	echo "\r\n<!--*****DEBUG: item: $item :: post: $post_id*****-->\r\n";
 }
 
 if (!function_exists('dequeue_assets'))
@@ -672,15 +683,17 @@ if (!function_exists('enqueue_styles'))
 	}
 }
 
-function get_loop($authordata)
+if (!function_exists('get_loop'))
 {
-	while (have_posts())
+	function get_loop($authordata)
 	{
-		the_post();
-		$authorId = get_the_author_meta('ID');
-		$author = get_author_posts_url($authorId);
-		//get_author_link( false, $authordata->ID, $authordata->user_nicename );
-		?>
+		while (have_posts())
+		{
+			the_post();
+			$authorId = get_the_author_meta('ID');
+			$author = get_author_posts_url($authorId);
+			//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+?>
 
                 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                   <h2 class="entry-title">
@@ -711,7 +724,8 @@ function get_loop($authordata)
 	<?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
                     </div><!-- #entry-utility -->
                   </div><!-- #post-<?php the_ID(); ?> -->
-	<?php
+<?php
+		}
 	}
 }
 
@@ -781,9 +795,12 @@ if (!function_exists('output_head'))
 	}
 }
 
-function remove_block_library_styles()
+if (!function_exists('remove_block_library_styles'))
 {
-	wp_dequeue_style('wp-block-library');
-	wp_dequeue_style('wp-block-library-theme');
-	wp_dequeue_style('wc-block-style'); // Remove WooCommerce block CSS
+	function remove_block_library_styles()
+	{
+		wp_dequeue_style('wp-block-library');
+		wp_dequeue_style('wp-block-library-theme');
+		wp_dequeue_style('wc-block-style'); // Remove WooCommerce block CSS
+	}
 }
