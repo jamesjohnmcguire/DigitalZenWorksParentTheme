@@ -3,6 +3,8 @@
 Template Name: Articles
 */
 
+namespace DigitalZenWorksTheme;
+
 get_header();
 ?>
     <!-- articles.php -->

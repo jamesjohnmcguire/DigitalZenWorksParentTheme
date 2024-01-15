@@ -3,6 +3,8 @@
 Template Name: Author
 */
 
+namespace DigitalZenWorksTheme;
+
 get_header();
 ?>
     <!-- author.php -->

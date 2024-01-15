@@ -3,6 +3,8 @@
 Template Name: Single
 */
 
+namespace DigitalZenWorksTheme;
+
 get_header();
 ?>
     <!-- single.php -->

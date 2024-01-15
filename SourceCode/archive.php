@@ -3,6 +3,8 @@
 Template Name: Archives
 */
 
+namespace DigitalZenWorksTheme;
+
 get_header();
 rewind_posts();
 

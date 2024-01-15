@@ -3,6 +3,8 @@
 Template Name: Category
 */
 
+namespace DigitalZenWorksTheme;
+
 $title = single_cat_title('', false);
 $title = __($title);
 
