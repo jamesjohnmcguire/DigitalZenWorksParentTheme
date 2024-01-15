@@ -35,7 +35,7 @@ remove_action('wp_head','qtranxf_wp_head_meta_generator');
 remove_filter('the_content', 'wpautop');
 remove_filter('the_excerpt', 'wpautop');
 
-if (!function_exists('bootstrap_add_home_link'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_add_home_link'))
 {
 	function bootstrap_add_home_link($items)
 	{
@@ -52,7 +52,7 @@ if (!function_exists('bootstrap_add_home_link'))
 /**
  * Display navigation to next/previous comments when applicable.
  */
-if (!function_exists('bootstrap_comment_nav'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_comment_nav'))
 {
 	function bootstrap_comment_nav()
 	{
@@ -83,7 +83,7 @@ if (!function_exists('bootstrap_comment_nav'))
 	}
 }
 
-if (!function_exists('bootstrap_get_archive_title'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_archive_title'))
 {
 	function bootstrap_get_archive_title()
 	{
@@ -124,7 +124,7 @@ if (!function_exists('bootstrap_get_archive_title'))
 	}
 }
 
-if (!function_exists('bootstrap_get_breadcrumbs'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_breadcrumbs'))
 {
 	function bootstrap_get_breadcrumbs()
 	{
@@ -152,7 +152,7 @@ if (!function_exists('bootstrap_get_breadcrumbs'))
 	}
 }
 
-if (!function_exists('bootstrap_get_front_page_image'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_front_page_image'))
 {
 	function bootstrap_get_front_page_image()
 	{
@@ -163,7 +163,7 @@ if (!function_exists('bootstrap_get_front_page_image'))
 	}
 }
 
-if (!function_exists('bootstrap_get_language'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_language'))
 {
 	function bootstrap_get_language()
 	{
@@ -180,7 +180,7 @@ if (!function_exists('bootstrap_get_language'))
 	}
 }
 
-if (!function_exists('bootstrap_get_nav'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_nav'))
 {
 	function bootstrap_get_nav($title, $use_logo)
 	{
@@ -201,7 +201,7 @@ if (!function_exists('bootstrap_get_nav'))
 	}
 }
 
-if (!function_exists('bootstrap_get_page_title'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_page_title'))
 {
 	function bootstrap_get_page_title()
 	{
@@ -223,7 +223,7 @@ if (!function_exists('bootstrap_get_page_title'))
 	}
 }
 
-if (!function_exists('bootstrap_get_pagination'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_pagination'))
 {
 	function bootstrap_get_pagination($class)
 	{
@@ -247,7 +247,7 @@ if (!function_exists('bootstrap_get_pagination'))
 	}
 }
 
-if (!function_exists('bootstrap_get_status_line'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_status_line'))
 {
 	function bootstrap_get_status_line($read_more = true)
 	{
@@ -271,7 +271,7 @@ if (!function_exists('bootstrap_get_status_line'))
 	}
 }
 
-if (!function_exists('bootstrap_get_the_posts'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_the_posts'))
 {
 	function bootstrap_get_the_posts($paged = true)
 	{
@@ -319,7 +319,7 @@ if (!function_exists('bootstrap_get_the_posts'))
 	}
 }
 
-if (!function_exists('bootstrap_get_title'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_get_title'))
 {
 	function bootstrap_get_title($page_name_site_name = true,
 		$site_name_page_name = false, $only_site_name = false,
@@ -360,7 +360,7 @@ if (!function_exists('bootstrap_get_title'))
 If the page is articles (posts) list page, include links in the head for
 next and previous
 */
-if (!function_exists('bootstrap_navigation_link'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_navigation_link'))
 {
 	function bootstrap_navigation_link($type)
 	{
@@ -391,7 +391,7 @@ if (!function_exists('bootstrap_navigation_link'))
 	}
 }
 
-if (!function_exists('bootstrap_remove_head_rest'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_remove_head_rest'))
 {
 	function bootstrap_remove_head_rest()
 	{
@@ -403,7 +403,7 @@ if (!function_exists('bootstrap_remove_head_rest'))
 	}
 }
 
-if (!function_exists('show_right_column'))
+if (!function_exists('\DigitalZenWorksTheme\show_right_column'))
 {
 	function show_right_column()
 	{
@@ -415,7 +415,7 @@ if (!function_exists('show_right_column'))
 	}
 }
 
-if (!function_exists('bootstrap_show_title'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_show_title'))
 {
 	function bootstrap_show_title($title = null, $title_classes = null,
 		$degree = 1)
@@ -444,7 +444,7 @@ if (!function_exists('bootstrap_show_title'))
 	}
 }
 
-if (!function_exists('bootstrap_theme_customizer'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_theme_customizer'))
 {
 	function bootstrap_theme_customizer($wp_customize)
 	{
@@ -539,7 +539,7 @@ if (!function_exists('bootstrap_theme_customizer'))
 	}
 }
 
-if (!function_exists('bootstrap_theme_directory_shortcode'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_theme_directory_shortcode'))
 {
 	function bootstrap_theme_directory_shortcode($content = '')
 	{
@@ -547,7 +547,7 @@ if (!function_exists('bootstrap_theme_directory_shortcode'))
 	}
 }
 
-if (!function_exists('bootstrap_use_navbar_logo'))
+if (!function_exists('\DigitalZenWorksTheme\bootstrap_use_navbar_logo'))
 {
 	function bootstrap_use_navbar_logo()
 	{
@@ -557,7 +557,7 @@ if (!function_exists('bootstrap_use_navbar_logo'))
 	}
 }
 
-if (!function_exists('comment_debug'))
+if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
 {
 	function comment_debug($message)
 	{
@@ -565,7 +565,7 @@ if (!function_exists('comment_debug'))
 	}
 }
 
-if (!function_exists('dequeue_assets'))
+if (!function_exists('\DigitalZenWorksTheme\dequeue_assets'))
 {
 	function dequeue_assets()
 	{
@@ -579,7 +579,7 @@ if (!function_exists('dequeue_assets'))
 	}
 }
 
-if (!function_exists('disable_emojicons_tinymce'))
+if (!function_exists('\DigitalZenWorksTheme\disable_emojicons_tinymce'))
 {
 	function disable_emojicons_tinymce( $plugins )
 	{
@@ -594,7 +594,7 @@ if (!function_exists('disable_emojicons_tinymce'))
 	}
 }
 
-if (!function_exists('disable_emojicons'))
+if (!function_exists('\DigitalZenWorksTheme\disable_emojicons'))
 {
 	function disable_emojicons()
 	{
@@ -608,11 +608,11 @@ if (!function_exists('disable_emojicons'))
 		remove_filter('comment_text_rss', 'wp_staticize_emoji');
 
 		// filter to remove TinyMCE emojis
-		add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+		add_filter( 'tiny_mce_plugins', '\DigitalZenWorksTheme\disable_emojicons_tinymce' );
 	}
 }
 
-if (!function_exists('enqueue_assets'))
+if (!function_exists('\DigitalZenWorksTheme\enqueue_assets'))
 {
 	function enqueue_assets()
 	{
@@ -621,7 +621,7 @@ if (!function_exists('enqueue_assets'))
 	}
 }
 
-if (!function_exists('enqueue_scripts'))
+if (!function_exists('\DigitalZenWorksTheme\enqueue_scripts'))
 {
 	function enqueue_scripts()
 	{
@@ -651,7 +651,7 @@ if (!function_exists('enqueue_scripts'))
 	}
 }
 
-if (!function_exists('enqueue_styles'))
+if (!function_exists('\DigitalZenWorksTheme\enqueue_styles'))
 {
 	function enqueue_styles()
 	{
@@ -682,7 +682,7 @@ if (!function_exists('enqueue_styles'))
 	}
 }
 
-if (!function_exists('get_loop'))
+if (!function_exists('\DigitalZenWorksTheme\get_loop'))
 {
 	function get_loop($authordata)
 	{
@@ -728,7 +728,7 @@ if (!function_exists('get_loop'))
 	}
 }
 
-if (!function_exists('mailer_config'))
+if (!function_exists('\DigitalZenWorksTheme\mailer_config'))
 {
 	function mailer_config($mailer)
 	{
@@ -764,7 +764,7 @@ if (!function_exists('mailer_config'))
 	}
 }
 
-if (!function_exists('output_head'))
+if (!function_exists('\DigitalZenWorksTheme\output_head'))
 {
 	function output_head($title, $icon_file = null)
 	{
@@ -794,7 +794,7 @@ if (!function_exists('output_head'))
 	}
 }
 
-if (!function_exists('remove_block_library_styles'))
+if (!function_exists('\DigitalZenWorksTheme\remove_block_library_styles'))
 {
 	function remove_block_library_styles()
 	{
