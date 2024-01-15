@@ -6,13 +6,10 @@
  * @author  James John McGuire <jamesjohnmcguire@gmail.com>
  */
 
- declare(strict_types=1);
+declare(strict_types=1);
 
- // Insure THEME_DEBUG is defined.
+// Insure THEME_DEBUG is defined.
 defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
-
-//contains functions specific to the bootstrap theme
-include 'bootstrap.php';
 
 // Remove the Link header for the WP REST API, as this (falsely) causes
 // W3C validation errors
