@@ -4,6 +4,22 @@ Digital Zen Theme	Tasks
 	add npm update to build.cmd
 	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
 	dart sass
+		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "disable_emojicons" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
+		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "\DigitalZenWorksTheme\dequeue_assets" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
+		Warning: The use statement with non-compound name has no effect in themes\digitalzenworks-irdi\functions.php on line 13
+		Fatal error: Cannot redeclare DigitalZenWorksTheme\dequeue_assets() (previously declared in themes\digitalzenworks-irdi\functions.php:59) in themes\digitalzenworks\functions.php on line 97
+		Warning: Undefined variable $type in themes\digitalzenworks\functions.php on line 241
+		Warning: Undefined variable $format in themes\digitalzenworks\functions.php on line 243
+		Call to undefined function get_archive_title() in themes\digitalzenworks\archive.php on line 10
+		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "disable_emojicons" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
+		Call to undefined function root_adjust() in themes\digitalzenworks-irdi\front-page.php on line 78
+		Uncaught Error: Call to undefined function get_sub_root() in themes\digitalzenworks-irdi\footer.php on line 34
+		Call to undefined function bootstrap_show_title() in themes\digitalzenworks-irdi\single-event.php on line 18
+		Remove events.php from parent theme
+		Call to undefined function show_carousel() in themes\digitalzenworks-irdi\section.php on line 84
+		Call to undefined function DigitalZenWorksTheme\bootstrap_show_title() in themes\digitalzenworks-irdi\single-event.php on line 20
+		Call to undefined function bootstrap_get_title() in themes\digitalzenworks-child\header.php on line 2
+		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "register_primary_menu" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
 Dzw Theme	Tasks
 	<script type="text/javascript" src="http://localhost/wp-content/themes/digitalzenworks/assets/js/vendor/jquery.slim.min.js?ver=6.4.2" id="jquery.slim-js"></script>
 	<script type="text/javascript" src="http://localhost/wp-content/themes/digitalzenworks/assets/js/vendor/bootstrap.min.js?ver=6.4.2" id="bootstrap-js"></script>
