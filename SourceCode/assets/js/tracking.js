@@ -1,9 +1,12 @@
+function GoogleTag(tagId)
+{
 	console.log('google analytics begin');
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 
-	gtag('config', 'UA-170462278-1');
+	gtag('config', tagId);
+}
 
 	// Facebook analytics
 	!function(f,b,e,v,n,t,s)
