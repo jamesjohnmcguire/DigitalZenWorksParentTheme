@@ -11,7 +11,7 @@ $year = date("Y");
     <!-- FOOTER -->
 
     </section><!--main-container-->
-    <div style="clear: both; height:20px; overflow:hidden;"></div>
+    <div class="clearfix footer-clear"></div>
 
     <div class="copyright">
       <div class="container">   

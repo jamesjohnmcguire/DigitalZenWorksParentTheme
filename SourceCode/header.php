@@ -109,8 +109,8 @@ navigation_link("prev");
 
   <body>
     <!-- Facebook Pixel Code -->
-    <noscript>
-      <img height="1" width="1" style="display:none" alt="Facebook Pixel Code"
+    <noscript id="facebook-pixel-code-noscript">
+      <img height="1" width="1" alt="Facebook Pixel Code"
         src="https://www.facebook.com/tr?id=286120895201177&ev=PageView&noscript=1"
       />
     </noscript>
@@ -133,7 +133,10 @@ if (($front_page_only == 'all_pages') || (is_front_page()))
 	{
 		$image = get_front_page_image();
 ?>
-      <div class="item active"><a href="<?php echo $home; ?>"><img src="<?php echo $image; ?>" class="ls-bg" style="width: 100%;" alt="<?php echo $title; ?>"/></a>
+      <div class="item active">
+        <a href="<?php echo $home; ?>">
+          <img class="image-full" alt="<?php echo $title; ?>" src="<?php echo $image; ?>">
+        </a>
 <?php
 if (true == $use_title)
 {
@@ -172,6 +175,6 @@ if (!is_front_page())
 ?>
       </header><!--row-->
     </div><!--header-container-->
-    <div style="clear:both;"></div>
+    <div class="clearfix"></div>
 
     <section id="main-container" class="container-fluid<?php echo $additional_css_classes; ?>">

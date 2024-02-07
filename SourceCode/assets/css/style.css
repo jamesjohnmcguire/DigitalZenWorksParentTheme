@@ -38,6 +38,11 @@ body
 	}
 }
 
+#facebook-pixel-code-noscript
+{
+	display: none;
+}
+
 .pdf-icon
 {
 	font-size: 100%;
@@ -842,6 +847,11 @@ a:hover
 	}
 }
 
+.image-full
+{
+	width: 100%;
+}
+
 .sandpaper
 {
 	width: 100%;
@@ -857,4 +867,10 @@ a:hover
 		margin-top: 20px;
 		margin-bottom: 20px;
 	}
+}
+
+.footer-clear
+{
+	overflow: hidden;
+	height: 20px;
 }
