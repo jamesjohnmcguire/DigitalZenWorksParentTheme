@@ -1,4 +1,6 @@
 Digital Zen Theme	Tasks
+    <!--meta name="alexaVerifyID" content=""/>
+    <meta name="google-site-verification" content="" /-->
 	Check for duplicate functionality	wp_head
 	Clean up functions.php
 	add npm update to build.cmd
