@@ -1,4 +1,14 @@
-<?php get_header(); ?>
+<?php
+/*
+Template Name: Front Page
+*/
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+ 
+get_header();
+ ?>
     <!-- front-page.php -->
 <?php
 if (is_home())
