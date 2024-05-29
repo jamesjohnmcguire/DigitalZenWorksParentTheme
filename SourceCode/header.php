@@ -13,11 +13,8 @@ $google_analytics_code = get_theme_mod('google_analytics_code');
 
 $home = "/";
 
-?>
-<!--[if IE]><![endif]-->
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-<!--2020-02-09-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
