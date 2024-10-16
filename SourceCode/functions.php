@@ -190,8 +190,10 @@ if (!function_exists('\DigitalZenWorksTheme\enqueue_styles'))
 
 		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
 		wp_enqueue_style('bootstrap-style', $bootstrap_file);
-		wp_enqueue_style('fontawesome-style',
-			"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
+
+		$css_cdn_path = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/' .
+			'4.5.0/css/font-awesome.min.css';
+		wp_enqueue_style('fontawesome-style', $css_cdn_path);
 
 		// When debug is false, these files, in their minified version are
 		// loaded from the child theme.
