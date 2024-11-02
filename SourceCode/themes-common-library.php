@@ -6,9 +6,15 @@ Common functions used across different WordPress themes.
 function get_archive_title()
 {
 	$message = null;
-	if ((true == is_archive()) && (false == is_category()))
+
+	$archive = is_archive();
+	$category = is_category();
+
+	if ($archive === true && $category === false)
 	{
-		if (isset($_GET['paged']) && !empty($_GET['paged']) )
+		$exists = !empty($_GET['paged']);
+
+		if ($exists === true)
 		{
 			$message = translate( 'Blog Archives', 'digitalzenworks-theme');
 		}
@@ -24,14 +30,15 @@ function get_archive_title()
 				$type = 'Monthly';
 				$format = get_the_time('F Y');
 			}
-			elseif (is_year())
+			else
 			{
 				$type = 'Yearly';
 				$format = get_the_time('Y');
 			}
 
-			$message = sprintf(__('%s Archives: <span>%s</span>',
-				'digitalzenworks-theme'), $type, $format);
+			$translation =
+				__('%s Archives: <span>%s</span>', 'digitalzenworks-theme');
+			$message = sprintf($translation, $type, $format);
 		}
 	}
 

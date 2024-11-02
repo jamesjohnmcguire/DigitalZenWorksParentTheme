@@ -29,13 +29,33 @@ while (have_posts())
 	$authorId = get_the_author_meta('ID');
 	$author = get_author_posts_url($authorId);
 	//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+  $authordata = get_the_author_meta();
+  $id = the_ID();
+  $class = post_class();
+  $title = the_title();
+  $url = the_permalink();
+
+  $translation = __('Permalink to %s', 'digitalzenworks-theme');
+  $title_attribute = the_title_attribute( 'echo=0' );
+  $message = sprintf( $translation, $title_attribute );
 ?>
-                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'digitalzenworks-theme'), the_title_attribute('echo=0') ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
+                <div id="post-<?php echo $id; ?>" <?php echo $class; ?>>
+                    <h2 class="entry-title">
+                      <a href="<?php echo $url; ?>"
+                        title="<?php echo $message; ?>"
+                        rel="bookmark"
+                        ><?php echo $title; ?></a>
+                    </h2>
 
                     <div class="entry-meta">
                         <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
-                        <span class="author vcard"><a class="url fn n" href="<?php echo $author; ?>" title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?></a></span>
+                        <span class="author vcard">
+                          <a
+                            class="url fn n"
+                            href="<?php echo $author; ?>"
+                            title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?>
+                          </a>
+                        </span>
                         <span class="meta-sep"> | </span>
                         <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
                         <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
