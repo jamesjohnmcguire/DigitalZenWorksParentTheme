@@ -31,6 +31,8 @@ Dzw Theme	Tasks
 	Clean up functions.php
 Development Plan
 	Infrastructure
+	BoilerPlate
+	_ Theme
 	Core Functionality
 	Merging of other themes
 	Testing, Polishing, Validation of requirements
@@ -38,34 +40,37 @@ Development Plan
 	Publish	On Github, WordPress
 
 	Infrastructure
-		ignore file.
-		standard license
-		blank screen shot
-		README.md
+		Base Git
+			README.md
+			LICENSE
+			.gitignore
+				workspace file *
+			funding
 		.editorconfig
-		workspace file *
-		npm & composer ?
-		phpdoc
+		composer
+		npm
 		phpunit
+		phpdoc
 		build tools
+			build.cmd
 			grunt
 			node modules
 			minify
 			scss
-		pipelines
-		sniffs and warnings, theme checkers, etc
-		unit tests
+			sniffs and warnings, theme checkers, etc
+			file headers
+	_ Theme	_s theme
+	BoilerPlate
 	Core Functionality
-		_s theme
-		boilerplate
+		blank screen shot
 		bootstrap
+	Infrastructure II
+		unit tests
+		pipelines
+
 	style.css
 	pot files
 	assets
-	other packages?
-	Merging of other themes
-		merge of existing themes
-			child themes
 	optimizations
 		seo
 		social media
@@ -73,14 +78,11 @@ Development Plan
 		admin options
 	google analytics
 	Merge variant themes
+		DigitalZenWorksTheme
 		Dzw-Bootstrap-Child
+		Dzw-Custom
 		Psynary
 		Inferret
-		Start from _s?	I think too much work in the given timeframe
-		DigitalZen	Just too much in infancy
-		Dzw-Custom
-	funding
-	file headers
 Notes
 	CustomLogo
 		Install
