@@ -543,3 +543,15 @@ Additional Code
 
 	//Remove Gutenberg Block Library CSS from loading on the frontend
 	add_action('wp_enqueue_scripts', 'remove_block_library_styles', 100);
+Digital Zen Themes Development
+	Error: Call to undefined function get_field() in C:\Util\xampp\htdocs\wp-content\themes\inferret\functions.php on line 37
+	<meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include 	<meta name="mobile-web-app-capable" content="yes">
+	Theme	update bootstrap theme from pan
+	DigitalZenWorks	REQUIRED: .wp-caption css class is needed in your theme css
+	DigitalZenWorks	use sass to fix webfont paths
+	Themes	add option for mobile hamburger menu
+	Themes	Deal with <!--meta name="alexaVerifyID" content=""/>
+	Themes	Deal with <meta name="google-site-verification" content="" /-->
+	Themes	find out why this is needed and fix it, so it isn't so much of a hack height: calc(100% - 20px);
+DigitalZenWorks Theme
+	Merge tracking.js
