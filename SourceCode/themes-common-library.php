@@ -164,5 +164,3 @@ function wpseo_canonical()
 {
 	return add_query_arg( NULL, NULL );
 }
-
-?>
