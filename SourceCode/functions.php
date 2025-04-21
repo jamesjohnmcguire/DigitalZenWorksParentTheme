@@ -26,6 +26,11 @@ add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
 //Remove Gutenberg Block Library CSS from loading on the frontend
 // add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
 
+add_action(
+	'wp_enqueue_scripts',
+	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed',
+	100);
+
 add_filter('show_admin_bar', '__return_false');
 // add_filter('wp_mail_from_name','from_mail_name');
 // add_filter('wp_nav_menu_objects', 'modify_wp_nav_menu_objects', 10, 2);
@@ -109,6 +114,36 @@ if (!function_exists('\DigitalZenWorksTheme\dequeue_assets'))
 		}
 
 		disable_emojicons();
+	}
+}
+
+if (!function_exists(
+	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed'))
+{
+	function dequeue_wpcf7_recaptcha_when_not_needed()
+	{
+		// Only run on the frontend
+		if (!is_admin())
+		{
+			// Check if the current post content contains
+			// a Contact Form 7 shortcode.
+			global $post;
+
+			if (!isset($post) ||
+				!has_shortcode($post->post_content, 'contact-form-7'))
+			{
+				// Dequeue the reCAPTCHA script and its inline data.
+				wp_dequeue_script('wpcf7-recaptcha-js');
+				wp_deregister_script('wpcf7-recaptcha-js');
+
+				// Remove the inline script.
+				add_filter(
+					'script_loader_tag',
+					'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script',
+					10,
+					2);
+			}
+		}
 	}
 }
 
@@ -658,6 +693,24 @@ if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
 
 		remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
 		remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+	}
+}
+
+if (!function_exists(
+	'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script'))
+{
+	// Remove unused inline script tags for contact forms and reCAPTCHA.
+	function remove_wpcf7_recaptcha_inline_script($tag, $handle)
+	{
+		if ($handle === 'contact-form-7' ||
+			$handle === 'google-recaptcha' ||
+			$handle === 'wpcf7-recaptcha' ||
+			$handle === 'wpcf7-recaptcha-js-before')
+		{
+			$tag = '';
+		}
+
+		return $tag;
 	}
 }
 
