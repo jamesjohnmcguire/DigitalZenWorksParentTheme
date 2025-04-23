@@ -22,14 +22,16 @@ add_action('after_setup_theme', '\DigitalZenWorksTheme\remove_head_rest');
 add_action('customize_register', '\DigitalZenWorksTheme\theme_customizer');
 add_action('phpmailer_init', '\DigitalZenWorksTheme\mailer_config', 10, 1);
 add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_assets');
-add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
-//Remove Gutenberg Block Library CSS from loading on the frontend
-// add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
-
+add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_polyfill', 100); 
 add_action(
 	'wp_enqueue_scripts',
 	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed',
 	100);
+add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
+
+//Remove Gutenberg Block Library CSS from loading on the frontend
+// add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
+
 
 add_filter('show_admin_bar', '__return_false');
 // add_filter('wp_mail_from_name','from_mail_name');
@@ -114,6 +116,18 @@ if (!function_exists('\DigitalZenWorksTheme\dequeue_assets'))
 		}
 
 		disable_emojicons();
+	}
+}
+
+if (!function_exists('\DigitalZenWorksTheme\dequeue_polyfill'))
+{
+	function dequeue_polyfill()
+	{
+		wp_dequeue_script( 'regenerator-runtime' );
+		wp_deregister_script( 'regenerator-runtime' );
+
+		wp_dequeue_script( 'wp-polyfill' );
+		wp_deregister_script( 'wp-polyfill' );
 	}
 }
 
