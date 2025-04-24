@@ -22,7 +22,7 @@ add_action('after_setup_theme', '\DigitalZenWorksTheme\remove_head_rest');
 add_action('customize_register', '\DigitalZenWorksTheme\theme_customizer');
 add_action('phpmailer_init', '\DigitalZenWorksTheme\mailer_config', 10, 1);
 add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_assets');
-add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_polyfill', 100); 
+add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_polyfill', 100);
 add_action(
 	'wp_enqueue_scripts',
 	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed',
@@ -136,7 +136,7 @@ if (!function_exists(
 {
 	function dequeue_wpcf7_recaptcha_when_not_needed()
 	{
-		// Only run on the frontend
+		// Only check for the frontend
 		if (!is_admin())
 		{
 			// Check if the current post content contains
@@ -156,6 +156,9 @@ if (!function_exists(
 					'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script',
 					10,
 					2);
+
+				add_filter( 'wpcf7_load_js', '__return_false' );
+				add_filter( 'wpcf7_load_css', '__return_false' );
 			}
 		}
 	}
@@ -447,7 +450,7 @@ if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 		{
 			$title = qtrans_use($language, $title);
 		}
- 
+
 		return $title;
 	}
 }
@@ -718,6 +721,8 @@ if (!function_exists(
 	{
 		if ($handle === 'contact-form-7' ||
 			$handle === 'google-recaptcha' ||
+			$handle === 'swv' ||
+			$handle === 'wp-i18n' ||
 			$handle === 'wpcf7-recaptcha' ||
 			$handle === 'wpcf7-recaptcha-js-before')
 		{
