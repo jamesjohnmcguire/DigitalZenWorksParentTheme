@@ -1,4 +1,7 @@
 Digital Zen Theme	Tasks
+	Update ionicons
+	Update Font Awesome
+	Consolidate De-queuing Assets
     <!--meta name="alexaVerifyID" content=""/>
     <meta name="google-site-verification" content="" /-->
 	Check for duplicate functionality	wp_head
@@ -309,7 +312,7 @@ Resources
 DigitalZen Theme
 	Including the "Desktop development with C++" while VS installation.(you can modify existing installation)
 
-	npm config set msbuild_path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Msbuild\Current\Bin\MSBuild.exe" 
+	npm config set msbuild_path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Msbuild\Current\Bin\MSBuild.exe"
 
 	npm config set msvs_version 2022
 
