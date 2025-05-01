@@ -1,8 +1,8 @@
 <?php get_header(); ?>
- 
+
         <div id="container">
           <div id="content">
- 
+
             <?php the_post(); ?>
 
             <h1 class="page-title"><?php _e( 'Tag Archives:', 'digitalzenworks-theme' ) ?> <span><?php single_tag_title() ?></span></h1>
@@ -29,15 +29,15 @@ while (have_posts())
 	$authorId = get_the_author_meta('ID');
 	$author = get_author_posts_url($authorId);
 	//get_author_link( false, $authordata->ID, $authordata->user_nicename );
-  $authordata = get_the_author_meta();
-  $id = the_ID();
-  $class = post_class();
-  $title = the_title();
-  $url = the_permalink();
+	$authordata = get_the_author_meta();
+	$id = the_ID();
+	$class = post_class();
+	$title = get_the_title();
+	$url = the_permalink();
 
-  $translation = __('Permalink to %s', 'digitalzenworks-theme');
-  $title_attribute = the_title_attribute( 'echo=0' );
-  $message = sprintf( $translation, $title_attribute );
+	$translation = __('Permalink to %s', 'digitalzenworks-theme');
+	$title_attribute = the_title_attribute( 'echo=0' );
+	$message = sprintf( $translation, $title_attribute );
 ?>
                 <div id="post-<?php echo $id; ?>" <?php echo $class; ?>>
                     <h2 class="entry-title">
@@ -46,14 +46,18 @@ while (have_posts())
                         rel="bookmark"
                         ><?php echo $title; ?></a>
                     </h2>
-
+<?php
+$display_name = get_the_author_meta('display_name');
+$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
+$title = sprintf( $inner_message, $display_name );
+?>
                     <div class="entry-meta">
                         <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
                         <span class="author vcard">
                           <a
                             class="url fn n"
                             href="<?php echo $author; ?>"
-                            title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?>
+                            title="<?php echo $title; ?>"><?php the_author(); ?>
                           </a>
                         </span>
                         <span class="meta-sep"> | </span>
@@ -63,7 +67,9 @@ while (have_posts())
                     </div><!-- .entry-meta -->
 
                     <div class="entry-summary">
-                      <?php the_excerpt( __( 'Continue reading <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )  ); ?>
+<?php
+the_excerpt( );
+?>
                     </div><!-- .entry-summary -->
 
                     <div class="entry-utility">

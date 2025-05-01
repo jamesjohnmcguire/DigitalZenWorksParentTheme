@@ -1,16 +1,22 @@
 <?php
 /*
-Template Name: Tags
+Template Name: Tag
 */
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
+$title = get_page_title();
 
 get_header();
 ?>
     <!-- tags.php -->
     <section id="main-container" class="container breadcrumbs">
       <div id="row">
-        <?php the_post(); ?>          
-        <h1 class="page-title" title="<?php echo single_page_title(); ?>">
-          Tag Archives: <?php single_page_title(); ?>
+        <?php the_post(); ?>
+        <h1 class="page-title" title="<?php echo $title; ?>">
+          Tag Archives: <?php echo $title; ?>
         </h1>
         <br />
 <?php
@@ -28,7 +34,7 @@ while (have_posts())
         </div>
         <br />
 <?php
-	get_status_line($authordata);
+	get_status_line();
 }
 ?>
       </div>
