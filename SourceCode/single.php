@@ -3,6 +3,8 @@
 Template Name: Single
 */
 
+declare(strict_types=1);
+
 namespace DigitalZenWorksTheme;
 
 get_header();

@@ -3,6 +3,10 @@
 Template Name: INDEX
 */
 
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 $classes = '';
 if ((!is_home()) && (!is_front_page()))
 {

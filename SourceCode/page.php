@@ -2,6 +2,11 @@
 /*
 Template Name: Default
 */
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 get_header();
 the_post();
 

@@ -1,4 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 $title = get_title();
 
 $use_carousel = get_theme_mod('use_carousel');

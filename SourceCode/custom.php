@@ -3,6 +3,10 @@
 Template Name: Custom Index
 */
 
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 get_header();
 
 ?>

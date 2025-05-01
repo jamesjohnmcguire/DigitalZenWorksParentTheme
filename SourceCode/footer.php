@@ -1,4 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 $site_title = get_bloginfo('name');
 $facebook_url = get_theme_mod('facebook_url');
 $gplus_url = get_theme_mod('gplus_url');

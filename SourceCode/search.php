@@ -1,4 +1,11 @@
-<?php get_header(); ?>
+<?php
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
+get_header();
+?>
  
         <div id="container">
             <div id="content">

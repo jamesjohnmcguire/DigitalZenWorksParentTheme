@@ -1,4 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
+namespace DigitalZenWorksTheme;
+
 /**
  * The template for displaying comments
  *
