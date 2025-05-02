@@ -32,13 +32,12 @@ add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets');
 //Remove Gutenberg Block Library CSS from loading on the frontend
 // add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
 
-
 add_filter('show_admin_bar', '__return_false');
 // add_filter('wp_mail_from_name','from_mail_name');
 // add_filter('wp_nav_menu_objects', 'modify_wp_nav_menu_objects', 10, 2);
 
 // add the home link to the main menu, if needed
-add_filter('wp_nav_menu_items', '\DigitalZenWorksTheme\add_home_link', 10, 2);
+add_filter( 'wp_nav_menu_items', '\DigitalZenWorksTheme\add_home_link', 10 );
 
 // add the theme directory path as needed
 add_shortcode('theme_directory', '\DigitalZenWorksTheme\theme_directory_shortcode');
@@ -396,7 +395,9 @@ if (!function_exists('\DigitalZenWorksTheme\get_loop'))
                   </div><!-- .entry-meta -->
 
                     <div class="entry-summary">
-<?php the_excerpt( __( 'Continue reading <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )  ); ?>
+<?php
+the_excerpt( );
+?>
                     </div><!-- .entry-summary -->
 
                     <div class="entry-utility">
@@ -706,7 +707,7 @@ if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
 	function remove_head_rest()
 	{
 		// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
-		remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+		remove_action( 'template_redirect', 'rest_output_link_header', 11 );
 
 		remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
 		remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );

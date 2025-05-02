@@ -4,48 +4,74 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+/** @var WP_Post $post */
+global $post;
+global $wp_query;
+
 get_header();
 ?>
  
         <div id="container">
             <div id="content">
- 
-				<?php if ( have_posts() ) : ?>
+<?php
+if ( have_posts() )
+{
+	$message = __( 'Search Results for: ', 'digitalzenworks-theme' );
+	$escaped_message = esc_html( $message );
+?>
+              <h1 class="page-title"><?php echo $escaped_message; ?>
+                <span><?php the_search_query(); ?></span>
+              </h1>
+<?php
+	$total_pages = $wp_query->max_num_pages;
+	if ( $total_pages > 1 )
+	{
+ ?>
+              <div id="nav-above" class="navigation">
+                <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
+                <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
+              </div><!-- #nav-above -->
+<?php
+	}
 
-				                <h1 class="page-title"><?php _e( 'Search Results for: ', 'digitalzenworks-theme' ); ?><span><?php the_search_query(); ?></span></h1>
+	while ( have_posts() ) :
+		the_post();
+		$authorId = get_the_author_meta('ID');
+		$author = get_author_posts_url($authorId);
+?>
 
-				<?php global $wp_query; $total_pages = $wp_query->max_num_pages; if ( $total_pages > 1 ) { ?>
-				                <div id="nav-above" class="navigation">
-				                    <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
-				                    <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
-				                </div><!-- #nav-above -->
-				<?php
-				}
+                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'digitalzenworks-theme'), the_title_attribute('echo=0') ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 
-				while ( have_posts() ) :
-				the_post();
-				$authorId = get_the_author_meta('ID');
-				$author = get_author_posts_url($authorId);
-				?>
+<?php
+		if ( $post->post_type == 'post' )
+		{
+			$display_name = get_the_author_meta('display_name');
+			$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
+			$title = sprintf( $inner_message, $display_name );
+?>
+                    <div class="entry-meta">
+                        <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
+                        <span class="author vcard">
+                          <a class="url fn n" href="<?php echo $author; ?>"
+                            title="<?php echo $title; ?>"><?php the_author(); ?></a>
+                        </span>
+                        <span class="meta-sep"> | </span>
+                        <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
+                        <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
+                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
+                    </div><!-- .entry-meta -->
+<?php
+		}
+?>
 
-				                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				                    <h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'digitalzenworks-theme'), the_title_attribute('echo=0') ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-
-				<?php if ( $post->post_type == 'post' ) { ?>
-				                    <div class="entry-meta">
-				                        <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
-				                        <span class="author vcard"><a class="url fn n" href="<?php echo $author; ?>" title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?></a></span>
-				                        <span class="meta-sep"> | </span>
-				                        <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
-				                        <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
-				                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
-				                    </div><!-- .entry-meta -->
-				<?php } ?>
-
-				                    <div class="entry-summary">
-				<?php the_excerpt( __( 'Continue reading <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )  ); ?>
-				<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'digitalzenworks-theme' ) . '&after=</div>') ?>
-				                    </div><!-- .entry-summary -->
+                    <div class="entry-summary">
+<?php
+		the_excerpt( );
+		wp_link_pages(
+			'before=<div class="page-link">' . __( 'Pages:', 'digitalzenworks-theme' ) . '&after=</div>');
+ ?>
+                    </div><!-- .entry-summary -->
 
 				<?php if ( $post->post_type == 'post' ) { ?>
 				                    <div class="entry-utility">
@@ -67,8 +93,11 @@ get_header();
 				                </div><!-- #nav-below -->
 				<?php } ?>            
 
-				<?php else : ?>
-
+<?php
+}
+else
+{
+?>
 				                <div id="post-0" class="post no-results not-found">
 				                    <h2 class="entry-title"><?php _e( 'Nothing Found', 'digitalzenworks-theme' ) ?></h2>
 				                    <div class="entry-content">
@@ -77,10 +106,11 @@ get_header();
 				                    </div><!-- .entry-content -->
 				                </div>
 
-				<?php endif; ?>           
- 
+<?php
+}
+?>
             </div><!-- #content -->
-			<?php get_sidebar(); ?>
+<?php get_sidebar(); ?>
         </div><!-- #container -->
- 
-<?php get_footer(); ?>
+<?php
+get_footer();
