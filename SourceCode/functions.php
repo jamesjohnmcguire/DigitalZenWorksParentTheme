@@ -22,7 +22,6 @@ add_action('after_setup_theme', '\DigitalZenWorksTheme\remove_head_rest');
 add_action('customize_register', '\DigitalZenWorksTheme\theme_customizer');
 add_action('phpmailer_init', '\DigitalZenWorksTheme\mailer_config', 10, 1);
 add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_assets');
-add_action('wp_enqueue_scripts', '\DigitalZenWorksTheme\dequeue_polyfill', 100);
 add_action(
 	'wp_enqueue_scripts',
 	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed',
@@ -145,6 +144,9 @@ if (!function_exists(
 			if (!isset($post) ||
 				!has_shortcode($post->post_content, 'contact-form-7'))
 			{
+				// Polyfill is not needed, except for the Contact Form.
+				dequeue_polyfill();
+
 				// Dequeue the reCAPTCHA script and its inline data.
 				wp_dequeue_script('wpcf7-recaptcha-js');
 				wp_deregister_script('wpcf7-recaptcha-js');
