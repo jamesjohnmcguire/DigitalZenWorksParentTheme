@@ -13,6 +13,13 @@ namespace DigitalZenWorksTheme;
 // Insure THEME_DEBUG is defined.
 defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
+// Remove the Link header for the WP REST API
+// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/".
+// remove_action(
+// 	'template_redirect',
+//	'\DigitalZenWorksTheme\remove_head_rest',
+//	11);
+
 // Remove the Link header for the WP REST API, as this (falsely) causes
 // W3C validation errors
 add_action('after_setup_theme', '\DigitalZenWorksTheme\remove_head_rest');
@@ -781,12 +788,18 @@ if (!function_exists('\DigitalZenWorksTheme\theme_customizer'))
 {
 	function theme_customizer($wp_customize)
 	{
-		$wp_customize->add_section('theme_options',
-			array('title' => 'Theme Options'));
+		$options = ['title' => 'Theme Options'];
+		$wp_customize->add_section('theme_options', $options);
 
-		$wp_customize->add_setting('use_carousel', array('type' => 'theme_mod',
-			'default' => 'Single Image only','transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$options =
+		[
+			'type' => 'theme_mod',
+			'default' => 'Single Image only',
+			'transport' => 'refresh',
+			'capability' => 'manage_options',
+			'priority' => 4
+		];
+		$wp_customize->add_setting('use_carousel', $options);
 
 		$wp_customize->add_control('use_carousel', array(
 			'section' => 'theme_options',
