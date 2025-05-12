@@ -87,12 +87,13 @@ if (!function_exists('\DigitalZenWorksTheme\comment_nav'))
 		if (get_comment_pages_count() > 1 && get_option('page_comments'))
 		{
 ?>
-	<nav class="navigation comment-navigation" role="navigation">
-		<h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'twentyfifteen' ); ?></h2>
-		<div class="nav-links">
+    <nav class="navigation comment-navigation" role="navigation">
+      <h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'twentyfifteen' ); ?></h2>
+      <div class="nav-links">
 <?php
 			$older_comments = translate( 'Older Comments');
 			$newer_comments = translate( 'Newer Comments');
+
 			if ($prev_link = get_previous_comments_link($older_comments))
 			{
 				printf( '<div class="nav-previous">%s</div>', $prev_link );
@@ -103,8 +104,8 @@ if (!function_exists('\DigitalZenWorksTheme\comment_nav'))
 				printf( '<div class="nav-next">%s</div>', $next_link );
 			}
 ?>
-		</div><!-- .nav-links -->
-	</nav><!-- .comment-navigation -->
+      </div><!-- .nav-links -->
+  </nav><!-- .comment-navigation -->
 <?php
 		}
 	}
@@ -445,20 +446,29 @@ if (!function_exists('\DigitalZenWorksTheme\get_nav'))
 
 if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 {
-	function get_page_title()
+	function get_page_title(
+		$use_site_name = true,
+		$seperator = ' | ')
 	{
 		$language = get_language();
+		$site_name = get_bloginfo('name');
+		$title = wp_title( '', false );
 
-		$title = wp_title('', false);
+		$empty = empty( $title );
 
-		if ((empty($title)) && (is_front_page()))
+		if ( true === $empty )
 		{
-			$title = single_post_title('', false);
+			$title = single_post_title( '', false );
 		}
 
-		if (function_exists('qtrans_use'))
+		if (true == $use_site_name)
 		{
-			$title = qtrans_use($language, $title);
+			$title = $site_name . $seperator . $title;
+		}
+
+		if (function_exists( 'qtrans_use' ) )
+		{
+			$title = qtrans_use( $language, $title );
 		}
 
 		return $title;
@@ -489,33 +499,50 @@ if (!function_exists('\DigitalZenWorksTheme\get_pagination'))
 	}
 }
 
+/**
+ * Get the status line for the post.
+ *
+ * @param bool $read_more Whether to show the read more link.
+ * @return void
+ */
 if (!function_exists('\DigitalZenWorksTheme\get_status_line'))
 {
-	function get_status_line($read_more = true)
+	function get_status_line( $read_more = true )
 	{
-		$time = get_the_time('Y/m/d');
-		$categories = get_the_category_list(', ');
+		$categories = get_the_category_list( ', ' );
+
 		$link = get_the_permalink();
+		$link = esc_url( $link );
+
+		$time = get_the_time( 'Y/m/d' );
+		$time = esc_html( $time );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
-          <ul class="meta-info-cells v2 float-wrapper">
-            <li><span class="fa fa-calendar"></span> <?php echo $time; ?></li>
-            <li><span class="fa fa-file"></span><?php echo $categories; ?></li>
+                    <ul class="meta-info-cells v2 float-wrapper">
+                        <li><span class="fa fa-calendar"></span> <?php echo $time; ?></li>
+                        <li><span class="fa fa-file"></span><?php echo $categories; ?></li>
 <?php
-		if (true == $read_more)
+		if ( true === $read_more )
 		{
 ?>
-            <li class="pull-right"><a href="<?php echo $link; ?>" class="btn-link">Read more</a></li>
+                        <li class="pull-right">
+                          <a href="<?php echo $link; ?>"
+                            class="btn-link">Read more</a>
+                        </li>
 <?php
 		}
 ?>
-          </ul>
+                    </ul>
 <?php
 	}
 }
 
 if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
 {
-	function get_the_posts($paged = true)
+	function get_the_posts(
+		$paged = true,
+		$show_excerpts = false,
+		$videos = false)
 	{
 		if (true == $paged)
 		{
@@ -523,11 +550,18 @@ if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
 			query_posts("posts_per_page=10&paged=$paged");
 		}
 
+		$additional_classes = '';
+
+		if (true == $videos)
+		{
+			$additional_classes = ' video-item';
+		}
+
 		if (have_posts())
 		{
 ?>
        <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 post-content">
 <?php
 			if (true == $paged)
 			{
@@ -541,9 +575,19 @@ if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
           <h2>
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
           </h2>
-          <div class="block-content">
-<?php the_excerpt(); ?>
+          <div class="block-content<?php echo $additional_classes; ?>">
+<?php
+				if ($show_excerpts == true)
+				{
+					the_excerpt();
+				}
+				else
+				{
+					the_content();
+				}
+?>
           </div>
+          <div class="clearfix"></div>
           <br />
 <?php
 				get_status_line();
@@ -755,24 +799,40 @@ if (!function_exists('\DigitalZenWorksTheme\show_right_column'))
 	}
 }
 
+/**
+ * Show the title of the page.
+ *
+ * @param string $title The title to show.
+ * @return void
+ */
 if (!function_exists('\DigitalZenWorksTheme\show_title'))
 {
 	function show_title($title = null, $title_classes = null,
 		$degree = 1)
 	{
-		if (empty($title))
+		$exists = ! empty( $title );
+
+		if ( false === $exists )
 		{
-			$title = get_the_title();
+			$have_posts = have_posts();
+
+			if ( true === $have_posts )
+			{
+				$title = get_the_title();
+			}
 		}
+
+		$title = esc_html( $title );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
     <div class="row">
-      <div class="col">
-        <div class="title <?php echo $title_classes; ?>">
+      <div class="col-md-12">
+        <div id="title" class="title <?php echo $title_classes; ?>">
           <h<?php echo $degree; ?>><?php echo $title; ?></h<?php echo $degree; ?>>
 <?php
 		global $enable_breadcrumbs;
 
-		if ($enable_breadcrumbs == true)
+		if ( true === $enable_breadcrumbs )
 		{
 			get_breadcrumbs();
 		}

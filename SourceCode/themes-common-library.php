@@ -93,35 +93,6 @@ function get_other_categories($seperator)
 	return trim(join( $seperator, $cats ));
 }
 
-function get_page_number()
-{
-	if (get_query_var('paged'))
-	{
-		print ' | ' . __( 'Page ' , 'digitalzenworks-theme') . get_query_var('paged');
-	}
-}
-
-function get_pagination($class)
-{
-	global $wp_query;
-	$total_pages = $wp_query->max_num_pages;
-	if ( $total_pages > 1 )
-	{
-		$next = get_next_posts_link(
-			__( '<span class="meta-nav">&laquo;</span> Older posts',
-			'digitalzenworks-theme' ));
-		$previous = get_previous_posts_link(
-			__( 'Newer posts <span class="meta-nav">&raquo;</span>',
-			'digitalzenworks-theme' ));
-		?>
-                <div id="<?php echo $class; ?>" class="navigation">
-                  <span class="nav-previous"><?php echo $next; ?></span>
-                  <span class="nav-next"><?php echo $previous; ?></span>
-                </div><!-- #<?php echo $class; ?> -->
-		<?php
-	}
-}
-
 // Check for static widgets in widget-ready areas
 function is_sidebar_active( $index )
 {
@@ -160,7 +131,13 @@ function remove_json_api ()
 	//remove_action( 'wp_head', 'wp_oembed_add_host_js' );
 }
 
+
+/**
+ * Clear canonical data for WP SEO Plugin.
+ *
+ * @return string
+ */
 function wpseo_canonical()
 {
-	return add_query_arg( NULL, NULL );
+	return add_query_arg( null, null );
 }
