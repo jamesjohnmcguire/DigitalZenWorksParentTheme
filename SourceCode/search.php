@@ -23,16 +23,7 @@ if ( have_posts() )
                 <span><?php the_search_query(); ?></span>
               </h1>
 <?php
-	$total_pages = $wp_query->max_num_pages;
-	if ( $total_pages > 1 )
-	{
- ?>
-              <div id="nav-above" class="navigation">
-                <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
-                <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
-              </div><!-- #nav-above -->
-<?php
-	}
+get_pagination( 'nav-above' );
 
 	while ( have_posts() ) :
 		the_post();
@@ -49,19 +40,14 @@ if ( have_posts() )
 			$display_name = get_the_author_meta('display_name');
 			$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
 			$title = sprintf( $inner_message, $display_name );
-?>
-                    <div class="entry-meta">
-                        <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
-                        <span class="author vcard">
-                          <a class="url fn n" href="<?php echo $author; ?>"
-                            title="<?php echo $title; ?>"><?php the_author(); ?></a>
-                        </span>
-                        <span class="meta-sep"> | </span>
-                        <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
-                        <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
-                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
-                    </div><!-- .entry-meta -->
-<?php
+
+			show_entry_meta(
+				$domain,
+				$author,
+				$title,
+				$edit_message,
+				$edit_before,
+				$edit_after);
 		}
 ?>
 
@@ -73,27 +59,25 @@ if ( have_posts() )
  ?>
                     </div><!-- .entry-summary -->
 
-				<?php if ( $post->post_type == 'post' ) { ?>
-				                    <div class="entry-utility">
-				                        <span class="cat-links"><span class="entry-utility-prep entry-utility-prep-cat-links"><?php _e( 'Posted in ', 'digitalzenworks-theme' ); ?></span><?php echo get_the_category_list(', '); ?></span>
-				                        <span class="meta-sep"> | </span>
-				                        <?php the_tags( '<span class="tag-links"><span class="entry-utility-prep entry-utility-prep-tag-links">' . __('Tagged ', 'digitalzenworks-theme' ) . '</span>', ", ", "</span>\n\t\t\t\t\t\t<span class=\"meta-sep\">|</span>\n" ) ?>
-				                        <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'digitalzenworks-theme' ), __( '1 Comment', 'digitalzenworks-theme' ), __( '% Comments', 'digitalzenworks-theme' ) ) ?></span>
-				                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
-				                    </div><!-- #entry-utility -->
-				<?php } ?>
-				                </div><!-- #post-<?php the_ID(); ?> -->
+<?php
+if ( $post->>post_type == 'post' )
+{
+	show_entry_utility_section(
+		$comment_message,
+		$comments_one,
+		$comments_more,
+		$edit_message,
+		$edit_before,
+		$edit_after,
+		$domain);
+}
+?>
+                </div><!-- #post-<?php the_ID(); ?> -->
 
 				<?php endwhile; ?>
 
-				<?php global $wp_query; $total_pages = $wp_query->max_num_pages; if ( $total_pages > 1 ) { ?>
-				                <div id="nav-below" class="navigation">
-				                    <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
-				                    <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
-				                </div><!-- #nav-below -->
-				<?php } ?>            
-
 <?php
+	get_pagination( 'nav-below' );
 }
 else
 {

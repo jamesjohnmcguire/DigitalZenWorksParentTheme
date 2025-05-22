@@ -13,6 +13,8 @@ namespace DigitalZenWorksTheme;
 // Insure THEME_DEBUG is defined.
 defined('THEME_DEBUG') OR define('THEME_DEBUG', false);
 
+require_once 'messages.php';
+
 // Remove the Link header for the WP REST API
 // [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/".
 // remove_action(
@@ -283,28 +285,34 @@ if (!function_exists('\DigitalZenWorksTheme\get_archive_title'))
 	function get_archive_title()
 	{
 		$message = null;
-		if ((true == is_archive()) && (false == is_category()))
+
+		$is_archive = is_archive();
+		$is_category = is_category();
+
+		if ( true === $is_archive && false === $is_category )
 		{
-			if (isset($_GET['paged']) && !empty($_GET['paged']) )
+			$exists = ! empty( $_GET['paged'] );
+
+			if ( true === $exists )
 			{
-				$message = translate( 'Blog Archives', 'digitalzenworks-theme');
+				$message =
+					translate( 'Blog Archives', 'digitalzenworks-theme' );
 			}
 			else
 			{
 				$type = 'Daily';
-				$format = get_the_time(get_option('date_format'));
+				$option = get_option( 'date_format' );
+				$format = get_the_time( $option );
 
-				if (is_day())
-				{
-					$type = 'Daily';
-					$format = get_the_time(get_option('date_format'));
-				}
-				elseif (is_month())
+				$is_month = is_month();
+				$is_year = is_year();
+
+				if ( true === $is_month )
 				{
 					$type = 'Monthly';
 					$format = get_the_time('F Y');
 				}
-				elseif (is_year())
+				elseif ( true === $is_year )
 				{
 					$type = 'Yearly';
 					$format = get_the_time('Y');
@@ -347,6 +355,102 @@ if (!function_exists('\DigitalZenWorksTheme\get_breadcrumbs'))
 	}
 }
 
+function show_entry_meta(
+	$domain,
+	$author,
+	$title,
+	$edit_message,
+	$edit_before,
+	$edit_after)
+{
+	$display_name = get_the_author_meta('display_name');
+	$inner_message = __( 'View all posts by %s', $domain );
+	$title = sprintf( $inner_message, $display_name );
+	$the_time = get_the_time('Y-m-d\TH:i:sO');
+?>
+                    <div class="entry-meta">
+                      <span class="meta-prep meta-prep-author">
+<?php _e('By ', $domain );
+?>
+                      </span>
+                      <span class="author vcard">
+                        <a
+                          class="url fn n"
+                          href="<?php echo $author; ?>"
+                          title="<?php echo $title; ?>"><?php the_author(); ?>
+                          </a>
+                        </span>
+                        <span class="meta-sep"> | </span>
+                        <span class="meta-prep meta-prep-entry-date">
+<?php
+_e( 'Published on ', $domain );
+?>
+                        </span>
+                        <span class="entry-date">
+                          <abbr class="published"
+                            title="<?php echo $the_time; ?>">
+<?php
+$option = get_option( 'date_format' );
+the_time( $option );
+?>
+                          </abbr>
+                        </span>
+<?php
+edit_post_link( $edit_message, $edit_before, $edit_after );
+?>
+                    </div><!-- .entry-meta -->
+<?php
+}
+
+function show_entry_utility_section(
+	$comment_message,
+	$comments_one,
+	$comments_more,
+	$edit_message,
+	$edit_before,
+	$edit_after,
+	$domain,
+	$include_the_tags = true)
+{
+	$entry_classes = 'entry-utility-prep entry-utility-prep-cat-links';
+	$category_list = get_the_category_list(', ');
+?>
+                    <div class="entry-utility">
+                      <span class="cat-links">
+                        <span class="<?php echo $entry_classes; ?>">
+<?php
+	_e( 'Posted in ', 'digitalzenworks-theme' );
+?>
+                        </span>
+<?php
+	echo $category_list;
+?>
+                      </span>
+                      <span class="meta-sep"> | </span>
+<?php
+if (true == $include_the_tags)
+{
+	$tag_message = __('Tagged ', $domain);
+	$tags_header = 	'<span class="tag-links">' .
+		'<span class="entry-utility-prep entry-utility-prep-tag-links">' .
+	 	$tag_message . '</span>';
+	$tags_footer = "</span>\n            <span class=\"meta-sep\">|</span>\n";
+
+	the_tags( $tags_header, ", ", $tags_footer );
+}
+?>
+                      <span class="comments-link">
+<?php
+comments_popup_link( $comment_message, $comments_one, $comments_more );
+?>
+                      </span>
+<?php
+edit_post_link( $edit_message, $edit_before, $edit_after );
+?>
+                    </div><!-- #entry-utility -->
+<?php
+}
+
 if (!function_exists('\DigitalZenWorksTheme\get_front_page_image'))
 {
 	function get_front_page_image()
@@ -377,16 +481,26 @@ if (!function_exists('\DigitalZenWorksTheme\get_language'))
 
 if (!function_exists('\DigitalZenWorksTheme\get_loop'))
 {
-	function get_loop($authordata)
+	function get_loop(
+		$authordata,
+		$domain = 'digitalzenworks-theme',
+		$comment_message = '',
+		$comments_one = '',
+		$comments_more = '',
+		$edit_message = '',
+		$edit_before = '',
+		$edit_after = '')
 	{
 		while (have_posts())
 		{
 			the_post();
 			$authorId = get_the_author_meta('ID');
 			$author = get_author_posts_url($authorId);
-			//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+			$title = get_the_title();
+			$author_url = get_author_posts_url(
+				$authordata->ID,
+				$authordata->user_nicename);
 ?>
-
                 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                   <h2 class="entry-title">
                     <a href="<?php the_permalink(); ?>"
@@ -394,29 +508,30 @@ if (!function_exists('\DigitalZenWorksTheme\get_loop'))
                       <?php the_title(); ?>
                     </a>
                   </h2>
-
-                  <div class="entry-meta">
-                    <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
-                    <span class="author vcard"><a class="url fn n" href="<?php echo $author; ?>" title="<?php printf( __( 'View all posts by %s', 'digitalzenworks-theme' ), $authordata->display_name ); ?>"><?php the_author(); ?></a></span>
-                    <span class="meta-sep"> | </span>
-                    <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
-                    <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
-<?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
-                  </div><!-- .entry-meta -->
-
+<?php
+show_entry_meta(
+	$domain,
+	$author,
+	$title,
+	$edit_message,
+	$edit_before,
+	$edit_after);
+?>
                     <div class="entry-summary">
 <?php
 the_excerpt( );
 ?>
                     </div><!-- .entry-summary -->
-
-                    <div class="entry-utility">
-                      <span class="cat-links"><span class="entry-utility-prep entry-utility-prep-cat-links"><?php _e( 'Posted in ', 'digitalzenworks-theme' ); ?></span><?php echo get_the_category_list(', '); ?></span>
-                      <span class="meta-sep"> | </span>
-<?php the_tags( '<span class="tag-links"><span class="entry-utility-prep entry-utility-prep-tag-links">' . __('Tagged ', 'digitalzenworks-theme' ) . '</span>', ", ", "</span>\n\t\t\t\t\t\t<span class=\"meta-sep\">|</span>\n" ) ?>
-                      <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'digitalzenworks-theme' ), __( '1 Comment', 'digitalzenworks-theme' ), __( '% Comments', 'digitalzenworks-theme' ) ) ?></span>
-<?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
-                    </div><!-- #entry-utility -->
+<?php
+show_entry_utility_section(
+	$comment_message,
+	$comments_one,
+	$comments_more,
+	$edit_message,
+	$edit_before,
+	$edit_after,
+	$domain);
+?>
                   </div><!-- #post-<?php the_ID(); ?> -->
 <?php
 		}
@@ -442,6 +557,28 @@ if (!function_exists('\DigitalZenWorksTheme\get_nav'))
     </nav>
 <?php
 	}
+}
+
+// For category lists on category archives:
+// Returns other categories except the current one (redundant)
+function get_other_categories($seperator)
+{
+	$current_cat = single_cat_title('', false);
+	$separator = "\n";
+	$cats = explode($separator, get_the_category_list($separator));
+
+	foreach ( $cats as $i => $str )
+	{
+		if ( strstr( $str, ">$current_cat<" ) ) {
+			unset($cats[$i]);
+			break;
+		}
+	}
+
+	if ( empty($cats) )
+		return false;
+
+	return trim(join( $seperator, $cats ));
 }
 
 if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
@@ -477,22 +614,23 @@ if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 
 if (!function_exists('\DigitalZenWorksTheme\get_pagination'))
 {
-	function get_pagination($class)
+	function get_pagination( $class )
 	{
 		global $wp_query;
 		$total_pages = $wp_query->max_num_pages;
+		$next_link = get_next_posts_link(
+			__( '<span class="meta-nav">&laquo;</span> Older posts',
+			'digitalzenworks-theme' ));
+		$previous_link = get_previous_posts_link(
+			__( 'Newer posts <span class="meta-nav">&raquo;</span>',
+			'digitalzenworks-theme' ));
+
 		if ( $total_pages > 1 )
 		{
-			$next = get_next_posts_link(
-				__( '<span class="meta-nav">&laquo;</span> Older posts',
-				'digitalzenworks-theme' ));
-			$previous = get_previous_posts_link(
-				__( 'Newer posts <span class="meta-nav">&raquo;</span>',
-				'digitalzenworks-theme' ));
 ?>
                 <div id="<?php echo $class; ?>" class="navigation">
-                  <span class="nav-previous"><?php echo $next; ?></span>
-                  <span class="nav-next"><?php echo $previous; ?></span>
+                  <span class="nav-previous"><?php echo $next_link; ?></span>
+                  <span class="nav-next"><?php echo $previous_link; ?></span>
                 </div><!-- #<?php echo $class; ?> -->
 <?php
 		}
@@ -767,6 +905,13 @@ if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
 	}
 }
 
+function remove_json_api ()
+{
+	// Remove the REST API link tag into page header.
+	remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+	remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+}
+
 if (!function_exists(
 	'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script'))
 {
@@ -961,4 +1106,14 @@ if (!function_exists('\DigitalZenWorksTheme\use_navbar_logo'))
 
 		return $use;
 	}
+}
+
+/**
+ * Clear canonical data for WP SEO Plugin.
+ *
+ * @return string
+ */
+function wpseo_canonical()
+{
+	return add_query_arg( null, null );
 }

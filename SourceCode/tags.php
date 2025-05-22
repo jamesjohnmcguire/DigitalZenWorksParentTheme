@@ -1,8 +1,19 @@
 <?php
+/**
+ * Template Name: Tags
+ *
+ * @package digitalzenworkstheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
+
+$entry_classes = 'entry-utility-prep entry-utility-prep-cat-links';
+$category_list = get_the_category_list( ', ' );
+$the_time = get_the_time( 'Y-m-d\TH:i:sO' );
 
 get_header();
 ?>
@@ -11,37 +22,38 @@ get_header();
 
             <?php the_post(); ?>
 
-            <h1 class="page-title"><?php _e( 'Tag Archives:', 'digitalzenworks-theme' ) ?> <span><?php single_tag_title() ?></span></h1>
+            <h1 class="page-title">
+<?php
+_e( 'Tag Archives:', 'digitalzenworks-theme' );
+?>
+              <span><?php single_tag_title(); ?></span>
+            </h1>
 
             <?php rewind_posts(); ?>
-
 <?php
-global $wp_query;
-$total_pages = $wp_query->max_num_pages;
+get_pagination( 'nav-above' );
 
-if ( $total_pages > 1 )
-{
-?>
-            <div id="nav-above" class="navigation">
-              <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
-                <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
-              </div><!-- #nav-above -->
-<?php
-}
+$have_posts = have_posts();
 
-while (have_posts())
+while ( true === $have_posts )
 {
+	/* translators: %s: Tag name. */
+	$translation = __( 'Tag Archives: %s', 'digitalzenworks-theme' );
+	$escaped_message = esc_html( $translation );
+
 	the_post();
-	$authorId = get_the_author_meta('ID');
-	$author = get_author_posts_url($authorId);
-	//get_author_link( false, $authordata->ID, $authordata->user_nicename );
+	$author_id = get_the_author_meta( 'ID' );
+	$author = get_author_posts_url( $author_id );
+	$author_url =
+		get_author_posts_url( $authordata->ID, $authordata->user_nicename );
 	$authordata = get_the_author_meta();
 	$id = the_ID();
 	$class = post_class();
 	$title = get_the_title();
 	$url = the_permalink();
 
-	$translation = __('Permalink to %s', 'digitalzenworks-theme');
+	/* translators: Permalink to post. */
+	$translation = __( 'Permalink to %s', 'digitalzenworks-theme' );
 	$title_attribute = the_title_attribute( 'echo=0' );
 	$message = sprintf( $translation, $title_attribute );
 ?>
@@ -53,61 +65,45 @@ while (have_posts())
                         ><?php echo $title; ?></a>
                     </h2>
 <?php
-$display_name = get_the_author_meta('display_name');
+$display_name = get_the_author_meta( 'display_name' );
+/* translators: View all posts by author. */
 $inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
 $title = sprintf( $inner_message, $display_name );
-?>
-                    <div class="entry-meta">
-                        <span class="meta-prep meta-prep-author"><?php _e('By ', 'digitalzenworks-theme'); ?></span>
-                        <span class="author vcard">
-                          <a
-                            class="url fn n"
-                            href="<?php echo $author; ?>"
-                            title="<?php echo $title; ?>"><?php the_author(); ?>
-                          </a>
-                        </span>
-                        <span class="meta-sep"> | </span>
-                        <span class="meta-prep meta-prep-entry-date"><?php _e('Published ', 'digitalzenworks-theme'); ?></span>
-                        <span class="entry-date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php the_time( get_option( 'date_format' ) ); ?></abbr></span>
-                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t" ) ?>
-                    </div><!-- .entry-meta -->
 
+show_entry_meta(
+	$domain,
+	$author,
+	$title,
+	$edit_message,
+	$edit_before,
+	$edit_after);
+?>
                     <div class="entry-summary">
 <?php
-the_excerpt( );
+the_excerpt();
 ?>
                     </div><!-- .entry-summary -->
-
-                    <div class="entry-utility">
-                        <span class="cat-links"><span class="entry-utility-prep entry-utility-prep-cat-links"><?php _e( 'Posted in ', 'digitalzenworks-theme' ); ?></span><?php echo get_the_category_list(', '); ?></span>
-                        <span class="meta-sep"> | </span>
-                        <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'digitalzenworks-theme' ), __( '1 Comment', 'digitalzenworks-theme' ), __( '% Comments', 'digitalzenworks-theme' ) ) ?></span>
-                        <?php edit_post_link( __( 'Edit', 'digitalzenworks-theme' ), "<span class=\"meta-sep\">|</span>\n\t\t\t\t\t\t<span class=\"edit-link\">", "</span>\n\t\t\t\t\t\n" ) ?>
-                    </div><!-- #entry-utility -->
+<?php
+show_entry_utility_section(
+	$comment_message,
+	$comments_one,
+	$comments_more,
+	$edit_message,
+	$edit_before,
+	$edit_after,
+	$domain,
+	false);
+?>
                 </div><!-- #post-<?php the_ID(); ?> -->
-
 <?php
 }
-?>
 
-<?php
-global $wp_query;
-$total_pages = $wp_query->max_num_pages;
-
-if ( $total_pages > 1 )
-{
+get_pagination( 'nav-below' );
 ?>
-                <div id="nav-below" class="navigation">
-                    <div class="nav-previous"><?php next_posts_link(__( '<span class="meta-nav">&laquo;</span> Older posts', 'digitalzenworks-theme' )) ?></div>
-                    <div class="nav-next"><?php previous_posts_link(__( 'Newer posts <span class="meta-nav">&raquo;</span>', 'digitalzenworks-theme' )) ?></div>
-                </div><!-- #nav-below -->
-<?php
-}
-?>
-
             </div><!-- #content -->
-			<?php get_sidebar(); ?>
+<?php
+get_sidebar();
+?>
         </div><!-- #container -->
-
 <?php
 get_footer();
