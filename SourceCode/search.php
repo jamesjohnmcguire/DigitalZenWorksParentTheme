@@ -1,100 +1,108 @@
 <?php
+/**
+ * Search Template
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-/** @var WP_Post $post */
+/** @var string $domain */
+global $domain;
+
+/** @var string $edit_message */
+global $edit_message;
+
+/** @var string $edit_before */
+global $edit_before;
+
+/** @var string $edit_after */
+global $edit_after;
+
+/** @var string $comment_message */
+global $comment_message;
+
+/** @var string $comments_one */
+global $comments_one;
+
+/** @var string $comments_more */
+global $comments_more;
+
+/** @var \WP_Post $post */
 global $post;
-global $wp_query;
+
+$have_posts = $tag_query->have_posts();
 
 get_header();
 ?>
  
-        <div id="container">
-            <div id="content">
+      <div id="container">
+        <div id="content">
 <?php
-if ( have_posts() )
+if ( true === $have_posts )
 {
 	$message = __( 'Search Results for: ', 'digitalzenworks-theme' );
 	$escaped_message = esc_html( $message );
 ?>
-              <h1 class="page-title"><?php echo $escaped_message; ?>
-                <span><?php the_search_query(); ?></span>
-              </h1>
+        <h1 class="page-title"><?php echo $escaped_message; ?>
+          <span><?php the_search_query(); ?></span>
+        </h1>
 <?php
-get_pagination( 'nav-above' );
+	get_pagination( 'nav-above' );
 
-	while ( have_posts() ) :
+	while ( true === $have_posts )
+	{
 		the_post();
-		$authorId = get_the_author_meta('ID');
-		$author = get_author_posts_url($authorId);
-?>
 
-                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'digitalzenworks-theme'), the_title_attribute('echo=0') ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
+		$post = get_post();
+		$url = get_permalink();
+		$title = get_the_title();
 
-<?php
-		if ( $post->post_type == 'post' )
-		{
-			$display_name = get_the_author_meta('display_name');
-			$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
-			$title = sprintf( $inner_message, $display_name );
+		$classes = get_post_class();
+		$classes = implode( ' ', $classes );
 
-			show_entry_meta(
-				$domain,
-				$author,
-				$title,
-				$edit_message,
-				$edit_before,
-				$edit_after);
-		}
-?>
+		show_post(
+			$post,
+			$classes,
+			$url,
+			$title,
+			$comment_message,
+			$comments_one,
+			$comments_more,
+			$edit_message,
+			$edit_before,
+			$edit_after,
+			$domain,
+			true);
 
-                    <div class="entry-summary">
-<?php
-		the_excerpt( );
-		wp_link_pages(
-			'before=<div class="page-link">' . __( 'Pages:', 'digitalzenworks-theme' ) . '&after=</div>');
- ?>
-                    </div><!-- .entry-summary -->
+		$have_posts = $tag_query->have_posts();
+	}
 
-<?php
-if ( $post->>post_type == 'post' )
-{
-	show_entry_utility_section(
-		$comment_message,
-		$comments_one,
-		$comments_more,
-		$edit_message,
-		$edit_before,
-		$edit_after,
-		$domain);
-}
-?>
-                </div><!-- #post-<?php the_ID(); ?> -->
-
-				<?php endwhile; ?>
-
-<?php
 	get_pagination( 'nav-below' );
 }
 else
 {
+	$nothing_found = __( 'Nothing Found', 'digitalzenworks-theme' );
+	$message = 'Sorry, but nothing matched your search criteria. ' .
+	'Please try again with some different keywords.';
+	$message = __( $message, 'digitalzenworks-theme' );
 ?>
-				                <div id="post-0" class="post no-results not-found">
-				                    <h2 class="entry-title"><?php _e( 'Nothing Found', 'digitalzenworks-theme' ) ?></h2>
-				                    <div class="entry-content">
-				                        <p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'digitalzenworks-theme' ); ?></p>
-				    <?php get_search_form(); ?>
-				                    </div><!-- .entry-content -->
-				                </div>
-
+        <div id="post-0" class="post no-results not-found">
+          <h2 class="entry-title"><?php echo $nothing_found; ?></h2>
+          <div class="entry-content">
+            <p><?php echo $message; ?></p>
+            <?php get_search_form(); ?>
+          </div><!-- .entry-content -->
+        </div>
 <?php
 }
 ?>
-            </div><!-- #content -->
+      </div><!-- #content -->
 <?php get_sidebar(); ?>
-        </div><!-- #container -->
+    </div><!-- #container -->
 <?php
 get_footer();

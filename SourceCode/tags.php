@@ -2,7 +2,7 @@
 /**
  * Template Name: Tags
  *
- * @package digitalzenworkstheme
+ * @package DigitalZenWorksTheme
  * @author  James John McGuire <jamesjohnmcguire@gmail.com>
  * @link    https://digitalzenworks.com
  */
@@ -11,99 +11,105 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-$entry_classes = 'entry-utility-prep entry-utility-prep-cat-links';
-$category_list = get_the_category_list( ', ' );
-$the_time = get_the_time( 'Y-m-d\TH:i:sO' );
+/** @var string $domain */
+global $domain;
+
+/** @var string $edit_message */
+global $edit_message;
+
+/** @var string $edit_before */
+global $edit_before;
+
+/** @var string $edit_after */
+global $edit_after;
+
+/** @var string $comment_message */
+global $comment_message;
+
+/** @var string $comments_one */
+global $comments_one;
+
+/** @var string $comments_more */
+global $comments_more;
+
+$tag_title = single_tag_title( '', false );
+$tag_title = esc_html( $tag_title );
+
+$translation = __( 'Tag Archives:', 'digitalzenworks-theme' );
+$escaped_message = esc_html( $translation );
+
+$tag_var = get_query_var( 'tag' );
+$paged_var = get_query_var( 'paged' );
+
+$exists = ! empty( $paged_var );
+
+if ( false === $exists )
+{
+	$paged_var = 1;
+}
+
+$parameters =
+[
+	'tag'   => $tag_var,
+	'paged' => $paged_var
+];
+
+$tag_query = new \WP_Query( $parameters );
+
+$have_posts = $tag_query->have_posts();
 
 get_header();
 ?>
-        <div id="container">
-          <div id="content">
+      <div id="container">
+        <div id="content">
 
-            <?php the_post(); ?>
-
-            <h1 class="page-title">
-<?php
-_e( 'Tag Archives:', 'digitalzenworks-theme' );
-?>
-              <span><?php single_tag_title(); ?></span>
-            </h1>
-
-            <?php rewind_posts(); ?>
+          <h1 class="page-title">
+            <?php echo $escaped_message; ?>
+            <span><?php echo $tag_title; ?></span>
+          </h1>
 <?php
 get_pagination( 'nav-above' );
 
-$have_posts = have_posts();
-
 while ( true === $have_posts )
 {
-	/* translators: %s: Tag name. */
-	$translation = __( 'Tag Archives: %s', 'digitalzenworks-theme' );
-	$escaped_message = esc_html( $translation );
+	$tag_query->the_post();
 
-	the_post();
-	$author_id = get_the_author_meta( 'ID' );
-	$author = get_author_posts_url( $author_id );
-	$author_url =
-		get_author_posts_url( $authordata->ID, $authordata->user_nicename );
-	$authordata = get_the_author_meta();
-	$id = the_ID();
-	$class = post_class();
+	$post = $tag_query->post;
+	$id    = get_the_ID();
 	$title = get_the_title();
-	$url = the_permalink();
+	$url   = get_the_permalink();
 
-	/* translators: Permalink to post. */
-	$translation = __( 'Permalink to %s', 'digitalzenworks-theme' );
-	$title_attribute = the_title_attribute( 'echo=0' );
-	$message = sprintf( $translation, $title_attribute );
-?>
-                <div id="post-<?php echo $id; ?>" <?php echo $class; ?>>
-                    <h2 class="entry-title">
-                      <a href="<?php echo $url; ?>"
-                        title="<?php echo $message; ?>"
-                        rel="bookmark"
-                        ><?php echo $title; ?></a>
-                    </h2>
-<?php
-$display_name = get_the_author_meta( 'display_name' );
-/* translators: View all posts by author. */
-$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
-$title = sprintf( $inner_message, $display_name );
+	$author_id   = (int)get_the_author_meta( 'ID' );
+	$author      = get_author_posts_url( $author_id );
+	$author_name = get_the_author_meta( 'display_name' );
+	$author_url  = get_author_posts_url( $author_id, $author_name );
 
-show_entry_meta(
-	$domain,
-	$author,
-	$title,
-	$edit_message,
-	$edit_before,
-	$edit_after);
-?>
-                    <div class="entry-summary">
-<?php
-the_excerpt();
-?>
-                    </div><!-- .entry-summary -->
-<?php
-show_entry_utility_section(
-	$comment_message,
-	$comments_one,
-	$comments_more,
-	$edit_message,
-	$edit_before,
-	$edit_after,
-	$domain,
-	false);
-?>
-                </div><!-- #post-<?php the_ID(); ?> -->
-<?php
+	$classes = get_post_class();
+	$classes = implode( ' ', $classes );
+
+	show_post(
+		$post,
+		$classes,
+		$url,
+		$title,
+		$comment_message,
+		$comments_one,
+		$comments_more,
+		$edit_message,
+		$edit_before,
+		$edit_after,
+		$domain,
+		false);
+
+	$have_posts = $tag_query->have_posts();
 }
 
 get_pagination( 'nav-below' );
 ?>
-            </div><!-- #content -->
+        </div><!-- #content -->
 <?php
 get_sidebar();
 ?>
-        </div><!-- #container -->
+      </div><!-- #container -->
 <?php
 get_footer();

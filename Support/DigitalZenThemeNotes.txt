@@ -558,3 +558,28 @@ Digital Zen Themes Development
 	Themes	find out why this is needed and fix it, so it isn't so much of a hack height: calc(100% - 20px);
 DigitalZenWorks Theme
 	Merge tracking.js
+Digital Zen Theme
+	globalize 'digitalzenworks-theme'
+Digital Zen Works Theme
+Themes
+	add_action( 'after_setup_theme', 'remove_json_api' );
+
+	// Set the canonical link to the page url.
+	add_filter( 'wpseo_canonical', 'wpseo_canonical' );
+
+	digitalzenworks parent theme
+		used by
+			digitalzenworks-inferret
+			digitalzenworks-dzw
+		* special case
+			irdi
+		??
+			panorientnews
+			ofjapan
+			azabu-insights
+		not used by
+			tokyomentalhealth
+
+	Verify other child themes using digitalzenworks parent theme
+	Find if any child theme is using 'get_other_categories'
+	globalize 'digitalzenworks-theme'

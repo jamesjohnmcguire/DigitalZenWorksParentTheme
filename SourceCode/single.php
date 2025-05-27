@@ -1,7 +1,11 @@
 <?php
-/*
-Template Name: Single
-*/
+/**
+ * Template Name: Single
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
@@ -18,7 +22,7 @@ get_header();
 <?php
 the_post();
 the_content();
-get_status_line(false);
+get_status_line( false );
 ?>
             </div>
           </div>
