@@ -86,10 +86,9 @@ if ( true === $have_posts )
 }
 else
 {
-	$nothing_found = __( 'Nothing Found', 'digitalzenworks-theme' );
+	$nothing_found = 'Nothing Found';
 	$message = 'Sorry, but nothing matched your search criteria. ' .
-	'Please try again with some different keywords.';
-	$message = __( $message, 'digitalzenworks-theme' );
+		'Please try again with some different keywords.';
 ?>
         <div id="post-0" class="post no-results not-found">
           <h2 class="entry-title"><?php echo $nothing_found; ?></h2>

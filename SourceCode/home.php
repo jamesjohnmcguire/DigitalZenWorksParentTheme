@@ -1,14 +1,21 @@
 <?php
+/**
+ * Template Name: Home
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-get_header("home");
+get_header( 'home' );
 ?>
     <!-- home.php -->
 <?php
-// in functions.php
+// In functions.php.
 get_the_posts();
 
 get_footer();

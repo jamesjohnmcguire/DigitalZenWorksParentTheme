@@ -1,16 +1,21 @@
 <?php
-/*
-Template Name: INDEX
-*/
+/**
+ * Template Name: Index
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
 $classes = '';
-if ((!is_home()) && (!is_front_page()))
+
+if ( ! is_home() && ! is_front_page() )
 {
-	$classes = " sct-color-1 slice breadcrumbs";
+	$classes = ' sct-color-1 slice breadcrumbs';
 }
 
 get_header();

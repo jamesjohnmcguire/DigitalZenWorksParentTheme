@@ -1,7 +1,11 @@
-<?php 
-/*
-Template Name: Default
-*/
+<?php
+/**
+ * Template Name: Page
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 

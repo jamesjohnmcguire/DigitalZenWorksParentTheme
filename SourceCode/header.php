@@ -148,29 +148,25 @@ if (true == $use_title)
 }
 ?>
       </div>
-<!--h1 class="block-content" id="title-section">BOOTSTRAP<br />by Digital Zen Works</h1>
-<br/>
-<br/-->
 <?php
 	}
 }
 
-if ((true == $show_main_menu) && ($menu_location == 'menu_below'))
+if ( true === $show_main_menu && $menu_location === 'menu_below' )
 {
-	get_nav($title, $use_logo);
+	get_nav( $title, $use_logo );
 }
 
 $additional_css_classes = '';
 
-if (!is_front_page())
+if ( ! is_front_page() )
 {
-	//TODO Make theme option
 	$enable_breadcrumbs = false;
 
-	if ($enable_breadcrumbs == true)
+	if ( true === $enable_breadcrumbs )
 	{
 		get_breadcrumbs();
-		$additional_css_classes = " breadcrumbs";
+		$additional_css_classes = ' breadcrumbs';
 	}
 }
 
@@ -179,4 +175,5 @@ if (!is_front_page())
     </div><!--header-container-->
     <div class="clearfix"></div>
 
-    <section id="main-container" class="container-fluid<?php echo $additional_css_classes; ?>">
+    <section id="main-container"
+      class="container-fluid<?php echo $additional_css_classes; ?>">
