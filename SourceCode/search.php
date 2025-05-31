@@ -35,7 +35,7 @@ global $comments_more;
 /** @var \WP_Post $post */
 global $post;
 
-$have_posts = $tag_query->have_posts();
+$have_posts = have_posts();
 
 get_header();
 ?>
@@ -79,7 +79,7 @@ if ( true === $have_posts )
 			$domain,
 			true);
 
-		$have_posts = $tag_query->have_posts();
+		$have_posts = have_posts();
 	}
 
 	get_pagination( 'nav-below' );
