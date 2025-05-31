@@ -1,4 +1,6 @@
 Digital Zen Theme	Tasks
+	Itemize All Current Child Themes of DZW
+	Make theme option	$enable_breadcrumbs = false;
 	Update ionicons
 	Update Font Awesome
 	Consolidate De-queuing Assets
@@ -583,3 +585,45 @@ Themes
 	Verify other child themes using digitalzenworks parent theme
 	Find if any child theme is using 'get_other_categories'
 	globalize 'digitalzenworks-theme'
+Found Fonts
+	@font-face
+	{
+		font-family: 'Sue Ellen Francisco';
+		src: url('../fonts/other/Sue Ellen Francisco.ttf');
+		src: url('../fonts/other/Sue Ellen Francisco.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
+Smooth Style
+	body
+	{
+		font-family: "Open Sans", sans-serif;
+	}
+
+	h1, h2, h3
+	{
+		font-family: "Raleway", "Open Sans", sans-serif;
+	}
+
+	Possibles
+		Lato (body) + Montserrat (headings) — modern and approachable.
+
+		Roboto (body) + Playfair Display (headings) — good if you want a touch of classic serif style in headings.
+Fonts
+	Cache
+		Cache-Control: public, max-age=31536000, immutable
+Default Templates
+	404.php
+	archive.php
+	home.php
+	index.php
+	page.php
+	search.php
+	single.php
+Templates
+	Resources
+		https://developer.wordpress.org/themes/basics/template-hierarchy/
+		https://wpshout.com/wordpress-template-hierarchy/
+		https://wpmudev.com/blog/guide-wordpress-template-hierarchy/
+
+https://github.com/Automattic/_s
