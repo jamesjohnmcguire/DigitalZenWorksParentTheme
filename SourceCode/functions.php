@@ -443,7 +443,7 @@ if (!function_exists('\DigitalZenWorksTheme\get_nav'))
 	function get_nav($title, $use_logo)
 	{
 ?>
-    <nav id="slide-nav" class="navbar navbar-main navbar-shadow">
+    <nav id="main-nav" class="navbar navbar-main navbar-shadow">
       <div class="container relative">
 <?php
 		$menu_options = array(
