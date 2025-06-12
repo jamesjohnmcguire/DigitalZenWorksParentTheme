@@ -10,6 +10,7 @@ Digital Zen Theme	Tasks
 	Clean up functions.php
 	add npm update to build.cmd
 	https://github.com/jamesjohnmcguire/DigitalZenWorksTheme/security/dependabot
+	IN theme_customizer: 			// 'transport' => 'refresh' ?
 	dart sass
 		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "disable_emojicons" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
 		Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "\DigitalZenWorksTheme\dequeue_assets" not found or invalid function name in wp-includes\class-wp-hook.php on line 324
