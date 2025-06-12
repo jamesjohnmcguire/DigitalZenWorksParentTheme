@@ -1,22 +1,30 @@
 <?php
+/**
+ * Header file for the Digital Zen Works theme.
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+$is_front_page = is_front_page();
 $title = get_title();
 
-$use_carousel = get_theme_mod('use_carousel');
-$use_title = get_theme_mod('use_title');
-$front_page_only = get_theme_mod('banner_pages');
-$show_main_menu = get_theme_mod('show_main_menu');
-$menu_location = get_theme_mod('menu_location');
+$use_carousel = get_theme_mod( 'use_carousel' );
+$use_title = get_theme_mod( 'use_title' );
+$front_page_only = get_theme_mod( 'banner_pages' );
+$show_main_menu = get_theme_mod( 'show_main_menu' );
+$menu_location = get_theme_mod( 'menu_location' );
 $use_logo = use_navbar_logo();
 $use_google_analytics = true;
 $use_alexa = false;
-$google_analytics_code = get_theme_mod('google_analytics_code');
-
-$home = "/";
+$google_analytics_code = get_theme_mod( 'google_analytics_code' );
+$google_analytics_code_exists = ! empty( $google_analytics_code );
+$home = '/';
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -31,7 +39,7 @@ $home = "/";
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
   <link rel="icon" href="favicon.png">
 <?php
-if ((true == $use_google_analytics) && (!empty($google_analytics_code)))
+if ( true === $use_google_analytics && true === $google_analytics_code_exists )
 {
 ?>
     <script>
@@ -89,20 +97,26 @@ if ((true == $use_google_analytics) && (!empty($google_analytics_code)))
     </script>
     <!-- End Facebook Pixel Code -->
 <?php
-if (true == $use_alexa)
+if ( true === $use_alexa )
 {
 ?>
     <!-- Start Alexa Certify Javascript -->
     <script>
     //_atrk_opts = { atrk_acct:"", domain:"inferret.com",dynamic: true};
-    //(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+    //(function()
+	//{
+	//	var as = document.createElement('script');
+	//	as.type = 'text/javascript';
+	//	as.async = true;
+	//	as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js";
+	//	var s = document.getElementsByTagName('script')[0];
+	//	s.parentNode.insertBefore(as, s); })();
     </script>
     <!-- End Alexa Certify Javascript -->
 <?php
 }
-navigation_link("next");
-navigation_link("prev");
-
+navigation_link( 'next' );
+navigation_link( 'prev' );
 ?>
   <!--wp_head begin-->
   <?php wp_head(); ?>
@@ -120,18 +134,14 @@ navigation_link("prev");
     <div id="header-container" class="container-fluid">
       <header class="row">
 <?php
-
-if ((true == $show_main_menu) && ($menu_location == 'menu_above'))
+if ( true === $show_main_menu && 'menu_above' === $menu_location )
 {
-	get_nav($title, $use_logo);
+	get_nav( $title, $use_logo );
 }
 
-if (($front_page_only == 'all_pages') || (is_front_page()))
+if ( 'all_pages' === $front_page_only || true === $is_front_page )
 {
-	if ($use_carousel == "use_carousel")
-	{
-	}
-	else
+	if ( 'use_carousel' !== $use_carousel )
 	{
 		$image = get_front_page_image();
 ?>
@@ -140,7 +150,7 @@ if (($front_page_only == 'all_pages') || (is_front_page()))
           <img class="image-full" alt="<?php echo $title; ?>" src="<?php echo $image; ?>">
         </a>
 <?php
-if (true == $use_title)
+if ( true === $use_title )
 {
 ?>
         <h1 id="title"><?php the_title(); ?></h1>
@@ -152,7 +162,7 @@ if (true == $use_title)
 	}
 }
 
-if ( true === $show_main_menu && $menu_location === 'menu_below' )
+if ( true === $show_main_menu && 'menu_below' === $menu_location )
 {
 	get_nav( $title, $use_logo );
 }

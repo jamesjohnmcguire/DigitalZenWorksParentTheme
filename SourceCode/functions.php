@@ -56,8 +56,14 @@ remove_action('wp_head','qtranxf_wp_head_meta_generator');
 remove_filter('the_content', 'wpautop');
 remove_filter('the_excerpt', 'wpautop');
 
-if (!function_exists('\DigitalZenWorksTheme\add_home_link'))
+if ( ! function_exists( '\DigitalZenWorksTheme\add_home_link' ) )
 {
+	/**
+	 * Add a home link to the main menu if not on the front page.
+	 *
+	 * @param string $items The menu items HTML.
+	 * @return string Modified menu items with home link if needed.
+	 */
 	function add_home_link($items)
 	{
 		if (!is_front_page())
@@ -70,8 +76,14 @@ if (!function_exists('\DigitalZenWorksTheme\add_home_link'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
+if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
 {
+	/**
+	 * Output debug message as HTML comment.
+	 *
+	 * @param string $message The debug message to output.
+	 * @return void
+	 */
 	function comment_debug($message)
 	{
 		echo "\r\n<!--*****DEBUG: $message*****-->\r\n";
@@ -81,12 +93,12 @@ if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
 /**
  * Display navigation to next/previous comments when applicable.
  */
-if (!function_exists('\DigitalZenWorksTheme\comment_nav'))
+if ( ! function_exists( '\DigitalZenWorksTheme\comment_nav' ) )
 {
 	function comment_nav()
 	{
 		// Are there comments to navigate through?
-		if (get_comment_pages_count() > 1 && get_option('page_comments'))
+		if (get_comment_pages_count() > 1 && get_option('page_comments' ) )
 		{
 ?>
     <nav class="navigation comment-navigation" role="navigation">
@@ -113,8 +125,13 @@ if (!function_exists('\DigitalZenWorksTheme\comment_nav'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\dequeue_assets'))
+if ( ! function_exists( '\DigitalZenWorksTheme\dequeue_assets' ) )
 {
+	/**
+	 * Dequeue unnecessary assets and disable emoji icons.
+	 *
+	 * @return void
+	 */
 	function dequeue_assets()
 	{
 		if (!is_admin_bar_showing())
@@ -127,8 +144,13 @@ if (!function_exists('\DigitalZenWorksTheme\dequeue_assets'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\dequeue_polyfill'))
+if ( ! function_exists( '\DigitalZenWorksTheme\dequeue_polyfill' ) )
 {
+	/**
+	 * Dequeue polyfill scripts that are not needed.
+	 *
+	 * @return void
+	 */
 	function dequeue_polyfill()
 	{
 		wp_dequeue_script( 'regenerator-runtime' );
@@ -139,9 +161,14 @@ if (!function_exists('\DigitalZenWorksTheme\dequeue_polyfill'))
 	}
 }
 
-if (!function_exists(
-	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed'))
+if ( ! function_exists( 
+	'\DigitalZenWorksTheme\dequeue_wpcf7_recaptcha_when_not_needed' ) )
 {
+	/**
+	 * Dequeue Contact Form 7 reCAPTCHA scripts when not needed.
+	 *
+	 * @return void
+	 */
 	function dequeue_wpcf7_recaptcha_when_not_needed()
 	{
 		// Only check for the frontend
@@ -152,7 +179,7 @@ if (!function_exists(
 			global $post;
 
 			if (!isset($post) ||
-				!has_shortcode($post->post_content, 'contact-form-7'))
+				!has_shortcode($post->post_content, 'contact-form-7' ) )
 			{
 				// Polyfill is not needed, except for the Contact Form.
 				dequeue_polyfill();
@@ -175,8 +202,13 @@ if (!function_exists(
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\disable_emojicons'))
+if ( ! function_exists( '\DigitalZenWorksTheme\disable_emojicons' ) )
 {
+	/**
+	 * Disable WordPress emoji icons and related functionality.
+	 *
+	 * @return void
+	 */
 	function disable_emojicons()
 	{
 		// all actions related to emojis
@@ -193,23 +225,34 @@ if (!function_exists('\DigitalZenWorksTheme\disable_emojicons'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\disable_emojicons_tinymce'))
+if ( ! function_exists( '\DigitalZenWorksTheme\disable_emojicons_tinymce' ) )
 {
+	/**
+	 * Remove emoji plugin from TinyMCE editor.
+	 *
+	 * @param array $plugins Array of TinyMCE plugins.
+	 * @return array Modified array of plugins.
+	 */
 	function disable_emojicons_tinymce( $plugins )
 	{
 		$result = [];
 
 		if (is_array($plugins))
 		{
-			$result = array_diff($plugins, array('wpemoji'));
+			$result = array_diff($plugins, array('wpemoji' ) );
 		}
 
 		return $result;
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\enqueue_assets'))
+if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_assets' ) )
 {
+	/**
+	 * Enqueue theme styles and scripts.
+	 *
+	 * @return void
+	 */
 	function enqueue_assets()
 	{
 		enqueue_styles();
@@ -217,8 +260,13 @@ if (!function_exists('\DigitalZenWorksTheme\enqueue_assets'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\enqueue_scripts'))
+if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_scripts' ) )
 {
+	/**
+	 * Enqueue theme JavaScript files.
+	 *
+	 * @return void
+	 */
 	function enqueue_scripts()
 	{
 		$theme_path = get_template_directory_uri();
@@ -247,8 +295,13 @@ if (!function_exists('\DigitalZenWorksTheme\enqueue_scripts'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\enqueue_styles'))
+if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_styles' ) )
 {
+	/**
+	 * Enqueue theme CSS files.
+	 *
+	 * @return void
+	 */
 	function enqueue_styles()
 	{
 		$theme_path = get_template_directory_uri();
@@ -280,8 +333,13 @@ if (!function_exists('\DigitalZenWorksTheme\enqueue_styles'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_archive_title'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_archive_title' ) )
 {
+	/**
+	 * Get the archive title based on the current query.
+	 *
+	 * @return string The archive title.
+	 */
 	function get_archive_title()
 	{
 		$message = null;
@@ -327,8 +385,13 @@ if (!function_exists('\DigitalZenWorksTheme\get_archive_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_breadcrumbs'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_breadcrumbs' ) )
 {
+	/**
+	 * Display breadcrumb navigation.
+	 *
+	 * @return void
+	 */
 	function get_breadcrumbs()
 	{
 		if (!is_front_page())
@@ -338,8 +401,8 @@ if (!function_exists('\DigitalZenWorksTheme\get_breadcrumbs'))
 <?php
 			$breadcrumbs_enabled = current_theme_supports('yoast-seo-breadcrumbs');
 
-			if ((function_exists('yoast_breadcrumb')) &&
-				($breadcrumbs_enabled == true))
+			if ((function_exists('yoast_breadcrumb' ) ) &&
+				($breadcrumbs_enabled === true))
 			{
 				yoast_breadcrumb('<p id="breadcrumbs">','</p>');
 			}
@@ -355,8 +418,13 @@ if (!function_exists('\DigitalZenWorksTheme\get_breadcrumbs'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_front_page_image'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_front_page_image' ) )
 {
+	/**
+	 * Get the front page image path.
+	 *
+	 * @return string The path to the front page image.
+	 */
 	function get_front_page_image()
 	{
 		$front_image =
@@ -366,8 +434,13 @@ if (!function_exists('\DigitalZenWorksTheme\get_front_page_image'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_language'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_language' ) )
 {
+	/**
+	 * Get the current language code.
+	 *
+	 * @return string The language code.
+	 */
 	function get_language()
 	{
 		$language = null;
@@ -383,8 +456,21 @@ if (!function_exists('\DigitalZenWorksTheme\get_language'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_loop'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_loop' ) )
 {
+	/**
+	 * Get the main loop content.
+	 *
+	 * @param object $authordata      Author data object.
+	 * @param string $domain          Text domain for translations.
+	 * @param string $comment_message Message for comments section.
+	 * @param string $comments_one    Text for single comment count.
+	 * @param string $comments_more   Text for multiple comments count.
+	 * @param string $edit_message    Message for edit link.
+	 * @param string $edit_before     Text to display before edit link.
+	 * @param string $edit_after      Text to display after edit link.
+	 * @return void
+	 */
 	function get_loop(
 		$authordata,
 		$domain = 'digitalzenworks-theme',
@@ -413,7 +499,7 @@ if (!function_exists('\DigitalZenWorksTheme\get_loop'))
                     </a>
                   </h2>
 <?php
-		show_entry_meta_section(
+	show_entry_meta_section(
 			$domain,
 			$author,
 			$title,
@@ -438,8 +524,15 @@ if (!function_exists('\DigitalZenWorksTheme\get_loop'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_nav'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_nav' ) )
 {
+	/**
+	 * Get the navigation menu.
+	 *
+	 * @param string $title    The menu title.
+	 * @param bool   $use_logo Whether to use logo in navigation.
+	 * @return void
+	 */
 	function get_nav($title, $use_logo)
 	{
 ?>
@@ -461,8 +554,14 @@ if (!function_exists('\DigitalZenWorksTheme\get_nav'))
 
 // For category lists on category archives:
 // Returns other categories except the current one (redundant)
-if (!function_exists('\DigitalZenWorksTheme\get_other_categories'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_other_categories' ) )
 {
+	/**
+	 * Get other categories for the current post.
+	 *
+	 * @param string $seperator Separator between categories.
+	 * @return string HTML list of other categories.
+	 */
 	function get_other_categories($seperator)
 	{
 		$current_cat = single_cat_title('', false);
@@ -484,8 +583,42 @@ if (!function_exists('\DigitalZenWorksTheme\get_other_categories'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_other_tags' ) )
 {
+	/**
+	 * Get other tags for the current post.
+	 *
+	 * @param string $seperator Separator between tags.
+	 * @return string HTML list of other tags.
+	 */
+	function get_other_tags($seperator)
+	{
+		$current_tag = single_tag_title('', false);
+		$separator = "\n";
+		$tags = explode($separator, get_the_tag_list($separator));
+
+		foreach ( $tags as $i => $str )
+		{
+			if ( strstr( $str, ">$current_tag<" ) ) {
+				unset($tags[$i]);
+				break;
+			}
+		}
+
+		if ( empty($tags) )
+			return false;
+
+		return trim(join( $seperator, $tags ));
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_page_title' ) )
+{
+	/**
+	 * Get the page title based on the current context.
+	 *
+	 * @return string The page title.
+	 */
 	function get_page_title(
 		$use_site_name = true,
 		$seperator = ' | ')
@@ -501,7 +634,7 @@ if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 			$title = single_post_title( '', false );
 		}
 
-		if (true == $use_site_name)
+		if (true === $use_site_name)
 		{
 			$title = $site_name . $seperator . $title;
 		}
@@ -515,8 +648,13 @@ if (!function_exists('\DigitalZenWorksTheme\get_page_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_pagination'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_pagination' ) )
 {
+	/**
+	 * Display pagination links.
+	 *
+	 * @return void
+	 */
 	function get_pagination( $class )
 	{
 		global $wp_query;
@@ -540,14 +678,121 @@ if (!function_exists('\DigitalZenWorksTheme\get_pagination'))
 	}
 }
 
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta' ) )
+{
+	/**
+	 * Get post meta information.
+	 *
+	 * @param string $seperator Separator between meta items.
+	 * @return string HTML list of post meta information.
+	 */
+	function get_post_meta($seperator)
+	{
+		$meta_items = '';
+		$meta_items .= get_post_meta_date() . $seperator;
+		$meta_items .= get_post_meta_time() . $seperator;
+		$meta_items .= get_post_meta_categories($seperator);
+		$meta_items .= get_post_meta_tags($seperator);
+		$meta_items .= get_post_meta_author(get_post());
+		return $meta_items;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_author' ) )
+{
+	/**
+	 * Get post author meta information.
+	 *
+	 * @param object $authordata Author data object.
+	 * @return string HTML for author meta information.
+	 */
+	function get_post_meta_author($authordata)
+	{
+		$author_id = $authordata->ID;
+		$author_name = $authordata->display_name;
+		$author_url = get_author_posts_url($author_id, $authordata->user_nicename);
+		$author_info = '<span class="author vcard"><a class="url fn n" href="' . $author_url . '" title="' . $author_name . '">' . $author_name . '</a></span>';
+		return $author_info;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_categories' ) )
+{
+	/**
+	 * Get post categories meta information.
+	 *
+	 * @param string $seperator Separator between categories.
+	 * @return string HTML for categories meta information.
+	 */
+	function get_post_meta_categories($seperator)
+	{
+		$categories = get_the_category_list($seperator);
+		$category_info = '<span class="cat-links">' . $categories . '</span>';
+		return $category_info;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_date' ) )
+{
+	/**
+	 * Get post date meta information.
+	 *
+	 * @return string HTML for date meta information.
+	 */
+	function get_post_meta_date()
+	{
+		$date = get_the_date();
+		$date_info = '<span class="entry-date">' .
+			'<abbr class="published" title="' . get_the_date( 'c' ) .
+			'">' . $date . '</abbr></span>';
+		return $date_info;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_tags' ) )
+{
+	/**
+	 * Get post tags meta information.
+	 *
+	 * @param string $seperator Separator between tags.
+	 * @return string HTML for tags meta information.
+	 */
+	function get_post_meta_tags($seperator)
+	{
+		$tags = get_the_tag_list( '', $seperator );
+		$tag_info = '<span class="tag-links">' . $tags . '</span>';
+		return $tag_info;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_time' ) )
+{
+	/**
+	 * Get post time meta information.
+	 *
+	 * @return string HTML for time meta information.
+	 */
+	function get_post_meta_time()
+	{
+		$time = get_the_time();
+		$time_info = '<span class="time-stamp">' . $time . '</span>';
+		return $time_info;
+	}
+}
+
 /**
  * Get the status line for the post.
  *
  * @param bool $read_more Whether to show the read more link.
  * @return void
  */
-if (!function_exists('\DigitalZenWorksTheme\get_status_line'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_status_line' ) )
 {
+	/**
+	 * Get the status line for the current page.
+	 *
+	 * @return string The status line HTML.
+	 */
 	function get_status_line( $read_more = true )
 	{
 		$categories = get_the_category_list( ', ' );
@@ -560,8 +805,14 @@ if (!function_exists('\DigitalZenWorksTheme\get_status_line'))
 		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                     <ul class="meta-info-cells v2 float-wrapper">
-                        <li><span class="fa fa-calendar"></span> <?php echo $time; ?></li>
-                        <li><span class="fa fa-file"></span><?php echo $categories; ?></li>
+                        <li>
+                          <span class="fa fa-calendar"></span>
+                          <?php echo $time; ?>
+                        </li>
+                        <li>
+                          <span class="fa fa-file"></span>
+                          <?php echo $categories; ?>
+                          </li>
 <?php
 		if ( true === $read_more )
 		{
@@ -578,35 +829,47 @@ if (!function_exists('\DigitalZenWorksTheme\get_status_line'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_the_posts' ) )
 {
+	/**
+	 * Get the posts for the current query.
+	 *
+	 * @param string $domain          Text domain for translations.
+	 * @param string $comment_message Message for comments section.
+	 * @param string $comments_one    Text for single comment count.
+	 * @param string $comments_more   Text for multiple comments count.
+	 * @param string $edit_message    Message for edit link.
+	 * @param string $edit_before     Text to display before edit link.
+	 * @param string $edit_after      Text to display after edit link.
+	 * @return void
+	 */
 	function get_the_posts(
 		$paged = true,
 		$show_excerpts = false,
 		$videos = false)
 	{
-		if (true == $paged)
+		if (true === $paged)
 		{
-			$paged = get_query_var('paged');
-			query_posts("posts_per_page=10&paged=$paged");
+			$paged = get_query_var( 'paged' );
+			query_posts( "posts_per_page=10&paged=$paged" );
 		}
 
 		$additional_classes = '';
 
-		if (true == $videos)
+		if (true === $videos)
 		{
 			$additional_classes = ' video-item';
 		}
 
-		if (have_posts())
+		if ( have_posts() )
 		{
 ?>
        <div class="row">
         <div class="col-md-12 post-content">
 <?php
-			if (true == $paged)
+			if (true === $paged)
 			{
-				get_pagination('nav-above');
+				get_pagination( 'nav-above' );
 			}
 
 			while(have_posts())
@@ -617,9 +880,11 @@ if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
           </h2>
 <?php
-				if ($show_excerpts == true)
+				if ($show_excerpts === true)
 				{
-					show_excerpt_section( 'block-content', $additional_classes );
+					show_excerpt_section(
+						'block-content',
+						$additional_classes);
 				}
 				else
 				{
@@ -635,9 +900,9 @@ if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
 				get_status_line();
 			}
 
-			if (true == $paged)
+			if (true === $paged)
 			{
-				get_pagination('nav-below');
+				get_pagination( 'nav-below' );
 			}
 ?>
         </div>
@@ -647,7 +912,7 @@ if (!function_exists('\DigitalZenWorksTheme\get_the_posts'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\get_title'))
+if ( ! function_exists( '\DigitalZenWorksTheme\get_title' ) )
 {
 	function get_title($page_name_site_name = true,
 		$site_name_page_name = false, $only_site_name = false,
@@ -655,27 +920,27 @@ if (!function_exists('\DigitalZenWorksTheme\get_title'))
 		$seperator = ' | ')
 	{
 		$title = '';
-		$site_name = get_bloginfo('name');
+		$site_name = get_bloginfo( 'name' );
 		$page_name = get_page_title();
-		$description = get_bloginfo('description');
+		$description = get_bloginfo( 'description' );
 
-		if (true == $only_site_name)
+		if (true === $only_site_name)
 		{
 			$title = $site_name;
 		}
-		else if (true == $only_page_name)
+		else if (true === $only_page_name)
 		{
 			$title = $page_name;
 		}
-		else if (true == $site_name_page_name)
+		else if (true === $site_name_page_name)
 		{
 			$title = $site_name . $seperator . $page_name;
 		}
-		else if (true == $page_name_site_name)
+		else if (true === $page_name_site_name)
 		{
 			$title = $page_name . $seperator . $site_name;
 		}
-		else if (true == $site_name_description)
+		else if (true === $site_name_description)
 		{
 			$title = $site_name . $seperator . $description;
 		}
@@ -684,23 +949,23 @@ if (!function_exists('\DigitalZenWorksTheme\get_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\mailer_config'))
+if ( ! function_exists( '\DigitalZenWorksTheme\mailer_config' ) )
 {
-	function mailer_config($mailer)
+	function mailer_config( $mailer )
 	{
 		$hostname = gethostname();
 
 		if ($hostname === 'ZenwanFocus' || $hostname === 'ZenWanJedi' ||
 			$hostname === 'ZenWan-Nomad')
 		{
-			$smtpServer = getenv('SMTP_SERVER');
-			$smtpProtocol = getenv('SMTP_PROTOCOL');
-			$smtpPort = (int)getenv('SMTP_PORT');
-			$smtpUser = getenv('SMTP_USER');
-			$smtpPassword = getenv('SMTP_PASSWORD');
+			$smtpServer = getenv( 'SMTP_SERVER' );
+			$smtpProtocol = getenv( 'SMTP_PROTOCOL' );
+			$smtpPort = (int)getenv( 'SMTP_PORT' );
+			$smtpUser = getenv( 'SMTP_USER' );
+			$smtpPassword = getenv( 'SMTP_PASSWORD' );
 
-			$userExists = !empty($smtpUser);
-			$passwordExists = !empty($smtpPassword);
+			$userExists = !empty( $smtpUser );
+			$passwordExists = !empty( $smtpPassword );
 
 			if ($userExists === true && $passwordExists === true)
 			{
@@ -724,7 +989,7 @@ if (!function_exists('\DigitalZenWorksTheme\mailer_config'))
 If the page is articles (posts) list page, include links in the head for
 next and previous
 */
-if (!function_exists('\DigitalZenWorksTheme\navigation_link'))
+if ( ! function_exists( '\DigitalZenWorksTheme\navigation_link' ) )
 {
 	function navigation_link($type)
 	{
@@ -732,18 +997,18 @@ if (!function_exists('\DigitalZenWorksTheme\navigation_link'))
 
 		if (is_page())
 		{
-			$current_uri = add_query_arg(NULL, NULL);
-			$found = strpos($current_uri, "/articles/");
+			$current_uri = add_query_arg( null, null );
+			$found = strpos( $current_uri, '/articles/' );
 
 			if (false !== $found)
 			{
-				if ($type == "next")
+				if ($type === "next")
 				{
-					$link = next_posts(0, false);
+					$link = next_posts( 0, false );
 				}
-				else if ($type == "previous")
+				else if ($type === "previous")
 				{
-					$link = previous_posts(false);
+					$link = previous_posts( false );
 				}
 ?>
     <link rel="<?php echo $type; ?>" href="<?php echo $link; ?>" />
@@ -755,7 +1020,7 @@ if (!function_exists('\DigitalZenWorksTheme\navigation_link'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\output_head'))
+if ( ! function_exists( '\DigitalZenWorksTheme\output_head' ) )
 {
 	function output_head($title, $icon_file = null)
 	{
@@ -767,11 +1032,11 @@ if (!function_exists('\DigitalZenWorksTheme\output_head'))
     <meta name="robots" content="index, follow">
     <title><?php echo $title; ?></title>
 <?php
-		if ($icon_file != null)
+		if ($icon_file !== null)
 		{
-			$exists = file_exists($icon_file);
+			$exists = file_exists( $icon_file );
 
-			if ($exists === true)
+			if ( true === $exists )
 			{
 ?>
     <link rel="icon" href="<?php echo $icon_file; ?>" />
@@ -787,18 +1052,24 @@ if (!function_exists('\DigitalZenWorksTheme\output_head'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\remove_block_library_styles'))
+if ( ! function_exists( '\DigitalZenWorksTheme\remove_block_library_styles' ) )
 {
+	/**
+	 * Remove block library styles.
+	 */
 	function remove_block_library_styles()
 	{
-		wp_dequeue_style('wp-block-library');
-		wp_dequeue_style('wp-block-library-theme');
-		wp_dequeue_style('wc-block-style'); // Remove WooCommerce block CSS
+		wp_dequeue_style( 'wp-block-library' );
+		wp_dequeue_style( 'wp-block-library-theme' );
+		wp_dequeue_style( 'wc-block-style' ); // Remove WooCommerce block CSS
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
+if ( ! function_exists( '\DigitalZenWorksTheme\remove_head_rest' ) )
 {
+	/**
+	 * Remove head rest.
+	 */
 	function remove_head_rest()
 	{
 		// [link] => <http://www.example.com/wp-json/>; rel="https://api.w.org/"
@@ -809,9 +1080,12 @@ if (!function_exists('\DigitalZenWorksTheme\remove_head_rest'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\remove_json_api'))
+if ( ! function_exists( '\DigitalZenWorksTheme\remove_json_api' ) )
 {
-	function remove_json_api ()
+	/**
+	 * Remove json api.
+	 */
+	function remove_json_api()
 	{
 		// Remove the REST API link tag into page header.
 		remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
@@ -819,18 +1093,24 @@ if (!function_exists('\DigitalZenWorksTheme\remove_json_api'))
 	}
 }
 
-if (!function_exists(
-	'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script'))
+if ( ! function_exists(
+	'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script' ) )
 {
-	// Remove unused inline script tags for contact forms and reCAPTCHA.
-	function remove_wpcf7_recaptcha_inline_script($tag, $handle)
+	/**
+	 * Remove unused inline script tags for contact forms and reCAPTCHA.
+	 *
+	 * @param string $tag    The script tag to filter.
+	 * @param string $handle The script handle being filtered.
+	 * @return string The filtered script tag, or empty string if removed.
+	 */
+	function remove_wpcf7_recaptcha_inline_script( $tag, $handle )
 	{
-		if ($handle === 'contact-form-7' ||
-			$handle === 'google-recaptcha' ||
-			$handle === 'swv' ||
-			$handle === 'wp-i18n' ||
-			$handle === 'wpcf7-recaptcha' ||
-			$handle === 'wpcf7-recaptcha-js-before')
+		if ( 'contact-form-7' === $handle ||
+			'google-recaptcha' === $handle ||
+			'swv' === $handle ||
+			'wp-i18n' === $handle ||
+			'wpcf7-recaptcha' === $handle ||
+			'wpcf7-recaptcha-js-before' === $handle )
 		{
 			$tag = '';
 		}
@@ -839,22 +1119,30 @@ if (!function_exists(
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
+if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
 {
+	/**
+	 * Display the entry meta section of a post including author and date.
+	 *
+	 * @param string $author       Author URL.
+	 * @param string $title        Post title.
+	 * @param string $edit_message Message for edit link.
+	 * @param string $edit_before  Text to display before edit link.
+	 * @param string $edit_after   Text to display after edit link.
+	 * @return void
+	 */
 	function show_entry_meta_section(
-		$domain,
 		$author,
 		$title,
 		$edit_message,
 		$edit_before,
 		$edit_after)
 	{
-		$display_name = get_the_author_meta('display_name');
-		$the_time = get_the_time('Y-m-d\TH:i:sO');
+		$the_time = get_the_time( 'Y-m-d\TH:i:sO' );
 ?>
                     <div class="entry-meta">
                       <span class="meta-prep meta-prep-author">
-                        <?php _e('By ', $domain ); ?>
+                        <?php _e( 'By ', 'digitalzenworks-theme' ); ?>
                       </span>
                       <span class="author vcard">
                         <a
@@ -865,7 +1153,9 @@ if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
                         </span>
                         <span class="meta-sep"> | </span>
                         <span class="meta-prep meta-prep-entry-date">
-                          <?php _e( 'Published on ', $domain ); ?>
+<?php
+		 _e( 'Published on ', 'digitalzenworks-theme' );
+?>
                         </span>
                         <span class="entry-date">
                           <abbr class="published"
@@ -884,30 +1174,22 @@ if (!function_exists('\DigitalZenWorksTheme\comment_debug'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\show_excerpt_section'))
+if ( ! function_exists( '\DigitalZenWorksTheme\show_entry_utility_section' ) )
 {
-	function show_excerpt_section(
-		$class, $additional_classes = '', $include_links = false)
-	{
-?>
-            <div class="<?php echo $class . $additional_classes; ?>">
-              <?php the_excerpt( ); ?>
-<?php
-		if (true == $include_links)
-		{
-			$inner_message = __( 'Pages:', 'digitalzenworks-theme' );
-			$message = 'before=<div class="page-link">' . $inner_message .
-				'&after=</div>';
-			wp_link_pages( $message );
-		}
-?>
-            </div><!-- .entry-summary -->
-<?php
-	}
-}
-
-if (!function_exists('\DigitalZenWorksTheme\show_entry_utility_section'))
-{
+	/**
+	 * Display the utility section of a post including categories, tags,
+	 * comments, and edit link.
+	 *
+	 * @param string $comment_message  Message for comments section.
+	 * @param string $comments_one     Text for single comment count.
+	 * @param string $comments_more    Text for multiple comments count.
+	 * @param string $edit_message     Message for edit link.
+	 * @param string $edit_before      Text to display before edit link.
+	 * @param string $edit_after       Text to display after edit link.
+	 * @param bool   $include_the_tags Whether to display post tags.
+	 *                                 Default true.
+	 * @return void
+	 */
 	function show_entry_utility_section(
 		$comment_message,
 		$comments_one,
@@ -915,11 +1197,10 @@ if (!function_exists('\DigitalZenWorksTheme\show_entry_utility_section'))
 		$edit_message,
 		$edit_before,
 		$edit_after,
-		$domain,
 		$include_the_tags = true)
 	{
 		$entry_classes = 'entry-utility-prep entry-utility-prep-cat-links';
-		$category_list = get_the_category_list(', ');
+		$category_list = get_the_category_list( ', ' );
 ?>
                     <div class="entry-utility">
                       <span class="cat-links">
@@ -932,15 +1213,15 @@ if (!function_exists('\DigitalZenWorksTheme\show_entry_utility_section'))
                       </span>
                       <span class="meta-sep"> | </span>
 <?php
-		if (true == $include_the_tags)
+		if ( true === $include_the_tags )
 		{
-			$tag_message = __('Tagged ', $domain);
-			$tags_header = 	'<span class="tag-links">' .
+			$tag_message = __( 'Tagged ', 'digitalzenworks-theme' );
+			$tags_header = '<span class="tag-links">' .
 				'<span class="entry-utility-prep entry-utility-prep-tag-links">' .
 				$tag_message . '</span>';
 			$tags_footer = "</span>\n            <span class=\"meta-sep\">|</span>\n";
 
-			the_tags( $tags_header, ", ", $tags_footer );
+			the_tags( $tags_header, ', ', $tags_footer );
 		}
 ?>
                       <span class="comments-link">
@@ -956,8 +1237,62 @@ if (!function_exists('\DigitalZenWorksTheme\show_entry_utility_section'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\show_post_title'))
+if ( ! function_exists( '\DigitalZenWorksTheme\show_excerpt_section' ) )
 {
+	/**
+	 * Display the excerpt section of a post with optional page links.
+	 *
+	 * @param string $css_class          Base CSS class for the excerpt
+	 *                                   container.
+	 * @param string $additional_classes Additional CSS classes to append.
+	 *                                   Default empty string.
+	 * @param bool   $include_links      Whether to display page links.
+	 *                                   Default false.
+	 * @return void
+	 */
+	function show_excerpt_section(
+		$css_class,
+		$additional_classes = '',
+		$include_links = false)
+	{
+?>
+            <div class="<?php echo $css_class . $additional_classes; ?>">
+              <?php the_excerpt(); ?>
+<?php
+		if ( true === $include_links )
+		{
+			$inner_message = __( 'Pages:', 'digitalzenworks-theme' );
+			$message = 'before=<div class="page-link">' . $inner_message .
+				'&after=</div>';
+			wp_link_pages( $message );
+		}
+?>
+            </div><!-- .entry-summary -->
+<?php
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
+{
+	/**
+	 * Display a post with its title, meta information, excerpt, and utility section.
+	 *
+	 * @param WP_Post $post            The post object to display.
+	 * @param string  $classes         CSS classes to apply to the post
+	 *                                 container.
+	 * @param string  $url             The URL for the post permalink.
+	 * @param string  $title           The post title.
+	 * @param string  $comment_message Message for comments section.
+	 * @param string  $comments_one    Text for single comment count.
+	 * @param string  $comments_more   Text for multiple comments count.
+	 * @param string  $edit_message    Message for edit link.
+	 * @param string  $edit_before     Text to display before edit link.
+	 * @param string  $edit_after      Text to display after edit link.
+	 * @param string  $domain          Text domain for translations.
+	 * @param string  $extra           Additional content to display in
+	 *                                 utility section.
+	 * @return void
+	 */
 	function show_post(
 		$post,
 		$classes,
@@ -990,63 +1325,67 @@ if (!function_exists('\DigitalZenWorksTheme\show_post_title'))
               </a>
             </h2>
 <?php
-		if ( $post->post_type == 'post' )
-		{
-			/* translators: View all posts by author. */
-			$inner_message =
-				__( 'View all posts by %s', 'digitalzenworks-theme' );
-			$title = sprintf( $inner_message, $author_name );
+	if ( 'post' === $post->post_type )
+	{
+		/* translators: View all posts by author. */
+		$inner_message =
+			__( 'View all posts by %s', 'digitalzenworks-theme' );
+		$title = sprintf( $inner_message, $author_name );
 
-			show_entry_meta_section(
-				$domain,
-				$author,
-				$title,
-				$edit_message,
-				$edit_before,
-				$edit_after);
-		}
+		show_entry_meta_section(
+			$domain,
+			$author,
+			$title,
+			$edit_message,
+			$edit_before,
+			$edit_after);
+	}
 
-		show_excerpt_section( 'entry-summary', true );
+	show_excerpt_section( 'entry-summary', true );
 
-		if ( $post->post_type == 'post' )
-		{
-			show_entry_utility_section(
-				$comment_message,
-				$comments_one,
-				$comments_more,
-				$edit_message,
-				$edit_before,
-				$edit_after,
-				$domain,
-				$extra);
-		}
+	if ( 'post' === $post->post_type )
+	{
+		show_entry_utility_section(
+			$comment_message,
+			$comments_one,
+			$comments_more,
+			$edit_message,
+			$edit_before,
+			$edit_after,
+			$domain,
+			$extra);
+	}
 ?>
           </div><!-- #post-<?php echo $id; ?> -->
 <?php
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\show_right_column'))
+if ( ! function_exists( '\DigitalZenWorksTheme\show_right_column' ) )
 {
+	/**
+	 * Show the right column.
+	 *
+	 * @return void
+	 */
 	function show_right_column()
 	{
-		global $show_right_column;
-
-		if (true == $show_right_column)
-		{
-		}
 	}
 }
 
-/**
- * Show the title of the page.
- *
- * @param string $title The title to show.
- * @return void
- */
-if (!function_exists('\DigitalZenWorksTheme\show_title'))
+if ( ! function_exists( '\DigitalZenWorksTheme\show_title' ) )
 {
-	function show_title($title = null, $title_classes = null,
+	/**
+	 * Show the title of the page.
+	 *
+	 * @param string|null $title         The title to show.
+	 * @param string|null $title_classes The title classes to use.
+	 * @param int         $degree        The title degree to use.
+	 * @return void
+	 */
+	function show_title(
+		$title = null,
+		$title_classes = null,
 		$degree = 1)
 	{
 		$exists = ! empty( $title );
@@ -1083,117 +1422,169 @@ if (!function_exists('\DigitalZenWorksTheme\show_title'))
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\theme_customizer'))
+if ( ! function_exists( '\DigitalZenWorksTheme\theme_customizer' ) )
 {
-	function theme_customizer($wp_customize)
+	/**
+	 * Theme customizer.
+	 *
+	 * @param  object $wp_customize The WP customizer object.
+	 * @return void
+	 */
+	function theme_customizer( $wp_customize )
 	{
-		$options = ['title' => 'Theme Options'];
-		$wp_customize->add_section('theme_options', $options);
+		$theme_mod_options =
+		[
+			'type'       => 'theme_mod',
+			'default'    => '',
+			'transport'  => 'refresh',
+			'capability' => 'manage_options',
+			'priority'   => 4
+		];
+
+		$theme_options =
+		[
+			'section' => 'theme_options',
+			'label'   => '',
+			'type'    => 'text'
+		];
+
+		$options = [ 'title' => 'Theme Options' ];
+		$wp_customize->add_section( 'theme_options', $options );
 
 		$options =
 		[
-			'type' => 'theme_mod',
-			'default' => 'Single Image only',
-			'transport' => 'refresh',
+			'type'       => 'theme_mod',
+			'default'    => 'Single Image only',
+			'transport'  => 'refresh',
 			'capability' => 'manage_options',
-			'priority' => 4
+			'priority'   => 4
 		];
-		$wp_customize->add_setting('use_carousel', $options);
 
-		$wp_customize->add_control('use_carousel', array(
+		$wp_customize->add_setting( 'use_carousel', $options );
+
+		$choices =
+		[
+			'single_image' => 'Single Image Only',
+			'use_carousel' => 'Use Carousel'
+		];
+
+		$options =
+		[
 			'section' => 'theme_options',
-			'label' => 'Use carousel or single image?',
-			'type' => 'radio', 'choices' => array(
-				'single_image' => 'Single Image Only',
-				'use_carousel' => 'Use Carousel')));
+			'label'   => 'Use carousel or single image?',
+			'type'    => 'radio',
+			'choices' => $choices
+		];
 
-		//$wp_customize->add_setting('use_title', array(
-		//	'default' => true,'transport' => 'postMessage'));
+		$wp_customize->add_control( 'use_carousel', $options );
 
-		$wp_customize->add_setting('use_title', array('type' => 'theme_mod',
-			'default' => 'Use Blog Title as Caption','transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$options =
+		[
+			'type'       => 'theme_mod',
+			'default'    => 'Use Blog Title as Caption',
+			'transport'  => 'refresh',
+			'capability' => 'manage_options',
+			'priority'   => 4
+		];
 
-		$wp_customize->add_control('use_title', array(
-			'section' => 'theme_options', 'label' => 'Use Blog Title as Caption?',
-			'type' => 'checkbox'));
+		$wp_customize->add_control( 'use_title', $options );
 
-		// 'transport' => 'refresh' ?
-		$wp_customize->add_setting('show_main_menu', array(
-			'default' => true, 'transport' => 'postMessage'));
-
-		$wp_customize->add_control('show_main_menu', array(
-			'section' => 'theme_options', 'label' => 'Show Main Menu?',
-			'type' => 'checkbox'));
-
-		$wp_customize->add_setting('menu_location', array('type' => 'theme_mod',
-			'default' => 'Menu Above','transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
-
-		$wp_customize->add_control('menu_location', array(
+		$options =
+		[
 			'section' => 'theme_options',
-			'label' => 'Main menu above top or below top image?',
-			'type' => 'radio', 'choices' => array(
-				'menu_above' => 'Menu Above',
-				'menu_below' => 'Menu Below')));
+			'label'   => 'Use Blog Title as Caption?',
+			'type'    => 'checkbox'
+		];
 
-		$wp_customize->add_setting('google_analytics_code', array('type' => 'theme_mod',
-			'default' => '', 'transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_control( 'use_title', $options );
 
-		$wp_customize->add_control('google_analytics_code', array(
+		$transport =
+		[
+			'default'   => true,
+			'transport' => 'postMessage'
+		];
+
+		$options =
+		[
 			'section' => 'theme_options',
-			'label' => 'Your google analytics code?',
-			'type' => 'text'));
+			'label'   => 'Show Main Menu?',
+			'type'    => 'checkbox'
+		];
 
-		$wp_customize->add_setting('facebook_url', array('type' => 'theme_mod',
-			'default' => '', 'transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting( 'show_main_menu', $transport );
+		$wp_customize->add_control( 'show_main_menu', $options );
 
-		$wp_customize->add_control('facebook_url', array(
+		$menu_mod_options =
+		[
+			'type'       => 'theme_mod',
+			'default'    => 'Menu Above',
+			'transport'  => 'refresh',
+			'capability' => 'manage_options',
+			'priority'   => 4
+		];
+
+		$choices =
+		[
+			'menu_above' => 'Menu Above',
+			'menu_below' => 'Menu Below'
+		];
+
+		$options =
+		[
 			'section' => 'theme_options',
-			'label' => 'Your facebook URL?',
-			'type' => 'text'));
+			'label'   => 'Main menu above top or below top image?',
+			'type'    => 'radio',
+			'choices' => $choices
+		];
 
-		$wp_customize->add_setting('gplus_url', array('type' => 'theme_mod',
-			'default' => '', 'transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$wp_customize->add_setting( 'menu_location', $menu_mod_options );
+		$wp_customize->add_control( 'menu_location', $options );
 
-		$wp_customize->add_control('gplus_url', array(
-			'section' => 'theme_options',
-			'label' => 'Your google plus URL?',
-			'type' => 'text'));
+		$theme_options['label'] = 'Your google analytics code?';
+		$wp_customize->add_setting( 'google_analytics_code', $theme_mod_options );
+		$wp_customize->add_control( 'google_analytics_code', $theme_options );
 
-		$wp_customize->add_setting('pinterest_url', array('type' => 'theme_mod',
-			'default' => '', 'transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$theme_options['label'] = 'Your facebook URL?';
+		$wp_customize->add_setting( 'facebook_url', $theme_mod_options );
+		$wp_customize->add_control( 'facebook_url', $theme_options );
 
-		$wp_customize->add_control('pinterest_url', array(
-			'section' => 'theme_options',
-			'label' => 'Your pinterest_url URL?',
-			'type' => 'text'));
+		$theme_options['label'] = 'Your google plus URL?';
+		$wp_customize->add_setting( 'gplus_url', $theme_mod_options );
+		$wp_customize->add_control( 'gplus_url', $theme_options );
 
-		$wp_customize->add_setting('twitter_url', array('type' => 'theme_mod',
-			'default' => '', 'transport' => 'refresh',
-			'capability' => 'manage_options', 'priority' => 4));
+		$theme_options['label'] = 'Your pinterest URL?';
+		$wp_customize->add_setting( 'pinterest_url', $theme_mod_options );
+		$wp_customize->add_control( 'pinterest_url', $theme_options );
 
-		$wp_customize->add_control('twitter_url', array(
-			'section' => 'theme_options',
-			'label' => 'Your twitter URL?',
-			'type' => 'text'));
+		$theme_options['label'] = 'Your twitter URL?';
+		$wp_customize->add_setting( 'twitter_url', $theme_mod_options );
+		$wp_customize->add_control( 'twitter_url', $theme_options );
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\theme_directory_shortcode'))
+if ( ! function_exists( '\DigitalZenWorksTheme\theme_directory_shortcode' ) )
 {
-	function theme_directory_shortcode($content = '')
+	/**
+	 * Theme directory shortcode.
+	 *
+	 * @param  string $content The initial content.
+	 * @return string
+	 */
+	function theme_directory_shortcode( $content = '' )
 	{
-		return get_template_directory_uri().$content;
+		$template_directory = get_template_directory();
+		$content = $template_directory . $content;
+		return $content;
 	}
 }
 
-if (!function_exists('\DigitalZenWorksTheme\use_navbar_logo'))
+if ( ! function_exists( '\DigitalZenWorksTheme\use_navbar_logo' ) )
 {
+	/**
+	 * Use navbar logo.
+	 *
+	 * @return boolean
+	 */
 	function use_navbar_logo()
 	{
 		$use = true;
@@ -1202,13 +1593,13 @@ if (!function_exists('\DigitalZenWorksTheme\use_navbar_logo'))
 	}
 }
 
-/**
- * Clear canonical data for WP SEO Plugin.
- *
- * @return string
- */
-if (!function_exists('\DigitalZenWorksTheme\wpseo_canonical'))
+if ( ! function_exists( '\DigitalZenWorksTheme\wpseo_canonical' ) )
 {
+	/**
+	 * Clear canonical data for WP SEO Plugin.
+	 *
+	 * @return string
+	 */
 	function wpseo_canonical()
 	{
 		return add_query_arg( null, null );
