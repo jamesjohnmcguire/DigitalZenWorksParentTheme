@@ -894,6 +894,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_the_posts' ) )
 					the_content();
 				}
 ?>
+          </div><!--block-content-->
           <div class="clearfix"></div>
           <br />
 <?php
