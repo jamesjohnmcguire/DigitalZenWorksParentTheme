@@ -36,23 +36,18 @@ add_action(
 	100);
 add_action( 'wp_enqueue_scripts', '\DigitalZenWorksTheme\enqueue_assets' );
 
-// Remove Gutenberg Block Library CSS from loading on the frontend.
-// add_action( 'wp_enqueue_scripts', 'remove_wp_block_library_css', 100 );
-
 add_filter( 'show_admin_bar', '__return_false' );
-// add_filter( 'wp_mail_from_name','from_mail_name' );
-// add_filter( 'wp_nav_menu_objects', 'modify_wp_nav_menu_objects', 10, 2 );
 
-// add the home link to the main menu, if needed.
+// Add the home link to the main menu, if needed.
 add_filter( 'wp_nav_menu_items', '\DigitalZenWorksTheme\add_home_link', 10 );
 
-// add the theme directory path as needed.
+// Add the theme directory path as needed.
 add_shortcode(
 	'theme_directory',
 	'\DigitalZenWorksTheme\theme_directory_shortcode');
 
 remove_action( 'wp_head', 'qtranxf_wp_head_meta_generator' );
 
-// prevent adding extra <p> into the text.
+// Prevent adding extra <p> into the text.
 remove_filter( 'the_content', 'wpautop' );
 remove_filter( 'the_excerpt', 'wpautop' );
