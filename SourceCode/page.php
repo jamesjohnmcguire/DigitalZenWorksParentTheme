@@ -13,9 +13,6 @@ namespace DigitalZenWorksTheme;
 
 get_header();
 the_post();
-
-global $additional_css_classes;
-global $title;
 ?>
     <!-- page.php -->
 <?php

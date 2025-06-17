@@ -47,6 +47,7 @@ if ( true === $have_posts )
 {
 	$message = __( 'Search Results for: ', 'digitalzenworks-theme' );
 	$escaped_message = esc_html( $message );
+	// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
         <h1 class="page-title"><?php echo $escaped_message; ?>
           <span><?php the_search_query(); ?></span>
@@ -86,14 +87,23 @@ if ( true === $have_posts )
 }
 else
 {
-	$nothing_found = 'Nothing Found';
-	$message = 'Sorry, but nothing matched your search criteria. ' .
-		'Please try again with some different keywords.';
+	$nothing_found = __( 'Nothing Found', 'digitalzenworks-theme' );
+	$nothing_found = esc_html( $nothing_found );
+
+	$message = __(
+		'Sorry, but nothing matched your search criteria. ',
+		'digitalzenworks-theme' );
+	$message = esc_html( $message );
+
+	$message_again = __(
+		'Please try again with some different keywords.',
+		'digitalzenworks-theme' );
+	$message_again = esc_html( $message_again );
 ?>
         <div id="post-0" class="post no-results not-found">
           <h2 class="entry-title"><?php echo $nothing_found; ?></h2>
           <div class="entry-content">
-            <p><?php echo $message; ?></p>
+            <p><?php echo $message . $message_again; ?></p>
             <?php get_search_form(); ?>
           </div><!-- .entry-content -->
         </div>

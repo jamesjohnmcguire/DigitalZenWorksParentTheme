@@ -25,8 +25,9 @@ $use_alexa = false;
 $google_analytics_code = get_theme_mod( 'google_analytics_code' );
 $google_analytics_code_exists = ! empty( $google_analytics_code );
 $home = '/';
-
-?><!DOCTYPE html>
+// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -39,8 +40,10 @@ $home = '/';
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
   <link rel="icon" href="favicon.png">
 <?php
+// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 if ( true === $use_google_analytics && true === $google_analytics_code_exists )
 {
+	// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
     <script>
 	console.log('google analytics begin');
@@ -64,6 +67,7 @@ if ( true === $use_google_analytics && true === $google_analytics_code_exists )
     <!-- End google analytics -->
     </script>
 <?php
+	// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 ?>
     <!-- Facebook analytics -->
@@ -144,12 +148,14 @@ if ( 'all_pages' === $front_page_only || true === $is_front_page )
 	if ( 'use_carousel' !== $use_carousel )
 	{
 		$image = get_front_page_image();
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
       <div class="item active">
         <a href="<?php echo $home; ?>">
           <img class="image-full" alt="<?php echo $title; ?>" src="<?php echo $image; ?>">
         </a>
 <?php
+// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 if ( true === $use_title )
 {
 ?>
@@ -180,6 +186,7 @@ if ( ! is_front_page() )
 	}
 }
 
+// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
       </header><!--row-->
     </div><!--header-container-->

@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-$domain = 'digitalzenworks-theme';
-
 $comment_message = 'Leave a comment';
 $comments_one = '1 Comment';
 $comments_more = '% Comments';
