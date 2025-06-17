@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+$theme_path = get_template_directory_uri();
+
 $site_title = get_bloginfo( 'name' );
 $facebook_url = get_theme_mod( 'facebook_url' );
 $gplus_url = get_theme_mod( 'gplus_url' );
@@ -18,6 +20,9 @@ $pinterest_url = get_theme_mod( 'pinterest_url' );
 $twitter_url = get_theme_mod( 'twitter_url' );
 
 $year = gmdate( 'Y' );
+
+// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
 ?>
     <!-- FOOTER -->
 
@@ -34,7 +39,10 @@ All rights reserved. Copyright &copy; <?php echo $year; ?>
           <div class="cell">
             <div class="social-media">
 <?php
-$exists = !empty( $facebook_url );
+$exists = ! empty( $facebook_url );
+$exists = ! empty( $gplus_url );
+$exists = ! empty( $pinterest_url );
+$exists = ! empty( $twitter_url );
 
 if ( true === $exists )
 {
@@ -45,8 +53,6 @@ if ( true === $exists )
 <?php
 }
 
-$exists = !empty( $gplus_url );
-
 if ( true === $exists )
 {
 ?>
@@ -55,8 +61,6 @@ if ( true === $exists )
               </a>
 <?php
 }
-
-$exists = !empty( $pinterest_url );
 
 if ( true === $exists )
 {
@@ -67,8 +71,6 @@ if ( true === $exists )
 <?php
 }
 
-$exists = ! empty( $twitter_url );
-
 if ( true === $exists )
 {
 ?>
@@ -77,6 +79,8 @@ if ( true === $exists )
               </a>
 <?php
 }
+
+// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                     <a href="/feed" class="rss">
                       <span class="fa fa-rss"></span>
@@ -88,34 +92,10 @@ if ( true === $exists )
     </div>
 
     <!--wp_footer begin-->
-<?php wp_footer(); ?>
+<?php
+wp_footer();
+?>
     <!--wp_footer end-->
-
-    <!--scripts-->
-    <!-- Cross-browser responsiveness scripts -->
-    <!--[if lt IE 9]>
-      <script src="<?php echo get_template_directory_uri(); ?>/js/html5shiv.js"></script>
-      <script src="<?php echo get_template_directory_uri(); ?>/js/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- load google fonts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js?202004040"></script>
-    <script>
-		WebFont.load(
-		{
-			google:
-			{
-				families:
-				[
-					'Open+Sans:400italic,600italic,400,600,700',
-					'Raleway:400,500,600,700'
-				]
-			}
-		});
-    </script>
-
-    <!-- Assets - Required -->
-    <script src="<?php echo get_template_directory_uri(); ?>/assets/page-scroller/jquery.ui.totop.min.js"></script>
 
     <script>
 		$('.carousel').carousel({

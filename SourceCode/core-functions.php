@@ -311,6 +311,11 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_styles' ) )
 		if ( true === THEME_DEBUG )
 		{
 			wp_enqueue_style(
+				'theme-font-styles',
+				$css_path . 'fonts.css',
+				[],
+				$version);
+			wp_enqueue_style(
 				'theme-style',
 				$css_path . 'style.css');
 			wp_enqueue_style(
@@ -1293,37 +1298,40 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
               </a>
             </h2>
 <?php
-	if ( 'post' === $post->post_type )
-	{
-		/* translators: View all posts by author. */
-		$inner_message =
-			__( 'View all posts by %s', 'digitalzenworks-theme' );
-		$title = sprintf( $inner_message, $author_name );
+		if ( 'post' === $post->post_type )
+		{
+			/* translators: View all posts by author. */
+			$inner_message =
+				__( 'View all posts by %s', 'digitalzenworks-theme' );
+			$title = sprintf( $inner_message, $author_name );
 
-		show_entry_meta_section(
-			$author,
-			$title,
-			$edit_message,
-			$edit_before,
-			$edit_after);
-	}
+			show_entry_meta_section(
+				$author,
+				$title,
+				$edit_message,
+				$edit_before,
+				$edit_after);
+		}
 
-	show_excerpt_section( 'entry-summary', true );
+		show_excerpt_section( 'entry-summary', true );
 
-	if ( 'post' === $post->post_type )
-	{
-		show_entry_utility_section(
-			$comment_message,
-			$comments_one,
-			$comments_more,
-			$edit_message,
-			$edit_before,
-			$edit_after,
-			$extra);
-	}
+		if ( 'post' === $post->post_type )
+		{
+			show_entry_utility_section(
+				$comment_message,
+				$comments_one,
+				$comments_more,
+				$edit_message,
+				$edit_before,
+				$edit_after,
+				$extra);
+		}
+
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
           </div><!-- #post-<?php echo $id; ?> -->
 <?php
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -1376,6 +1384,8 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
           </h2>
 <?php
+				// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
 				if ( true === $show_excerpts )
 				{
 					show_excerpt_section(
@@ -1387,6 +1397,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 ?>
           <div class="block-content<?php echo $additional_classes; ?>">
 <?php
+					// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 					the_content();
 				}
 ?>
