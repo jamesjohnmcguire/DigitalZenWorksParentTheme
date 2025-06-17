@@ -1,17 +1,23 @@
 <?php
+/**
+ * Footer file for the Digital Zen Works theme.
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-$site_title = get_bloginfo('name');
-$facebook_url = get_theme_mod('facebook_url');
-$gplus_url = get_theme_mod('gplus_url');
-$pinterest_url = get_theme_mod('pinterest_url');
-$twitter_url = get_theme_mod('twitter_url');
+$site_title = get_bloginfo( 'name' );
+$facebook_url = get_theme_mod( 'facebook_url' );
+$gplus_url = get_theme_mod( 'gplus_url' );
+$pinterest_url = get_theme_mod( 'pinterest_url' );
+$twitter_url = get_theme_mod( 'twitter_url' );
 
-date_default_timezone_set('Asia/Tokyo');
-$year = date("Y");
+$year = gmdate( 'Y' );
 ?>
     <!-- FOOTER -->
 
@@ -21,11 +27,16 @@ $year = date("Y");
     <div class="copyright">
       <div class="container">   
         <div class="div-table v-middle">
-          <div class="cell">All rights reserved. Copyright &copy; <?php echo $year; ?> <span class="company-rights"><?php echo $site_title; ?></span></div>
+          <div class="cell">
+All rights reserved. Copyright &copy; <?php echo $year; ?>
+<span class="company-rights"><?php echo $site_title; ?></span>
+          </div>
           <div class="cell">
             <div class="social-media">
 <?php
-if (!empty($facebook_url))
+$exists = !empty( $facebook_url );
+
+if ( true === $exists )
 {
 ?>
               <a href="<?php echo $facebook_url; ?>" class="facebook">
@@ -34,7 +45,9 @@ if (!empty($facebook_url))
 <?php
 }
 
-if (!empty($gplus_url))
+$exists = !empty( $gplus_url );
+
+if ( true === $exists )
 {
 ?>
               <a href="<?php echo $gplus_url; ?>" class="google-plus">
@@ -43,7 +56,9 @@ if (!empty($gplus_url))
 <?php
 }
 
-if (!empty($pinterest_url))
+$exists = !empty( $pinterest_url );
+
+if ( true === $exists )
 {
 ?>
               <a href="<?php echo $pinterest_url; ?>" class="pinterest">
@@ -52,7 +67,9 @@ if (!empty($pinterest_url))
 <?php
 }
 
-if (!empty($twitter_url))
+$exists = ! empty( $twitter_url );
+
+if ( true === $exists )
 {
 ?>
               <a href="<?php echo $twitter_url; ?>" class="twitter">
@@ -83,17 +100,27 @@ if (!empty($twitter_url))
 
     <!-- load google fonts -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js?202004040"></script>
-    <script>WebFont.load({google:{families:['Open+Sans:400italic,600italic,400,600,700', 'Raleway:400,500,600,700']}});</script>
+    <script>
+		WebFont.load(
+		{
+			google:
+			{
+				families:
+				[
+					'Open+Sans:400italic,600italic,400,600,700',
+					'Raleway:400,500,600,700'
+				]
+			}
+		});
+    </script>
 
     <!-- Assets - Required -->
     <script src="<?php echo get_template_directory_uri(); ?>/assets/page-scroller/jquery.ui.totop.min.js"></script>
 
     <script>
-
 		$('.carousel').carousel({
 			interval: 3000
 		})
     </script>
-
   </body>
 </html>

@@ -873,3 +873,8 @@ a:hover
 	overflow: hidden;
 	height: 20px;
 }
+
+.pull-right
+{
+	float: right !important;	
+}

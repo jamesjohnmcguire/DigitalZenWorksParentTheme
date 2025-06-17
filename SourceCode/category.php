@@ -1,14 +1,17 @@
 <?php
-/*
-Template Name: Category
-*/
+/**
+ * Template Name: Category
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
-$title = single_cat_title('', false);
-$title = __($title);
+$title = single_cat_title( '', false );
 
 get_header();
 rewind_posts();
@@ -18,10 +21,9 @@ rewind_posts();
       <div class="row">
         <div class="col-md-12">
 <?php
-// in functions.php
-show_title($title);
+show_title( $title );
 
-get_the_posts(false);
+show_posts( false );
 ?>
         </div>
 <?php show_right_column(); ?>

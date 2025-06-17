@@ -52,7 +52,7 @@ if ( true === $have_posts )
           <span><?php the_search_query(); ?></span>
         </h1>
 <?php
-	get_pagination( 'nav-above' );
+	show_pagination( 'nav-above' );
 
 	while ( true === $have_posts )
 	{
@@ -82,7 +82,7 @@ if ( true === $have_posts )
 		$have_posts = have_posts();
 	}
 
-	get_pagination( 'nav-below' );
+	show_pagination( 'nav-below' );
 }
 else
 {

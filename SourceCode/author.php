@@ -1,7 +1,11 @@
 <?php
-/*
-Template Name: Author
-*/
+/**
+ * Template Name: Author
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
@@ -12,7 +16,10 @@ get_header();
     <!-- author.php -->
 <?php
 the_post();
-if (empty($authordata))
+
+$exists = ! empty( $authordata );
+
+if ( false === $exists )
 {
 ?>
       <div id="row">
@@ -23,20 +30,21 @@ if (empty($authordata))
 else
 {
 	$author_name = get_the_author();
-	$author_id = get_the_author_meta('ID');
-	$author = get_author_posts_url($author_id);
-	$author_tip = sprintf(__('View all posts by %s', 'digitalzenworks-theme' ),
-		$authordata->display_name);
+	$author_id = get_the_author_meta( 'ID' );
+	$author = get_author_posts_url( $author_id );
+	$template = __( 'View all posts by %s', 'digitalzenworks-theme' );
+	$author_tip = sprintf( $template, $authordata->display_name );
 
-	$title = "Author Archives: <span class=\"author vcard\"><a class=\"url fn n\" href=\"$author\" title=\"$author_tip\">$author_name</a></span>";
+	$title = 'Author Archives: <span class="author vcard">' .
+		'<a class="url fn n" href="$author" title="$author_tip">' .
+		$author_name . '</a></span>';
 
-	// in functions.php
-	show_title($title);
+	show_title( $title );
 
 	rewind_posts();
-	query_posts('&showposts=-1&order=ASC');
-	// in functions.php
-	get_the_posts();
+	query_posts( '&showposts=-1&order=ASC' );
+
+	show_posts();
 }
 ?>
       </div>

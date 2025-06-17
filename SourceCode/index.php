@@ -25,7 +25,7 @@ rewind_posts();
         <div class="row">
             <div class="col-md-9">
 <?php
-get_the_posts();
+show_posts();
 ?>
                 </div>
 <?php

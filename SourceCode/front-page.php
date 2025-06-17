@@ -1,39 +1,45 @@
 <?php
-/*
-Template Name: Front Page
-*/
+/**
+ * Template Name: Front Page
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+$is_front_page = is_front_page();
+$is_home = is_home();
 get_header();
 ?>
     <!-- front-page.php -->
 <?php
-if (is_home())
+if ( true === $is_home )
 {
 ?>
     <!--is_home-->
 <?php
 }
-if (is_front_page())
+
+if ( true === $is_front_page )
 {
 ?>
     <!--is_front_page-->
 <?php
 }
 
-if ((is_home()) && (is_front_page()))
+if ( true === $is_home && true === $is_front_page )
 {
-	// show a list of posts
+	// Show a list of posts.
 	echo "<!--home-->\r\n";
-	// in functions.php
-	get_the_posts();
+	show_posts();
 }
 else
 {
-	// show our main default page
+	// Show our main default page.
 	the_content();
 }
 

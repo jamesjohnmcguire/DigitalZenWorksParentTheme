@@ -136,7 +136,7 @@ navigation_link( 'prev' );
 <?php
 if ( true === $show_main_menu && 'menu_above' === $menu_location )
 {
-	get_nav( $title, $use_logo );
+	show_nav();
 }
 
 if ( 'all_pages' === $front_page_only || true === $is_front_page )
@@ -164,7 +164,7 @@ if ( true === $use_title )
 
 if ( true === $show_main_menu && 'menu_below' === $menu_location )
 {
-	get_nav( $title, $use_logo );
+	show_nav();
 }
 
 $additional_css_classes = '';
@@ -175,7 +175,7 @@ if ( ! is_front_page() )
 
 	if ( true === $enable_breadcrumbs )
 	{
-		get_breadcrumbs();
+		show_breadcrumbs();
 		$additional_css_classes = ' breadcrumbs';
 	}
 }

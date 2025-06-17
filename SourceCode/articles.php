@@ -1,7 +1,11 @@
 <?php
-/*
-Template Name: Articles
-*/
+/**
+ * Template Name: Articles
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
@@ -13,10 +17,9 @@ get_header();
 <?php
 query_posts( '&showposts=-1&order=ASC' );
 
-// in functions.php
 $title = child_get_page_title();
 show_title( $title );
 
-get_the_posts();
+show_posts();
 
 get_footer();

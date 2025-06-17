@@ -22,7 +22,7 @@ get_header();
 <?php
 the_post();
 the_content();
-get_status_line( false );
+show_status_line( false );
 ?>
             </div>
           </div>

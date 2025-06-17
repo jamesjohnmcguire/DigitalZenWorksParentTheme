@@ -1,18 +1,20 @@
 <?php
-/*
-Template Name: 404
-
-The template for displaying 404 pages (not found).
-
-@link https://codex.wordpress.org/Creating_an_Error_404_Page
-*/
+/**
+ * Template Name: 404
+ *
+ * The template for displaying 404 pages (not found).
+ *
+ * @package DigitalZenWorksTheme
+ * @author  James John McGuire <jamesjohnmcguire@gmail.com>
+ * @link    https://digitalzenworks.com
+ */
 
 declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
 get_header();
-$notice = esc_html__('That page can&rsquo;t be found.', 'bootstrap' );
+$notice = esc_html__( 'That page can&rsquo;t be found.', 'bootstrap' );
 ?>
       <div class="row">
         <div id="primary" class="content-area">
@@ -21,4 +23,5 @@ $notice = esc_html__('That page can&rsquo;t be found.', 'bootstrap' );
           </main>
         </div>
       </div>
-<?php get_footer();?>
+<?php
+get_footer();

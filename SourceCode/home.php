@@ -16,6 +16,6 @@ get_header( 'home' );
     <!-- home.php -->
 <?php
 // In functions.php.
-get_the_posts();
+show_posts();
 
 get_footer();
