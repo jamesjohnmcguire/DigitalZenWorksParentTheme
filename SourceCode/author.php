@@ -41,10 +41,49 @@ else
 
 	show_title( $title );
 
-	rewind_posts();
-	query_posts( '&showposts=-1&order=ASC' );
+	$arguments = [
+		'posts_per_page' => -1,
+		'order'          => 'ASC',
+		'post_status'    => 'publish',
+		'author'         => $author_id,
+	];
 
-	show_posts();
+	$query = new \WP_Query( $arguments );
+
+	$has_posts = $query->have_posts();
+
+	if ( true === $has_posts )
+	{
+?>
+       <div class="row">
+        <div class="col-md-12 post-content">
+<?php
+		while ( true === $has_posts )
+		{
+			$query->the_post();
+?>
+          <h2>
+            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+          </h2>
+          <div class="block-content">
+<?php
+			the_content();
+?>
+          </div><!--block-content-->
+          <div class="clearfix"></div>
+          <br />
+<?php
+			show_status_line();
+
+			$has_posts = $query->have_posts();
+		}
+?>
+        </div>
+      </div>
+<?php
+	}
+
+	wp_reset_postdata();
 }
 ?>
       </div>

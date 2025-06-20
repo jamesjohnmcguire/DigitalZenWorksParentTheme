@@ -1437,10 +1437,18 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 		$show_excerpts = false,
 		$videos = false)
 	{
+		$query = null;
+
 		if ( true === $paged )
 		{
 			$paged = get_query_var( 'paged' );
-			query_posts( "posts_per_page=10&paged=$paged" );
+			$arguments = [
+				'posts_per_page' => 10,
+				'paged'          => $paged,
+				'post_status'    => 'publish',
+			];
+
+			$query = new \WP_Query( $arguments );
 		}
 
 		$additional_classes = '';
@@ -1450,7 +1458,16 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 			$additional_classes = ' video-item';
 		}
 
-		$have_posts = have_posts();
+		$have_posts = false;
+
+		if ( null !== $query )
+		{
+			$have_posts = $query->have_posts();
+		}
+		else
+		{
+			$have_posts = have_posts();
+		}
 
 		if ( true === $have_posts )
 		{
@@ -1465,7 +1482,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 
 			while ( true === $have_posts )
 			{
-				the_post();
+				if ( null !== $query )
+				{
+					$query->the_post();
+				}
+				else
+				{
+					the_post();
+				}
 ?>
           <h2>
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -1493,6 +1517,15 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
           <br />
 <?php
 				show_status_line();
+
+				if ( null !== $query )
+				{
+					$have_posts = $query->have_posts();
+				}
+				else
+				{
+					$have_posts = have_posts();
+				}
 			}
 
 			if ( true === $paged )
@@ -1503,6 +1536,11 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
         </div>
       </div>
 <?php
+		}
+
+		if ( null !== $query )
+		{
+			wp_reset_postdata();
 		}
 	}
 }
