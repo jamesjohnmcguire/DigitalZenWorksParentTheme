@@ -14,7 +14,10 @@ declare(strict_types=1);
 namespace DigitalZenWorksTheme;
 
 get_header();
+
 $notice = esc_html__( 'That page can&rsquo;t be found.', 'bootstrap' );
+
+// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
       <div class="row">
         <div id="primary" class="content-area">

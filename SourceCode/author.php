@@ -32,11 +32,11 @@ else
 	$author_name = get_the_author();
 	$author_id = get_the_author_meta( 'ID' );
 	$author = get_author_posts_url( $author_id );
-	$template = __( 'View all posts by %s', 'digitalzenworks-theme' );
-	$author_tip = sprintf( $template, $authordata->display_name );
+	$author_message = get_posts_by_author_message();
+	$author_message = esc_attr( $author_message );
 
 	$title = 'Author Archives: <span class="author vcard">' .
-		'<a class="url fn n" href="$author" title="$author_tip">' .
+		'<a class="url fn n" href="$author" title="$author_message">' .
 		$author_name . '</a></span>';
 
 	show_title( $title );

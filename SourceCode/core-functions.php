@@ -43,7 +43,12 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
 	 */
 	function comment_debug( $message )
 	{
-		echo "\n<!--*****DEBUG: $message*****-->\n";
+		$message = "\n<!--*****DEBUG: $message*****-->\n";
+		$message = esc_html( $message );
+
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $message;
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -67,16 +72,25 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_nav' ) )
 
 		if ( $pages_count > 1 && true === $exists )
 		{
+			$comment_nav = __( 'Comment navigation', 'twentyfifteen' );
+			$comment_nav = esc_html( $comment_nav );
+			// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
     <nav class="navigation comment-navigation" role="navigation">
-      <h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'twentyfifteen' ); ?></h2>
+      <h2 class="screen-reader-text"><?php echo $comment_nav; ?></h2>
       <div class="nav-links">
 <?php
-			$older_comments = translate( 'Older Comments' );
-			$newer_comments = translate( 'Newer Comments' );
-			$previous_link = get_previous_comments_link( $older_comments );
-			$next_link = get_previous_comments_link( $newer_comments );
+			// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+			$older_comments = __( 'Older Comments', 'digitalzenworks-theme' );
+			$newer_comments = __( 'Newer Comments', 'digitalzenworks-theme' );
 
+			$previous_link = get_previous_comments_link( $older_comments );
+			$previous_link = esc_url( $previous_link );
+
+			$next_link = get_previous_comments_link( $newer_comments );
+			$next_link = esc_url( $next_link );
+
+			// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 			$exists = ! empty( $previous_link );
 
 			if ( true === $exists )
@@ -264,7 +278,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_scripts' ) )
 			'totop-async',
 			$file,
 			[ 'jquery' ],
-			false,
+			'1.2.0',
 			true);
 		wp_enqueue_script( 'totop-async' );
 
@@ -276,7 +290,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_scripts' ) )
 				'theme-bootstrap-async',
 				$bootstrap_file,
 				[ 'jquery' ],
-				false,
+				'5.3.3',
 				true);
 			wp_enqueue_script( 'theme-bootstrap-async' );
 		}
@@ -300,11 +314,19 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_styles' ) )
 		$version = $theme->get( 'Version' );
 
 		$bootstrap_file = $css_vendor_path . 'bootstrap.min.css';
-		wp_enqueue_style( 'bootstrap-style', $bootstrap_file );
+		wp_enqueue_style(
+			'bootstrap-style',
+			$bootstrap_file,
+			[],
+			'5.3.3');
 
 		$css_cdn_path = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/' .
 			'4.5.0/css/font-awesome.min.css';
-		wp_enqueue_style( 'fontawesome-style', $css_cdn_path );
+		wp_enqueue_style(
+			'fontawesome-style',
+			$css_cdn_path,
+			[],
+			'4.5.0');
 
 		// When debug is false, these files, in their minified version are
 		// loaded from the child theme.
@@ -317,19 +339,29 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_styles' ) )
 				$version);
 			wp_enqueue_style(
 				'theme-style',
-				$css_path . 'style.css');
+				$css_path . 'style.css',
+				[],
+				$version);
 			wp_enqueue_style(
 				'social-media-style',
-				$css_path  . 'social-media.css');
+				$css_path  . 'social-media.css',
+				[],
+				$version);
 			wp_enqueue_style(
 				'to-top-style',
-				$css_path  . 'to-top.css');
+				$css_path  . 'to-top.css',
+				[],
+				$version);
 			wp_enqueue_style(
 				'parent-parallax-style',
-				$css_path  . 'parallax.css');
+				$css_path  . 'parallax.css',
+				[],
+				$version);
 			wp_enqueue_style(
 				'services-style',
-				$css_path  . 'services.css');
+				$css_path  . 'services.css',
+				[],
+				$version);
 		}
 	}
 }
@@ -354,8 +386,8 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_archive_title' ) )
 
 			if ( true === $exists )
 			{
-				$message =
-					translate( 'Blog Archives', 'digitalzenworks-theme' );
+				$message = __( 'Blog Archives', 'digitalzenworks-theme' );
+				$message = esc_html( $message );
 			}
 			else
 			{
@@ -377,9 +409,10 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_archive_title' ) )
 					$format = get_the_time( 'Y' );
 				}
 
+				/* translators: Type of archive. */
 				$template = __(
 					'%1$s Archives: <span>%2$s</span>',
-					'digitalzenworks-theme');
+					'digitalzenworks-theme' );
 				$message = sprintf( $template, $type, $format );
 			}
 		}
@@ -671,6 +704,25 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_time' ) )
 	}
 }
 
+if ( ! function_exists( '\DigitalZenWorksTheme\get_posts_by_author_message' ) )
+{
+	/**
+	 * Get posts by author message.
+	 *
+	 * @return string
+	 */
+	function get_posts_by_author_message()
+	{
+		$author_name = get_the_author_meta( 'display_name' );
+
+		/* translators: View all posts by author. */
+		$inner_message = __( 'View all posts by %s', 'digitalzenworks-theme' );
+		$message = sprintf( $inner_message, $author_name );
+
+		return $message;
+	}
+}
+
 if ( ! function_exists( '\DigitalZenWorksTheme\get_title' ) )
 {
 	/**
@@ -805,9 +857,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\navigation_link' ) )
 				{
 					$link = previous_posts( false );
 				}
+
+				$type = esc_attr( $type );
+				$link = esc_url( $link );
+				// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
     <link rel="<?php echo $type; ?>" href="<?php echo $link; ?>" />
 <?php
+				// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -826,6 +883,8 @@ if ( ! function_exists( '\DigitalZenWorksTheme\output_head' ) )
 	 */
 	function output_head( $title, $icon_file = null )
 	{
+		$title = esc_html( $title );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
   <head>
     <meta charset="utf-8">
@@ -834,15 +893,20 @@ if ( ! function_exists( '\DigitalZenWorksTheme\output_head' ) )
     <meta name="robots" content="index, follow">
     <title><?php echo $title; ?></title>
 <?php
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+
 		if ( null !== $icon_file )
 		{
 			$exists = file_exists( $icon_file );
 
 			if ( true === $exists )
 			{
+				$icon_file = esc_url( $icon_file );
+				// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
     <link rel="icon" href="<?php echo $icon_file; ?>" />
 <?php
+				// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 ?>
@@ -933,6 +997,8 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_breadcrumbs' ) )
 {
 	/**
 	 * Show breadcrumbs navigation.
+	 *
+	 * @return void
 	 */
 	function show_breadcrumbs()
 	{
@@ -983,11 +1049,19 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
 		$edit_before,
 		$edit_after)
 	{
+		$by = __( 'By ', 'digitalzenworks-theme' );
+		$by = esc_html( $by );
+
 		$the_time = get_the_time( 'Y-m-d\TH:i:sO' );
+		$the_time = esc_attr( $the_time );
+
+		$published_on = __( 'Published on ', 'digitalzenworks-theme' );
+		$published_on = esc_html( $published_on );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                     <div class="entry-meta">
                       <span class="meta-prep meta-prep-author">
-                        <?php _e( 'By ', 'digitalzenworks-theme' ); ?>
+                        <?php echo $by; ?>
                       </span>
                       <span class="author vcard">
                         <a
@@ -999,13 +1073,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
                         <span class="meta-sep"> | </span>
                         <span class="meta-prep meta-prep-entry-date">
 <?php
-		 _e( 'Published on ', 'digitalzenworks-theme' );
+		echo $published_on;
 ?>
                         </span>
                         <span class="entry-date">
                           <abbr class="published"
                             title="<?php echo $the_time; ?>">
 <?php
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		$option = get_option( 'date_format' );
 		the_time( $option );
 ?>
@@ -1044,15 +1119,21 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_entry_utility_section' ) )
 		$include_the_tags = true)
 	{
 		$entry_classes = 'entry-utility-prep entry-utility-prep-cat-links';
+
+		$posted_in = __( 'Posted in ', 'digitalzenworks-theme' );
+		$posted_in = esc_html( $posted_in );
 		$category_list = get_the_category_list( ', ' );
+		$category_list = esc_html( $category_list );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                     <div class="entry-utility">
                       <span class="cat-links">
                         <span class="<?php echo $entry_classes; ?>">
-                          <?php _e( 'Posted in ', 'digitalzenworks-theme' ); ?>
+                          <?php echo $posted_in; ?>
                         </span>
 <?php
 		echo $category_list;
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                       </span>
                       <span class="meta-sep"> | </span>
@@ -1099,10 +1180,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_excerpt_section' ) )
 		$additional_classes = '',
 		$include_links = false)
 	{
+		$css_classes = $css_class . $additional_classes;
+		$css_classes = esc_attr( $css_classes );
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
-            <div class="<?php echo $css_class . $additional_classes; ?>">
+            <div class="<?php echo $css_classes; ?>">
               <?php the_excerpt(); ?>
 <?php
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( true === $include_links )
 		{
 			$inner_message = __( 'Pages:', 'digitalzenworks-theme' );
@@ -1235,12 +1320,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_pagination' ) )
 
 		if ( $total_pages > 1 )
 		{
+			// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                 <div id="<?php echo $name; ?>" class="navigation">
                   <span class="nav-previous"><?php echo $next_link; ?></span>
                   <span class="nav-next"><?php echo $previous_link; ?></span>
                 </div><!-- #<?php echo $name; ?> -->
 <?php
+			// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }
@@ -1283,12 +1370,13 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 		$id = $post->ID;
 		$author_id   = (int)get_the_author_meta( 'ID' );
 		$author      = get_author_posts_url( $author_id );
-		$author_name = get_the_author_meta( 'display_name' );
 
 		/* translators: Permalink to post. */
 		$translation = __( 'Permalink to %s', 'digitalzenworks-theme' );
 		$title_attribute = the_title_attribute( [ 'echo' => false ] );
 		$message = sprintf( $translation, $title_attribute );
+
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
           <div id="post-<?php echo $id; ?>" <?php echo $classes; ?>>
             <h2 class="entry-title">
@@ -1298,12 +1386,11 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
               </a>
             </h2>
 <?php
+		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+
 		if ( 'post' === $post->post_type )
 		{
-			/* translators: View all posts by author. */
-			$inner_message =
-				__( 'View all posts by %s', 'digitalzenworks-theme' );
-			$title = sprintf( $inner_message, $author_name );
+			$title = get_posts_by_author_message();
 
 			show_entry_meta_section(
 				$author,
