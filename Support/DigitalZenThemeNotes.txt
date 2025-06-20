@@ -39,6 +39,10 @@ Development Plan
 	Infrastructure
 	BoilerPlate
 	_ Theme
+	BootStrap
+	Google Fonts
+	Ion Icons
+	Font Awesome
 	Core Functionality
 	Merging of other themes
 	Testing, Polishing, Validation of requirements
@@ -52,11 +56,14 @@ Development Plan
 			.gitignore
 				workspace file *
 			funding
+		Directory Structure
 		.editorconfig
 		composer
 		npm
 		phpunit
 		phpdoc
+		phpstan
+		phpcs
 		build tools
 			build.cmd
 			grunt
