@@ -37,7 +37,7 @@ if ( true === $has_posts )
 <?php
 	while ( true === $has_posts )
 	{
-		$articles_query->the_post();
+		$query->the_post();
 ?>
           <h2>
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>

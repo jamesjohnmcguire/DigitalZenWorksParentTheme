@@ -35,7 +35,7 @@ global $comments_more;
 /** @var \WP_Post $post */
 global $post;
 
-$have_posts = have_posts();
+$have_posts = \have_posts();
 
 get_header();
 ?>
@@ -80,7 +80,7 @@ if ( true === $have_posts )
 			$domain,
 			true);
 
-		$have_posts = have_posts();
+		$have_posts = \have_posts();
 	}
 
 	show_pagination( 'nav-below' );

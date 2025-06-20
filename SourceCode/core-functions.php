@@ -375,46 +375,42 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_archive_title' ) )
 	 */
 	function get_archive_title()
 	{
-		$message = null;
+		$message = '';
 
 		$is_archive = is_archive();
 		$is_category = is_category();
 
 		if ( true === $is_archive && false === $is_category )
 		{
-			$exists = ! empty( $_GET['paged'] );
+			$type = 'Blog';
+			$format = '';
 
-			if ( true === $exists )
-			{
-				$message = __( 'Blog Archives', 'digitalzenworks-theme' );
-				$message = esc_html( $message );
-			}
-			else
+			$is_day = is_day();
+			$is_month = is_month();
+			$is_year = is_year();
+
+			if ( true === $is_day )
 			{
 				$type = 'Daily';
 				$option = get_option( 'date_format' );
 				$format = get_the_time( $option );
-
-				$is_month = is_month();
-				$is_year = is_year();
-
-				if ( true === $is_month )
-				{
-					$type = 'Monthly';
-					$format = get_the_time( 'F Y' );
-				}
-				elseif ( true === $is_year )
-				{
-					$type = 'Yearly';
-					$format = get_the_time( 'Y' );
-				}
-
-				/* translators: Type of archive. */
-				$template = __(
-					'%1$s Archives: <span>%2$s</span>',
-					'digitalzenworks-theme' );
-				$message = sprintf( $template, $type, $format );
 			}
+			elseif ( true === $is_month )
+			{
+				$type = 'Monthly';
+				$format = get_the_time( 'F Y' );
+			}
+			elseif ( true === $is_year )
+			{
+				$type = 'Yearly';
+				$format = get_the_time( 'Y' );
+			}
+
+			/* translators: Type of archive. */
+			$template = __(
+				'%1$s Archives: <span>%2$s</span>',
+				'digitalzenworks-theme' );
+			$message = sprintf( $template, $type, $format );
 		}
 
 		return $message;
@@ -774,6 +770,29 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_title' ) )
 		}
 
 		return $title;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\have_posts' ) )
+{
+	/**
+	 * Check if there are posts.
+	 *
+	 * @param \WP_Query|null $query The query object.
+	 * @return bool True if there are posts, false otherwise.
+	 */
+	function have_posts( $query )
+	{
+		if ( null !== $query )
+		{
+			$have_posts = $query->have_posts();
+		}
+		else
+		{
+			$have_posts = \have_posts();
+		}
+
+		return $have_posts;
 	}
 }
 
@@ -1224,7 +1243,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_loop' ) )
 		$edit_before = '',
 		$edit_after = '')
 	{
-		$have_posts = have_posts();
+		$have_posts = \have_posts();
 		
 		while ( true === $have_posts )
 		{
@@ -1458,16 +1477,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 			$additional_classes = ' video-item';
 		}
 
-		$have_posts = false;
-
-		if ( null !== $query )
-		{
-			$have_posts = $query->have_posts();
-		}
-		else
-		{
-			$have_posts = have_posts();
-		}
+		$have_posts = have_posts( $query );
 
 		if ( true === $have_posts )
 		{
@@ -1518,14 +1528,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 <?php
 				show_status_line();
 
-				if ( null !== $query )
-				{
-					$have_posts = $query->have_posts();
-				}
-				else
-				{
-					$have_posts = have_posts();
-				}
+				$have_posts = have_posts( $query );
 			}
 
 			if ( true === $paged )
@@ -1620,7 +1623,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_title' ) )
 
 		if ( false === $exists )
 		{
-			$have_posts = have_posts();
+			$have_posts = \have_posts();
 
 			if ( true === $have_posts )
 			{
