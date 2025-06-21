@@ -23,7 +23,7 @@ rewind_posts();
 <?php
 show_title( $title );
 
-show_posts( false );
+show_posts();
 ?>
         </div>
 <?php show_right_column(); ?>

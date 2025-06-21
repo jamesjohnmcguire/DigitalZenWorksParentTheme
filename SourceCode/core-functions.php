@@ -1446,14 +1446,16 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 	/**
 	 * Show posts with pagination.
 	 *
-	 * @param bool $paged         Whether to show pagination.
+	 * @param bool $show_content  Whether to show content.
 	 * @param bool $show_excerpts Whether to show excerpts.
+	 * @param bool $paged         Whether to show pagination.
 	 * @param bool $videos        Whether to show videos.
 	 * @return void
 	 */
 	function show_posts(
-		$paged = true,
+		$show_content = true,
 		$show_excerpts = false,
+		$paged = true,
 		$videos = false)
 	{
 		$query = null;
@@ -1513,19 +1515,18 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 						'block-content',
 						$additional_classes);
 				}
-				else
+				else if ( true === $show_content )
 				{
 ?>
           <div class="block-content<?php echo $additional_classes; ?>">
 <?php
 					// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 					the_content();
-				}
 ?>
           </div><!--block-content-->
-          <div class="clearfix"></div>
-          <br />
 <?php
+				}
+
 				show_status_line();
 
 				$have_posts = have_posts( $query );
