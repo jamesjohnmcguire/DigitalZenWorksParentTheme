@@ -719,6 +719,27 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_posts_by_author_message' ) )
 	}
 }
 
+if ( ! function_exists( '\DigitalZenWorksTheme\get_query_default_arguments' ) )
+{
+	/**
+	 * Get query default arguments.
+	 *
+	 * @return array The query default arguments.
+	 */
+	function get_query_default_arguments()
+	{
+		$paged = get_query_var( 'paged' );
+
+		$arguments = [
+			'posts_per_page' => 10,
+			'paged'          => $paged,
+			'post_status'    => 'publish',
+		];
+
+		return $arguments;
+	}
+}
+
 if ( ! function_exists( '\DigitalZenWorksTheme\get_title' ) )
 {
 	/**
@@ -770,6 +791,27 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_title' ) )
 		}
 
 		return $title;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\get_video_css_classes' ) )
+{
+	/**
+	 * Get video CSS classes.
+	 *
+	 * @param bool $videos Whether the post has videos.
+	 * @return string The video CSS classes.
+	 */
+	function get_video_css_classes( $videos )
+	{
+		$additional_classes = '';
+
+		if ( true === $videos )
+		{
+			$additional_classes = ' video-item';
+		}
+
+		return $additional_classes;
 	}
 }
 
@@ -1462,22 +1504,11 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 
 		if ( true === $paged )
 		{
-			$paged = get_query_var( 'paged' );
-			$arguments = [
-				'posts_per_page' => 10,
-				'paged'          => $paged,
-				'post_status'    => 'publish',
-			];
-
+			$arguments = get_query_default_arguments();
 			$query = new \WP_Query( $arguments );
 		}
 
-		$additional_classes = '';
-
-		if ( true === $videos )
-		{
-			$additional_classes = ' video-item';
-		}
+		$additional_classes = get_video_css_classes( $videos );
 
 		$have_posts = have_posts( $query );
 
@@ -1515,7 +1546,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 						'block-content',
 						$additional_classes);
 				}
-				else if ( true === $show_content )
+				elseif ( true === $show_content )
 				{
 ?>
           <div class="block-content<?php echo $additional_classes; ?>">
@@ -1580,7 +1611,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_status_line' ) )
 		$time = esc_html( $time );
 		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
-                    <ul class="meta-info-cells v2 float-wrapper">
+                    <ul class="meta-info-cells float-wrapper">
                         <li>
                           <span class="fa fa-calendar"></span>
                           <?php echo $time; ?>
