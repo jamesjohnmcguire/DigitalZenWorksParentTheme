@@ -11,6 +11,11 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+/**
+ * Default number of posts per page for queries.
+ */
+const DEFAULT_POSTS_PER_PAGE = 10;
+
 if ( ! function_exists( '\DigitalZenWorksTheme\add_home_link' ) )
 {
 	/**
@@ -87,7 +92,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_nav' ) )
 			$previous_link = get_previous_comments_link( $older_comments );
 			$previous_link = esc_url( $previous_link );
 
-			$next_link = get_previous_comments_link( $newer_comments );
+			$next_link = get_next_comments_link( $newer_comments );
 			$next_link = esc_url( $next_link );
 
 			// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -722,16 +727,19 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_posts_by_author_message' ) )
 if ( ! function_exists( '\DigitalZenWorksTheme\get_query_default_arguments' ) )
 {
 	/**
-	 * Get query default arguments.
+	 * Get default arguments for WP_Query.
 	 *
-	 * @return array The query default arguments.
+	 * Returns an array of default query arguments including posts per page,
+	 * current page number, and post status.
+	 *
+	 * @return array The default query arguments.
 	 */
-	function get_query_default_arguments()
+	function get_query_default_arguments(): array
 	{
 		$paged = get_query_var( 'paged' );
 
 		$arguments = [
-			'posts_per_page' => 10,
+			'posts_per_page' => DEFAULT_POSTS_PER_PAGE,
 			'paged'          => $paged,
 			'post_status'    => 'publish',
 		];
@@ -802,7 +810,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_video_css_classes' ) )
 	 * @param bool $videos Whether the post has videos.
 	 * @return string The video CSS classes.
 	 */
-	function get_video_css_classes( $videos )
+	function get_video_css_classes( $videos ): string
 	{
 		$additional_classes = '';
 
@@ -823,7 +831,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\have_posts' ) )
 	 * @param \WP_Query|null $query The query object.
 	 * @return bool True if there are posts, false otherwise.
 	 */
-	function have_posts( $query )
+	function have_posts( $query ): bool
 	{
 		if ( null !== $query )
 		{
