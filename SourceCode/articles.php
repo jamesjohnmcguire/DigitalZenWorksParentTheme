@@ -26,7 +26,7 @@ get_header();
     <!-- articles.php -->
 <?php
 
-$title = child_get_page_title();
+$title = get_page_title();
 show_title( $title );
 
 if ( true === $has_posts )
