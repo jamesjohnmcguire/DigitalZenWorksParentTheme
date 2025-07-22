@@ -39,7 +39,7 @@ $have_posts = \have_posts();
 
 get_header();
 ?>
- 
+
       <div id="container">
         <div id="content">
 <?php
@@ -60,11 +60,20 @@ if ( true === $have_posts )
 		the_post();
 
 		$post = get_post();
-		$url = get_permalink();
+		$url_check = get_permalink();
 		$title = get_the_title();
 
 		$classes = get_post_class();
 		$classes = implode( ' ', $classes );
+
+		if ( false !== $url_check )
+		{
+			$url = esc_url( $url_check );
+		}
+		else
+		{
+			$url = '';
+		}
 
 		show_post(
 			$post,
