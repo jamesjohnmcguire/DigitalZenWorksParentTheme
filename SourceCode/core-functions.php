@@ -236,13 +236,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\disable_emojicons_tinymce' ) )
 	 */
 	function disable_emojicons_tinymce( $plugins )
 	{
-		$result = [];
-
-		$is_array = is_array( $plugins );
-		if ( true === $is_array )
-		{
-			$result = array_diff( $plugins, [ 'wpemoji' ] );
-		}
+		$result = array_diff( $plugins, [ 'wpemoji' ] );
 
 		return $result;
 	}
@@ -1294,7 +1288,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_loop' ) )
 		$edit_after = '')
 	{
 		$have_posts = \have_posts();
-		
+
 		while ( true === $have_posts )
 		{
 			the_post();
