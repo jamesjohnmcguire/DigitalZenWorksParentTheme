@@ -1254,9 +1254,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_excerpt_section' ) )
 		if ( true === $include_links )
 		{
 			$inner_message = __( 'Pages:', 'digitalzenworks-theme' );
-			$message = 'before=<div class="page-link">' . $inner_message .
-				'&after=</div>';
-			wp_link_pages( $message );
+
+			$arguments =
+			[
+    			'before' => '<div class="page-link">' . $inner_message,
+			    'after'  => '</div>',
+			];
+
+			wp_link_pages( $arguments );
 		}
 ?>
             </div><!-- .entry-summary -->
@@ -1294,6 +1299,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_loop' ) )
 			the_post();
 
 			$author_id = get_the_author_meta( 'ID' );
+			$author_id = (int) $author_id;
 			$author = get_author_posts_url( $author_id );
 			$title = get_the_title();
 			$author_url = get_author_posts_url(
@@ -1463,7 +1469,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 				$edit_after);
 		}
 
-		show_excerpt_section( 'entry-summary', true );
+		show_excerpt_section( 'entry-summary', '', true );
 
 		if ( 'post' === $post->post_type )
 		{
