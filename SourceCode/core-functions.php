@@ -231,8 +231,8 @@ if ( ! function_exists( '\DigitalZenWorksTheme\disable_emojicons_tinymce' ) )
 	/**
 	 * Disable emoji icons in TinyMCE editor.
 	 *
-	 * @param array $plugins The array of TinyMCE plugins.
-	 * @return array Modified array of TinyMCE plugins.
+	 * @param array<string> $plugins The array of TinyMCE plugins.
+	 * @return array<string> Modified array of TinyMCE plugins.
 	 */
 	function disable_emojicons_tinymce( $plugins )
 	{
@@ -726,7 +726,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_query_default_arguments' ) )
 	 * Returns an array of default query arguments including posts per page,
 	 * current page number, and post status.
 	 *
-	 * @return array The default query arguments.
+	 * @return array<string, mixed> The default query arguments.
 	 */
 	function get_query_default_arguments(): array
 	{
