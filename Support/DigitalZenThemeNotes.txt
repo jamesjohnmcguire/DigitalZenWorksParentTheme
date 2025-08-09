@@ -1,4 +1,5 @@
 Digital Zen Theme	Tasks
+	// Remove TinyMCE emojis.	add_filter(	'tiny_mce_plugins',	'\DigitalZenWorksTheme\Inferret\disable_emojicons_tinymce');
 	Itemize All Current Child Themes of DZW
 	Make theme option	$enable_breadcrumbs = false;
 	Update ionicons
