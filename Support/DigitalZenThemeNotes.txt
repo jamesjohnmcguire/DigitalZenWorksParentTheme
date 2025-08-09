@@ -183,6 +183,7 @@ Notes
 				// remove Open Sans font
 				add_action('wp_enqueue_scripts', 'deregister_styles', 100);
 
+			add_action( 'wp', '\DigitalZenWorksTheme\Inferret\home_check' );
 			function clean_yoast()
 			{
 				// Sets the canonical link to the page url

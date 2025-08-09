@@ -231,18 +231,12 @@ if ( ! function_exists( '\DigitalZenWorksTheme\disable_emojicons_tinymce' ) )
 	/**
 	 * Disable emoji icons in TinyMCE editor.
 	 *
-	 * @param array $plugins The array of TinyMCE plugins.
-	 * @return array Modified array of TinyMCE plugins.
+	 * @param array<string> $plugins The array of TinyMCE plugins.
+	 * @return array<string> Modified array of TinyMCE plugins.
 	 */
 	function disable_emojicons_tinymce( $plugins )
 	{
-		$result = [];
-
-		$is_array = is_array( $plugins );
-		if ( true === $is_array )
-		{
-			$result = array_diff( $plugins, [ 'wpemoji' ] );
-		}
+		$result = array_diff( $plugins, [ 'wpemoji' ] );
 
 		return $result;
 	}
@@ -520,7 +514,16 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_other_tags' ) )
 		$separator = "\n";
 
 		$tag_list = get_the_tag_list( $separator );
-		$tags = explode( $separator, $tag_list );
+		$is_error = is_wp_error( $tag_list );
+
+		if ( false === $is_error && false !== $tag_list )
+		{
+			$tags = explode( $separator, $tag_list );
+		}
+		else
+		{
+			$tags = [];
+		}
 
 		foreach ( $tags as $index => $value )
 		{
@@ -626,10 +629,40 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_author' ) )
 	 */
 	function get_post_meta_author( $authordata )
 	{
-		$author_id = $authordata->ID;
-		$author_name = $authordata->display_name;
-		$author_url =
-			get_author_posts_url( $author_id, $authordata->user_nicename );
+		$exists = property_exists( $authordata, 'ID' );
+
+		if ( true === $exists )
+		{
+			$author_id = $authordata->ID;
+		}
+		else
+		{
+			$author_id = '';
+		}
+
+		$exists = property_exists( $authordata, 'display_name' );
+
+		if ( true === $exists )
+		{
+			$author_name = $authordata->display_name;
+		}
+		else
+		{
+			$author_name = '';
+		}
+
+		$exists = property_exists( $authordata, 'user_nicename' );
+
+		if ( true === $exists )
+		{
+			$nice_name = $authordata->user_nicename;
+		}
+		else
+		{
+			$nice_name = '';
+		}
+
+		$author_url = get_author_posts_url( $author_id, $nice_name );
 		$author_info = '<span class="author vcard"><a class="url fn n" href="' .
 			$author_url . '" title="' . $author_name . '">' . $author_name .
 			'</a></span>';
@@ -682,8 +715,16 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_post_meta_tags' ) )
 	 */
 	function get_post_meta_tags( $seperator )
 	{
+		$tag_info = '';
+
 		$tags = get_the_tag_list( '', $seperator );
-		$tag_info = '<span class="tag-links">' . $tags . '</span>';
+
+		$is_error = is_wp_error( $tags );
+
+		if ( false === $is_error && false !== $tags )
+		{
+			$tag_info = '<span class="tag-links">' . $tags . '</span>';
+		}
 
 		return $tag_info;
 	}
@@ -732,7 +773,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\get_query_default_arguments' ) )
 	 * Returns an array of default query arguments including posts per page,
 	 * current page number, and post status.
 	 *
-	 * @return array The default query arguments.
+	 * @return array<string, mixed> The default query arguments.
 	 */
 	function get_query_default_arguments(): array
 	{
@@ -880,8 +921,16 @@ if ( ! function_exists( '\DigitalZenWorksTheme\mailer_config' ) )
 				$mailer->Mailer = 'smtp';
 				$mailer->SMTPAuth = true;
 
-				$mailer->Host = $smtp_server;
-				$mailer->SMTPSecure = $smtp_protocol;
+				if ( false !== $smtp_server )
+				{
+					$mailer->Host = $smtp_server;
+				}
+
+				if ( false !== $smtp_protocol )
+				{
+					$mailer->SMTPSecure = $smtp_protocol;
+				}
+
 				$mailer->Port = $smtp_port;
 				$mailer->CharSet  = 'utf-8';
 
@@ -1122,7 +1171,6 @@ if ( ! function_exists( '\DigitalZenWorksTheme\comment_debug' ) )
 		$by = esc_html( $by );
 
 		$the_time = get_the_time( 'Y-m-d\TH:i:sO' );
-		$the_time = esc_attr( $the_time );
 
 		$published_on = __( 'Published on ', 'digitalzenworks-theme' );
 		$published_on = esc_html( $published_on );
@@ -1260,9 +1308,14 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_excerpt_section' ) )
 		if ( true === $include_links )
 		{
 			$inner_message = __( 'Pages:', 'digitalzenworks-theme' );
-			$message = 'before=<div class="page-link">' . $inner_message .
-				'&after=</div>';
-			wp_link_pages( $message );
+
+			$arguments =
+			[
+    			'before' => '<div class="page-link">' . $inner_message,
+			    'after'  => '</div>',
+			];
+
+			wp_link_pages( $arguments );
 		}
 ?>
             </div><!-- .entry-summary -->
@@ -1294,17 +1347,15 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_loop' ) )
 		$edit_after = '')
 	{
 		$have_posts = \have_posts();
-		
+
 		while ( true === $have_posts )
 		{
 			the_post();
 
 			$author_id = get_the_author_meta( 'ID' );
+			$author_id = (int) $author_id;
 			$author = get_author_posts_url( $author_id );
 			$title = get_the_title();
-			$author_url = get_author_posts_url(
-				$authordata->ID,
-				$authordata->user_nicename);
 ?>
                 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                   <h2 class="entry-title">
@@ -1436,7 +1487,17 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 		$domain,
 		$extra)
 	{
-		$id = $post->ID;
+		$exists = property_exists( $post, 'ID' );
+
+		if ( true === $exists )
+		{
+			$id = $post->ID;
+		}
+		else
+		{
+			$id = null;
+		}
+
 		$author_id   = (int)get_the_author_meta( 'ID' );
 		$author      = get_author_posts_url( $author_id );
 
@@ -1457,7 +1518,9 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 <?php
 		// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		if ( 'post' === $post->post_type )
+		$exists = property_exists( $post, 'post_type' );
+
+		if ( true === $exists && 'post' === $post->post_type )
 		{
 			$title = get_posts_by_author_message();
 
@@ -1469,9 +1532,9 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 				$edit_after);
 		}
 
-		show_excerpt_section( 'entry-summary', true );
+		show_excerpt_section( 'entry-summary', '', true );
 
-		if ( 'post' === $post->post_type )
+		if ( true === $exists && 'post' === $post->post_type )
 		{
 			show_entry_utility_section(
 				$comment_message,
@@ -1612,11 +1675,20 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_status_line' ) )
 	{
 		$categories = get_the_category_list( ', ' );
 
-		$link = get_the_permalink();
+		$link_check = get_the_permalink();
+
+		if ( false !== $link_check )
+		{
+			$link = $link_check;
+		}
+		else
+		{
+			$link = '';
+		}
+
 		$link = esc_url( $link );
 
 		$time = get_the_time( 'Y/m/d' );
-		$time = esc_html( $time );
 		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
                     <ul class="meta-info-cells float-wrapper">
@@ -1698,7 +1770,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\theme_customizer' ) )
 	/**
 	 * Theme customizer settings.
 	 *
-	 * @param  object $wp_customize The WP customizer object.
+	 * @param  \WP_Customize_Manager $wp_customize The WP customizer object.
 	 * @return void
 	 */
 	function theme_customizer( $wp_customize )
@@ -1771,7 +1843,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\theme_customizer' ) )
 
 		$transport =
 		[
-			'default'   => true,
+			'default'   => '1',
 			'transport' => 'postMessage'
 		];
 

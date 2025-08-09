@@ -31,6 +31,7 @@ else
 {
 	$author_name = get_the_author();
 	$author_id = get_the_author_meta( 'ID' );
+	$author_id = (int) $author_id;
 	$author = get_author_posts_url( $author_id );
 	$author_message = get_posts_by_author_message();
 	$author_message = esc_attr( $author_message );

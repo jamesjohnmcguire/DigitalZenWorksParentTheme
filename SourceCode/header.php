@@ -19,11 +19,15 @@ $use_title = get_theme_mod( 'use_title' );
 $front_page_only = get_theme_mod( 'banner_pages' );
 $show_main_menu = get_theme_mod( 'show_main_menu' );
 $menu_location = get_theme_mod( 'menu_location' );
+$enable_breadcrumbs = get_theme_mod( 'enable_breadcrumbs' );
+$use_alexa = get_theme_mod( 'use_alexa' );
 $use_logo = use_navbar_logo();
-$use_google_analytics = true;
-$use_alexa = false;
+$use_google_analytics = get_theme_mod( 'use_google_analytics' );
 $google_analytics_code = get_theme_mod( 'google_analytics_code' );
 $google_analytics_code_exists = ! empty( $google_analytics_code );
+
+$additional_css_classes = '';
+
 $home = '/';
 // @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
@@ -173,12 +177,9 @@ if ( true === $show_main_menu && 'menu_below' === $menu_location )
 	show_nav();
 }
 
-$additional_css_classes = '';
 
 if ( ! is_front_page() )
 {
-	$enable_breadcrumbs = false;
-
 	if ( true === $enable_breadcrumbs )
 	{
 		show_breadcrumbs();
