@@ -1926,7 +1926,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\use_navbar_logo' ) )
 	/**
 	 * Check if navbar logo should be used.
 	 *
-	 * @return bool Whether to use navbar logo.
+	 * @return true Use navbar logo.
 	 */
 	function use_navbar_logo()
 	{
