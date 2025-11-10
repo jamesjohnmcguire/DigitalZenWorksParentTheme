@@ -165,38 +165,53 @@ if ( ! function_exists(
 	 */
 	function dequeue_wpcf7_recaptcha_when_not_needed()
 	{
+		$do_dequeue = false;
+
 		// Only check for the frontend.
 		$is_admin = is_admin();
 
 		if ( false === $is_admin )
 		{
-			// Check if the current post content contains
-			// a Contact Form 7 shortcode.
 			global $post;
 
 			$is_post_set = isset( $post );
-			$has_shortcode =
-				has_shortcode( $post->post_content, 'contact-form-7' );
 
-			if ( false === $is_post_set || false === $has_shortcode )
+			if ( false === $is_post_set )
 			{
-				// Polyfill is not needed, except for the Contact Form.
-				dequeue_polyfill();
-
-				// Dequeue the reCAPTCHA script and its inline data.
-				wp_dequeue_script( 'wpcf7-recaptcha-js' );
-				wp_deregister_script( 'wpcf7-recaptcha-js' );
-
-				// Remove the inline script.
-				add_filter(
-					'script_loader_tag',
-					'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script',
-					10,
-					2);
-
-				add_filter( 'wpcf7_load_js', '__return_false' );
-				add_filter( 'wpcf7_load_css', '__return_false' );
+				$do_dequeue = true;
 			}
+			else
+			{
+				// Check if the current post content contains
+				// a Contact Form 7 shortcode.
+				$has_shortcode =
+					has_shortcode( $post->post_content, 'contact-form-7' );
+
+				if ( false === $has_shortcode )
+				{
+					$do_dequeue = true;
+				}
+			}
+		}
+
+		if ( true === $do_dequeue )
+		{
+			// Polyfill is not needed, except for the Contact Form.
+			dequeue_polyfill();
+
+			// Dequeue the reCAPTCHA script and its inline data.
+			wp_dequeue_script( 'wpcf7-recaptcha-js' );
+			wp_deregister_script( 'wpcf7-recaptcha-js' );
+
+			// Remove the inline script.
+			add_filter(
+				'script_loader_tag',
+				'\DigitalZenWorksTheme\remove_wpcf7_recaptcha_inline_script',
+				10,
+				2);
+
+			add_filter( 'wpcf7_load_js', '__return_false' );
+			add_filter( 'wpcf7_load_css', '__return_false' );
 		}
 	}
 }
