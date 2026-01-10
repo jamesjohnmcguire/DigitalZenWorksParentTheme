@@ -33,10 +33,9 @@ add_filter( 'show_admin_bar', '__return_false' );
 // Add the home link to the main menu, if needed.
 add_filter( 'wp_nav_menu_items', '\DigitalZenWorksTheme\add_home_link', 10 );
 
-// Add the theme directory path as needed.
-add_shortcode(
-	'theme_directory',
-	'\DigitalZenWorksTheme\theme_directory_shortcode');
+/** @var callable(array<mixed>, string|null, string): string $callback */
+$callback = '\DigitalZenWorksTheme\theme_directory_shortcode';
+add_shortcode( 'theme_directory', $callback );
 
 remove_action( 'wp_head', 'qtranxf_wp_head_meta_generator' );
 

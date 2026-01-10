@@ -1925,13 +1925,21 @@ if ( ! function_exists( '\DigitalZenWorksTheme\theme_directory_shortcode' ) )
 	/**
 	 * Theme directory shortcode.
 	 *
-	 * @param string $content The shortcode content.
-	 * @return string The theme directory path.
+	 * Callback for the `theme_directory` shortcode.
+	 *
+	 * @param array<string, mixed> $attributes The attributes passed to the
+	 *                                         shortcode.
+	 * @param string|null          $content    The content inside the shortcode.
+	 *
+	 * @return string The theme directory path concatenated with the content.
 	 */
-	function theme_directory_shortcode( $content = '' )
+	function theme_directory_shortcode(
+		array $attributes = [],
+		?string $content = null ) : string
 	{
 		$template_directory = get_template_directory();
 		$content = $template_directory . $content;
+
 		return $content;
 	}
 }
