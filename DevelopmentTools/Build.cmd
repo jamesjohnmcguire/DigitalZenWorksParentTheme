@@ -1,6 +1,6 @@
 CD %~dp0
 CD ..
-CD SourceCode\themes\digitalzenworks
+CD SourceCode
 
 CALL composer validate --strict
 CALL composer install --prefer-dist
