@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="Digital Zen Theme Coding Standard">
+
+ 	<rule ref="./ruleset.default.xml"/>
+ 	<rule ref="./ruleset.wordpress.xml"/>
+
+	<rule ref="PEAR">
+		<exclude name="PEAR.Commenting.FileComment.MissingLicenseTag"/>
+	</rule>
+
+	<rule ref="Squiz">
+		<exclude name="Squiz.Classes.ClassDeclaration.SpaceBeforeCloseBrace"/>
+	</rule>
+
+</ruleset>
