@@ -1,17 +1,33 @@
+@ECHO OFF
+
 CD %~dp0
 CD ..
-CD SourceCode
 
-CALL composer validate --strict
+ECHO Checking composer...
 CALL composer install --prefer-dist
+CALL composer validate --strict
 ECHO outdated:
-CALL composer outdated
+CALL composer outdated --direct
+
+ECHO Checking syntax...
+CALL vendor\bin\parallel-lint --exclude .git --exclude vendor .
+
+ECHO Code Analysis...
+CALL vendor\bin\phpstan.phar.bat analyse
 
 ECHO Checking code styles...
-php vendor\bin\phpcs -sp --standard=ruleset.xml .
+CALL vendor\bin\phpcs.bat -sp --standard=ruleset.xml SourceCode
+CALL vendor\bin\phpcs.bat -sp --standard=ruleset.tests.xml Tests
 
-@ECHO ON
-CD SourceCode\themes\digitalzenworks-irdi
+
+ECHO Running Automated Tests
+CALL vendor\bin\phpunit --config Tests\phpunit.xml
+
+IF "%1"=="deploy" GOTO deploy
+GOTO finish
+
+:deploy
+CD SourceCode
 IF EXIST vendor.bak\NUL RD /S /Q vendor.bak
 IF EXIST vendor.production\NUL RD /S /Q vendor.production
 
@@ -24,7 +40,7 @@ CALL composer install --no-dev --prefer-dist
 
 CD vendor
 
-DEL /S /Q *.md >NUL
+DEL /S /Q *.md >NUL 2>NUL
 CD ..
 
 REN vendor vendor.production

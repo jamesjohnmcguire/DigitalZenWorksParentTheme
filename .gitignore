@@ -1,6 +1,6 @@
-DigitalZenWorksTheme.code-workspace
+/DigitalZenWorksTheme.code-workspace
 
-SourceCode/assets/css/fonts/
-SourceCode/assets/js/vendor/gtag.js
+/SourceCode/assets/css/fonts/
+/SourceCode/assets/js/vendor/gtag.js
 
-SourceCode/vendor
+/vendor/
