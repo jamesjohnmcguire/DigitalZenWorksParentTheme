@@ -2,9 +2,10 @@
 /**
  * Footer file for the Digital Zen Works theme.
  *
- * @package DigitalZenWorksTheme
- * @author  James John McGuire <jamesjohnmcguire@gmail.com>
- * @link    https://digitalzenworks.com
+ * @package   DigitalZenWorksTheme
+ * @author    James John McGuire <jamesjohnmcguire@gmail.com>
+ * @copyright 2015 - 2026 James John McGuire
+ * @link      https://digitalzenworks.com
  */
 
 declare(strict_types=1);
@@ -30,7 +31,7 @@ $year = gmdate( 'Y' );
     <div class="clearfix footer-clear"></div>
 
     <div class="copyright">
-      <div class="container">   
+      <div class="container">
         <div class="div-table v-middle">
           <div class="cell">
 All rights reserved. Copyright &copy; <?php echo $year; ?>
