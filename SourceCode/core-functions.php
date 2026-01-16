@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace DigitalZenWorksTheme;
 
+defined( 'THEME_DEBUG' ) or define( 'THEME_DEBUG', false );
+
 /**
  * Default number of posts per page for queries.
  */
@@ -296,7 +298,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\enqueue_scripts' ) )
 			true);
 		wp_enqueue_script( 'totop-async' );
 
-		if ( THEME_DEBUG === true )
+		if ( true === THEME_DEBUG )
 		{
 			// If false, these will be enqueued by the child theme.
 			$bootstrap_file = $js_vendor_path . 'bootstrap.min.js';
