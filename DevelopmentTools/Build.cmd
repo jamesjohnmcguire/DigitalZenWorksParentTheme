@@ -9,9 +9,11 @@ CALL composer validate --strict
 ECHO outdated:
 CALL composer outdated --direct
 
+ECHO .
 ECHO Checking syntax...
 CALL vendor\bin\parallel-lint --exclude .git --exclude vendor .
 
+ECHO .
 ECHO Code Analysis...
 CALL vendor\bin\phpstan.phar.bat analyse
 
