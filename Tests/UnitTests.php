@@ -26,6 +26,7 @@ final class UnitTests extends TestCase
 	public function SanityCheck()
 	{
 		$some_var = true;
-		$this->assertTrue($some_var);
+ 		/** @phpstan-ignore-next-line */
+ 		$this->assertTrue($some_var);
 	}
 }
