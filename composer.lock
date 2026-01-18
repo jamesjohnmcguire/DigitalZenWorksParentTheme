@@ -1872,12 +1872,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "e356d5120fa8d7eec96fb54e2cc26fb0e7d73922"
+                "reference": "6a3ae1ffc8941b8a0f7f6a6e2235951ad32508fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/e356d5120fa8d7eec96fb54e2cc26fb0e7d73922",
-                "reference": "e356d5120fa8d7eec96fb54e2cc26fb0e7d73922",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/6a3ae1ffc8941b8a0f7f6a6e2235951ad32508fe",
+                "reference": "6a3ae1ffc8941b8a0f7f6a6e2235951ad32508fe",
                 "shasum": ""
             },
             "require": {
@@ -1953,7 +1953,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-12T09:40:09+00:00"
+            "time": "2026-01-17T16:58:39+00:00"
         },
         {
             "name": "phpstan/extension-installer",
