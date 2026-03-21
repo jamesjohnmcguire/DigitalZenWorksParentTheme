@@ -1,4 +1,7 @@
 Digital Zen Theme	Tasks
+	Fork and Expand	https://github.com/WPTT/WPThemeReview
+	Themes	Add Minify Support
+	Add GitHub WorkFlow Support
 	Intergrate https://github.com/WPTT/WPThemeReview
 	// Remove TinyMCE emojis.	add_filter(	'tiny_mce_plugins',	'\DigitalZenWorksTheme\Inferret\disable_emojicons_tinymce');
 	Itemize All Current Child Themes of DZW
