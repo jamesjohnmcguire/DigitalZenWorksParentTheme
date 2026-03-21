@@ -980,7 +980,7 @@ if ( ! function_exists( '\DigitalZenWorksTheme\navigation_link' ) )
 
 		if ( true === $is_page )
 		{
-			$current_uri = add_query_arg( null, null );
+			$current_uri = home_url();
 			$found = strpos( $current_uri, '/articles/' );
 
 			if ( false !== $found )
