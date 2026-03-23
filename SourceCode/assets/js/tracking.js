@@ -8,6 +8,8 @@ function GoogleTag(tagId)
 	gtag('config', tagId);
 }
 
+function FacebookPixelTag(tagId)
+{
 	// Facebook analytics
 	!function(f,b,e,v,n,t,s)
 	{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -17,5 +19,6 @@ function GoogleTag(tagId)
 	t.src=v;s=b.getElementsByTagName(e)[0];
 	s.parentNode.insertBefore(t,s)}(window, document,'script',
 	'https://connect.facebook.net/en_US/fbevents.js');
-	fbq('init', '278379486580331');
+	fbq('init', tagId);
 	fbq('track', 'PageView');
+}
