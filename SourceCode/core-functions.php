@@ -1572,6 +1572,101 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_post' ) )
 	}
 }
 
+if ( ! function_exists( '\DigitalZenWorksTheme\get_query' ) )
+{
+	/**
+	 * Get query.
+	 *
+	 * @param bool $paged Whether to show pagination.
+	 *
+	 * @return ?\WP_Query
+	 */
+	function get_query( bool $paged ) : ?\WP_Query
+	{
+		$query = null;
+
+		if ( true === $paged )
+		{
+			$arguments = get_query_default_arguments();
+			$query = new \WP_Query( $arguments );
+		}
+
+		return $query;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\have_posts_extended' ) )
+{
+	/**
+	 * Have posts extended.
+	 *
+	 * @param ?\WP_Query $query The query object.
+	 *
+	 * @return bool True if there are posts, false otherwise.
+	 */
+	function have_posts_extended( $query ) : bool
+	{
+		$have_posts = have_posts( $query );
+
+		return $have_posts;
+	}
+}
+
+if ( ! function_exists( '\DigitalZenWorksTheme\show_post_extended' ) )
+{
+	/**
+	 * Show post.
+	 *
+	 * @param ?\WP_Query $query              The query object.
+	 * @param bool       $show_content       Whether to show content.
+	 * @param bool       $show_excerpts      Whether to show excerpts.
+	 * @param ?string    $additional_classes Additional classes.
+	 *
+	 * @return void
+	 */
+	function show_post_extended(
+		$query,
+		$show_content = true,
+		$show_excerpts = false,
+		$additional_classes = '')
+	{
+		if ( null !== $query )
+		{
+			$query->the_post();
+		}
+		else
+		{
+			the_post();
+		}
+?>
+          <h2>
+            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+          </h2>
+<?php
+		// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		if ( true === $show_excerpts )
+		{
+			show_excerpt_section(
+				'block-content',
+				$additional_classes);
+		}
+		elseif ( true === $show_content )
+		{
+?>
+          <div class="block-content<?php echo $additional_classes; ?>">
+<?php
+			// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+			the_content();
+?>
+          </div><!--block-content-->
+<?php
+		}
+
+		show_status_line();
+	}
+}
+
 if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 {
 	/**
@@ -1589,20 +1684,13 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 		$paged = true,
 		$videos = false)
 	{
-		$query = null;
+		$query = get_query( $paged );
 
-		if ( true === $paged )
-		{
-			$arguments = get_query_default_arguments();
-			$query = new \WP_Query( $arguments );
-		}
-
-		$additional_classes = get_video_css_classes( $videos );
-
-		$have_posts = have_posts( $query );
+		$have_posts = have_posts_extended( $query );
 
 		if ( true === $have_posts )
 		{
+			$additional_classes = get_video_css_classes( $videos );
 ?>
        <div class="row">
         <div class="col-md-12 post-content">
@@ -1614,40 +1702,11 @@ if ( ! function_exists( '\DigitalZenWorksTheme\show_posts' ) )
 
 			while ( true === $have_posts )
 			{
-				if ( null !== $query )
-				{
-					$query->the_post();
-				}
-				else
-				{
-					the_post();
-				}
-?>
-          <h2>
-            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-          </h2>
-<?php
-				// @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-
-				if ( true === $show_excerpts )
-				{
-					show_excerpt_section(
-						'block-content',
-						$additional_classes);
-				}
-				elseif ( true === $show_content )
-				{
-?>
-          <div class="block-content<?php echo $additional_classes; ?>">
-<?php
-					// @phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-					the_content();
-?>
-          </div><!--block-content-->
-<?php
-				}
-
-				show_status_line();
+				show_post_extended(
+					$query,
+					$show_content,
+					$show_excerpts,
+					$additional_classes);
 
 				$have_posts = have_posts( $query );
 			}
