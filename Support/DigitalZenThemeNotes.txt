@@ -1,4 +1,10 @@
 Digital Zen Theme	Tasks
+	modify copying of bootstrap files
+	Review build scripts
+	compare build scripts	inferret
+	compare build scripts	dzw
+	phpcf
+	camel case scripts
 	Fork and Expand	https://github.com/WPTT/WPThemeReview
 	Themes	Add Minify Support
 	Add GitHub WorkFlow Support
